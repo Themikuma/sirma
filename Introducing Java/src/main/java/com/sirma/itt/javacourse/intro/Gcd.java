@@ -29,6 +29,21 @@ public class Gcd {
 	}
 
 	/**
+	 * Calculates the least common multiple of two numbers.
+	 * 
+	 * @param a
+	 *            the first number
+	 * @param b
+	 *            the second number
+	 * @return the least common multiple of two numbers
+	 */
+	int lcm(int a, int b) {
+		int firstNum = a;
+		int secondNum = b;
+		return firstNum * secondNum / gcd(firstNum, secondNum);
+	}
+
+	/**
 	 * Main method of the class.
 	 * 
 	 * @param args

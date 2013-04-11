@@ -12,7 +12,7 @@ import org.junit.Test;
 public class GcdTest {
 
 	/**
-	 * Method, testing the functionality of the Gcd class.
+	 * Method, testing the functionality of the Gcd class, gcd method.
 	 */
 	@Test
 	public void testGcd() {
@@ -20,6 +20,16 @@ public class GcdTest {
 		assertEquals(2, greatestDivisor.gcd(20, 2));
 		assertEquals(4, greatestDivisor.gcd(20, 4));
 		assertEquals(12, greatestDivisor.gcd(1332, 600));
+	}
+
+	/**
+	 * Method, testing the functionality of the Gcd class, lcm method.
+	 */
+	@Test
+	public void testLcm() {
+		Gcd test = new Gcd();
+		assertEquals(315, test.lcm(63, 5));
+		assertEquals(55, test.lcm(11, 5));
 	}
 
 }
