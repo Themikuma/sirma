@@ -19,15 +19,15 @@ public class ArrayProcessing {
 		int[] array = a;
 		if (array.length == 0 || array == null) {
 			throw new IllegalArgumentException();
-		} else {
-			int minElement = array[0];
-			for (int number : array) {
-				if (number < minElement) {
-					minElement = number;
-				}
-			}
-			return minElement;
 		}
+		int minElement = array[0];
+		for (int number : array) {
+			if (number < minElement) {
+				minElement = number;
+			}
+		}
+		return minElement;
+
 	}
 
 	/**
@@ -42,11 +42,11 @@ public class ArrayProcessing {
 		int sum = 0;
 		if (array.length == 0 || array == null) {
 			throw new IllegalArgumentException();
-		} else {
-			for (int number : array) {
-				sum += number;
-			}
 		}
+		for (int number : array) {
+			sum += number;
+		}
+
 		return sum;
 
 	}
@@ -61,11 +61,11 @@ public class ArrayProcessing {
 		int[] array = a;
 		if (array.length == 0 || array == null) {
 			throw new IllegalArgumentException();
-		} else {
-			for (int number : array) {
-				System.out.print(number);
-			}
 		}
+		for (int number : array) {
+			System.out.print(number);
+		}
+
 	}
 
 	/**
