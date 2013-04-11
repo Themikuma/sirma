@@ -5,7 +5,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 /**
- * Class with a method, testing the functionality of the Gcd class.
+ * Class with methods testing the functionality of the Gcd class.
  * 
  * @author metodskiPC
  */

@@ -1,7 +1,8 @@
 package com.sirma.itt.javacourse.intro;
 
 /**
- * Class with a method calculating the greatest common divisor of two numbers.
+ * Class containing a method calculating the greatest common divisor of two numbers and a method
+ * calculating the least common multiple.
  * 
  * @author metodskiPC
  */
