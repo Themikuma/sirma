@@ -28,11 +28,7 @@ public class MassOfArrayTest {
 	 * Method, testing the method centerOfMass from the MassOfArray class for exceptions.
 	 */
 	@Test(expected = IllegalArgumentException.class)
-<<<<<<< HEAD
 	public void testCenterOfMassException() {
-=======
-	public void testGetMinElementException() {
->>>>>>> a9269f93848d4e6c3b06eb0147651528b5270a96
 		MassOfArray massClass = new MassOfArray();
 		assertEquals("Can't handle null arrays", massClass.centerOfMass(new int[] {}));
 		assertEquals("Can't handle null arrays", massClass.centerOfMass(null));
