@@ -5,7 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -15,8 +15,8 @@ import org.junit.Test;
  */
 public class ArrayProcessingTest {
 
-	private ArrayProcessing arrayClass;
-	private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+	private static ArrayProcessing arrayClass;
+	private static ByteArrayOutputStream outContent;
 
 	/**
 	 * Initializes the class and sets a new output stream.
@@ -24,9 +24,10 @@ public class ArrayProcessingTest {
 	 * @throws Exception
 	 *             exception if anything goes wrong
 	 */
-	@Before
-	public void setUp() throws Exception {
+	@BeforeClass
+	public static void setUpBeforeClass() throws Exception {
 		arrayClass = new ArrayProcessing();
+		outContent = new ByteArrayOutputStream();
 		System.setOut(new PrintStream(outContent));
 
 	}
