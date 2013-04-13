@@ -1,8 +1,8 @@
 package com.sirma.itt.javacourse.intro;
 
 /**
- * Class containing a method that returns the smallest element of an int array, method returning the
- * sum of the elements of an int array and a method printing out each element of an int array.
+ * A class, containing a method that returns the smallest element of an int array, method returning
+ * the sum of the elements of an int array and a method printing out each element of an int array.
  * 
  * @author metodskiPC
  */
