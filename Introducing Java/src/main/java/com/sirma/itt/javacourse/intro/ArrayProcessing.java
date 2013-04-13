@@ -11,17 +11,16 @@ public class ArrayProcessing {
 	/**
 	 * A method that returns the smallest element in an array.
 	 * 
-	 * @param a
+	 * @param inputArray
 	 *            Input array containing integers
 	 * @return the smallest element in the array
 	 */
-	int getMinElement(int[] a) {
-		int[] array = a;
-		if (array.length == 0 || array == null) {
+	int getMinElement(int[] inputArray) {
+		if (inputArray.length == 0 || inputArray == null) {
 			throw new IllegalArgumentException();
 		}
-		int minElement = array[0];
-		for (int number : array) {
+		int minElement = inputArray[0];
+		for (int number : inputArray) {
 			if (number < minElement) {
 				minElement = number;
 			}
@@ -33,17 +32,16 @@ public class ArrayProcessing {
 	/**
 	 * Method returning the sum of all elements in an array.
 	 * 
-	 * @param a
+	 * @param inputArray
 	 *            Input array containing integers
 	 * @return the sum of all elements in the array
 	 */
-	int getSum(int[] a) {
-		int[] array = a;
+	int getSum(int[] inputArray) {
 		int sum = 0;
-		if (array.length == 0 || array == null) {
+		if (inputArray.length == 0 || inputArray == null) {
 			throw new IllegalArgumentException();
 		}
-		for (int number : array) {
+		for (int number : inputArray) {
 			sum += number;
 		}
 
@@ -54,15 +52,14 @@ public class ArrayProcessing {
 	/**
 	 * Method printing out all elements of the array.
 	 * 
-	 * @param a
+	 * @param inputArray
 	 *            Input array containing integers
 	 */
-	void printElements(int[] a) {
-		int[] array = a;
-		if (array.length == 0 || array == null) {
+	void printElements(int[] inputArray) {
+		if (inputArray.length == 0 || inputArray == null) {
 			throw new IllegalArgumentException();
 		}
-		for (int number : array) {
+		for (int number : inputArray) {
 			System.out.print(number);
 		}
 

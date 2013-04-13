@@ -11,36 +11,31 @@ public class Gcd {
 	/**
 	 * Calculates the greatest common divisor of two numbers.
 	 * 
-	 * @param a
+	 * @param firstNum
 	 *            the first number
-	 * @param b
+	 * @param secondNum
 	 *            the second number
 	 * @return the greatest common divisor of the numbers
 	 */
-	int gcd(int a, int b) {
-		int firstNum = a;
-		int secondNum = b;
+	int gcd(int firstNum, int secondNum) {
 		if (firstNum == secondNum)
 			return firstNum;
 		else if (firstNum > secondNum)
-			firstNum -= secondNum;
+			return gcd(firstNum - secondNum, secondNum);
 		else
-			secondNum -= firstNum;
-		return gcd(firstNum, secondNum);
+			return gcd(firstNum, secondNum - firstNum);
 	}
 
 	/**
 	 * Calculates the least common multiple of two numbers.
 	 * 
-	 * @param a
+	 * @param firstNum
 	 *            the first number
-	 * @param b
+	 * @param secondNum
 	 *            the second number
 	 * @return the least common multiple of two numbers
 	 */
-	int lcm(int a, int b) {
-		int firstNum = a;
-		int secondNum = b;
+	int lcm(int firstNum, int secondNum) {
 		return firstNum * secondNum / gcd(firstNum, secondNum);
 	}
 
