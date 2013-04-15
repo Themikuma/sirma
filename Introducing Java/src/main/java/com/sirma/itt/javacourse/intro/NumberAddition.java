@@ -16,9 +16,8 @@ public class NumberAddition {
 	 * @return the sum of the numbers
 	 */
 	public Object sum(String numberOne, String numberTwo) {
-		if (numberOne.matches("[0-9]+") == false || numberTwo.matches("[0-9]+") == false
-				|| numberOne.equals(null) || numberTwo.equals(null) || numberOne.equals("")
-				|| numberTwo.equals("")) {
+		if (!numberOne.matches("[0-9]+") || !numberTwo.matches("[0-9]+") || numberOne == null
+				|| numberTwo == null || "".equals(numberOne) || "".equals(numberTwo)) {
 			throw new IllegalArgumentException();
 		}
 		char[] numOne = numberOne.toCharArray();
@@ -38,8 +37,8 @@ public class NumberAddition {
 						result += "1";
 					}
 				} else {
-					resultArray[i] += (Character.getNumericValue(numOne[i]) + Character
-							.getNumericValue(numTwo[i - (lengthOne - lengthTwo)]));
+					resultArray[i] += Character.getNumericValue(numOne[i])
+							+ Character.getNumericValue(numTwo[i - (lengthOne - lengthTwo)]);
 				}
 				if (resultArray[i] > 9) {
 					int tempResult = resultArray[i];
@@ -57,8 +56,8 @@ public class NumberAddition {
 						result += "1";
 					}
 				} else {
-					resultArray[i] += (Character.getNumericValue(numTwo[i]) + Character
-							.getNumericValue(numOne[i - (lengthTwo - lengthOne)]));
+					resultArray[i] += Character.getNumericValue(numTwo[i])
+							+ Character.getNumericValue(numOne[i - (lengthTwo - lengthOne)]);
 				}
 				if (resultArray[i] > 9) {
 					int tempResult = resultArray[i];
@@ -71,8 +70,8 @@ public class NumberAddition {
 		else {
 			resultArray = new int[lengthTwo];
 			for (int i = lengthTwo - 1; i >= 0; i--) {
-				resultArray[i] += (Character.getNumericValue(numTwo[i]) + Character
-						.getNumericValue(numOne[i - (lengthTwo - lengthOne)]));
+				resultArray[i] += Character.getNumericValue(numTwo[i])
+						+ Character.getNumericValue(numOne[i - (lengthTwo - lengthOne)]);
 				if (i == 0 && resultArray[i] > 9) {
 					resultArray[i] = resultArray[i] % 10;
 					result += "1";
