@@ -4,8 +4,16 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+/**
+ * Class, testing the NumberAddition Class.
+ * 
+ * @author user
+ */
 public class NumberAdditionTest {
-
+	/**
+	 * Testing the addClass method from the NumberAddition class. The tests should return the
+	 * expected sum.
+	 */
 	@Test
 	public void testSum() {
 		NumberAddition addClass = new NumberAddition();
@@ -15,6 +23,9 @@ public class NumberAdditionTest {
 		assertEquals(9968, addClass.sum("9753", "215"));
 	}
 
+	/**
+	 * Testing the addClass method from the NumberAddition class for exceptions.
+	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testSumException() {
 		NumberAddition addClass = new NumberAddition();
