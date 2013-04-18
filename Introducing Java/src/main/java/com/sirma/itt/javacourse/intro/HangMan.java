@@ -5,21 +5,13 @@ package com.sirma.itt.javacourse.intro;
  * 
  * @author user
  */
-public class HangMan {
+final class HangMan {
 
 	/**
-	 * Initialization method.
+	 * Private constructor, throwing an error, preventing anyone from instantiating this class.
 	 */
-	public void initGame() {
-		HangManGame game = new HangManGame();
-		game.play(new HangManManualReader());
-	}
-
-	/**
-	 * 
-	 */
-	HangMan() {
-		initGame();
+	private HangMan() {
+		throw new AssertionError("Can't instantiate utility class");
 	}
 
 	/**
@@ -27,6 +19,7 @@ public class HangMan {
 	 *            command-line arguments
 	 */
 	public static void main(String[] args) {
-		HangMan game = new HangMan();
+		HangManGame game = new HangManGame();
+		game.play(new HangManManualReader());
 	}
 }

@@ -17,7 +17,7 @@ public class SumatorTest {
 	 * types(int,float,string,biginteger,bigdecimal).
 	 */
 	@Test
-	public void test() {
+	public void testSumator() {
 		Sumator sumClass = new Sumator();
 		assertEquals(20, sumClass.sum(10, 10));
 		assertEquals(20f, sumClass.sum(10f, 10f), 0.0001);
