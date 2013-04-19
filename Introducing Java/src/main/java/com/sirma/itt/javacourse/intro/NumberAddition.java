@@ -15,7 +15,7 @@ public class NumberAddition {
 	 *            the second number
 	 * @return the sum of the numbers
 	 */
-	public Object sum(String numberOne, String numberTwo) {
+	public int sum(String numberOne, String numberTwo) {
 		if (!numberOne.matches("[0-9]+") || !numberTwo.matches("[0-9]+") || numberOne == null
 				|| numberTwo == null || "".equals(numberOne) || "".equals(numberTwo)) {
 			throw new IllegalArgumentException();

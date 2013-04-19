@@ -17,7 +17,7 @@ public class Gcd {
 	 *            the second number
 	 * @return the greatest common divisor of the numbers
 	 */
-	int gcd(int firstNum, int secondNum) {
+	public int gcd(int firstNum, int secondNum) {
 		if (firstNum == secondNum)
 			return firstNum;
 		else if (firstNum > secondNum)
@@ -35,19 +35,8 @@ public class Gcd {
 	 *            the second number
 	 * @return the least common multiple of two numbers
 	 */
-	int lcm(int firstNum, int secondNum) {
+	public int lcm(int firstNum, int secondNum) {
 		return firstNum * secondNum / gcd(firstNum, secondNum);
-	}
-
-	/**
-	 * Main method of the class.
-	 * 
-	 * @param args
-	 *            command-line arguments
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
 	}
 
 }

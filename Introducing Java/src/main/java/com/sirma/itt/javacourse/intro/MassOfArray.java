@@ -15,7 +15,7 @@ public class MassOfArray {
 	 *            the input array
 	 * @return the index of the element which is the center of mass
 	 */
-	int centerOfMass(int[] inputArray) {
+	public int centerOfMass(int[] inputArray) {
 		if (inputArray.length == 0 || inputArray == null) {
 			throw new IllegalArgumentException();
 		}
@@ -33,15 +33,4 @@ public class MassOfArray {
 		}
 		return 0;
 	}
-
-	/**
-	 * Main method of the class.
-	 * 
-	 * @param args
-	 *            command-line arguments
-	 */
-	public static void main(String[] args) {
-
-	}
-
 }

@@ -15,7 +15,7 @@ public class ArrayProcessing {
 	 *            Input array containing integers
 	 * @return the smallest element in the array
 	 */
-	int getMinElement(int[] inputArray) {
+	public int getMinElement(int[] inputArray) {
 		if (inputArray.length == 0 || inputArray == null) {
 			throw new IllegalArgumentException();
 		}
@@ -36,7 +36,7 @@ public class ArrayProcessing {
 	 *            Input array containing integers
 	 * @return the sum of all elements in the array
 	 */
-	int getSum(int[] inputArray) {
+	public int getSum(int[] inputArray) {
 		int sum = 0;
 		if (inputArray.length == 0 || inputArray == null) {
 			throw new IllegalArgumentException();
@@ -55,24 +55,13 @@ public class ArrayProcessing {
 	 * @param inputArray
 	 *            Input array containing integers
 	 */
-	void printElements(int[] inputArray) {
+	public void printElements(int[] inputArray) {
 		if (inputArray.length == 0 || inputArray == null) {
 			throw new IllegalArgumentException();
 		}
 		for (int number : inputArray) {
 			System.out.print(number);
 		}
-
-	}
-
-	/**
-	 * Main method of the class.
-	 * 
-	 * @param args
-	 *            command-line arguments
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 
 	}
 

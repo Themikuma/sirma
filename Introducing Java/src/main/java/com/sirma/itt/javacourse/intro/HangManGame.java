@@ -19,7 +19,7 @@ public class HangManGame {
 	 * @param reader
 	 *            The reader that is going to be used.
 	 */
-	public void start(HangManReader reader) {
+	private void start(HangManReader reader) {
 		System.out.println("The game is starting, please choose your word: ");
 		word = reader.getWord();
 		if (wordBuilder.length() > 2)
@@ -73,7 +73,7 @@ public class HangManGame {
 	/**
 	 * The end of the game. Asks the user if he wants to play the game again.
 	 */
-	public void end() {
+	private void end() {
 		System.out.println("Do you want to play again? y/n");
 		String answer = reader.getWord();
 		if ("y".equals(answer)) {

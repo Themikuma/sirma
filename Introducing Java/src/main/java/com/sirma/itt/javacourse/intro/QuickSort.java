@@ -51,19 +51,10 @@ public class QuickSort {
 	 *            the input array yet to be sorted
 	 * @return the sorted array
 	 */
-	int[] quickSort(int[] inputArray) {
+	public int[] quickSort(int[] inputArray) {
 		if (inputArray.length == 0 || inputArray == null) {
 			throw new IllegalArgumentException();
 		}
 		return quickSort(inputArray, 0, inputArray.length - 1);
-	}
-
-	/**
-	 * Main method of the class.
-	 * 
-	 * @param args
-	 *            command-line arguments
-	 */
-	public static void main(String[] args) {
 	}
 }
