@@ -10,12 +10,6 @@ public class PolyLine extends Figure {
 	private Line oneLine;
 	private Arc oneArc;
 
-	@Override
-	void draw() {
-		// TODO Auto-generated method stub
-
-	}
-
 	/**
 	 * Getter method for oneLine.
 	 * 
@@ -52,6 +46,12 @@ public class PolyLine extends Figure {
 	 */
 	public void setOneArc(Arc oneArc) {
 		this.oneArc = oneArc;
+	}
+
+	@Override
+	void draw() {
+		// TODO Auto-generated method stub
+
 	}
 
 }

@@ -7,10 +7,9 @@ package com.sirma.itt.javacourse.objects;
  */
 public final class BinaryTreeRun {
 	/**
-	 * Private constructor, throwing an error, preventing anyone from instantiating this class.
+	 * Private constructor, preventing anyone from instantiating this class.
 	 */
 	private BinaryTreeRun() {
-		throw new AssertionError("Can't instantiate utility class");
 	}
 
 	/**

@@ -10,7 +10,7 @@ public abstract class Figure {
 	/**
 	 * Empty constructor.
 	 */
-	protected Figure() {
+	public Figure() {
 	}
 
 	/**

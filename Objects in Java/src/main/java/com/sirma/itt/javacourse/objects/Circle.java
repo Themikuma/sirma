@@ -21,7 +21,7 @@ public class Circle extends Ellipse {
 	 * @param diameter
 	 *            diameter of the circle
 	 */
-	protected Circle(Point center, int radius, int diameter) {
+	public Circle(Point center, int radius, int diameter) {
 		super(center);
 		this.setRadius(radius);
 		this.setDiameter(diameter);

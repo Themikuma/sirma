@@ -32,7 +32,7 @@ public class HeterogeneousNode {
 	 * @param child
 	 *            the object to be added to the list;
 	 */
-	void add(Object child) {
+	public void add(Object child) {
 		children.add(new HeterogeneousNode(child));
 
 	}
@@ -44,7 +44,7 @@ public class HeterogeneousNode {
 	 *            the index at which the object is
 	 * @return the object at position index
 	 */
-	HeterogeneousNode getChildAt(int index) {
+	public HeterogeneousNode getChildAt(int index) {
 		return children.get(index);
 	}
 

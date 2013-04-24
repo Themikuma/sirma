@@ -21,7 +21,7 @@ public class Node<T> {
 	 * @param info
 	 *            the information that is going to be represented in the node(string, integer etc.)
 	 */
-	Node(T info) {
+	public Node(T info) {
 		if (info == null) {
 			throw new IllegalArgumentException();
 		}
@@ -35,7 +35,7 @@ public class Node<T> {
 	 * @param child
 	 *            the child node to be added
 	 */
-	void add(Node<T> child) {
+	public void add(Node<T> child) {
 		if (child.getParent() != null) {
 			throw new IllegalArgumentException();
 		}

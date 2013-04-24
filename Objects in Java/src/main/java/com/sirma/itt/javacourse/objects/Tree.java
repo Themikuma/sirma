@@ -16,7 +16,7 @@ public class Tree<T> {
 	 * @param info
 	 *            the information that the root will contain
 	 */
-	Tree(T info) {
+	public Tree(T info) {
 		root = new Node<T>(info);
 	}
 

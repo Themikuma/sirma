@@ -15,7 +15,7 @@ public class Line extends Arc {
 	 * @param b
 	 *            the end point of the line
 	 */
-	protected Line(Point a, Point b) {
+	public Line(Point a, Point b) {
 		super(a, b, 0);
 		// TODO Auto-generated constructor stub
 	}

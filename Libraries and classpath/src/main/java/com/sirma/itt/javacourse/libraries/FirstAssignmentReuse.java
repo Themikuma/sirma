@@ -16,13 +16,12 @@ public final class FirstAssignmentReuse {
 	 * Private constructor, throwing an error, preventing anyone from instantiating this class.
 	 */
 	private FirstAssignmentReuse() {
-		throw new AssertionError("Can't instantiate utility class");
 	}
 
 	/**
 	 * Reusing the ArrayProcessing class.
 	 */
-	static void startArrayProcessing() {
+	public static void startArrayProcessing() {
 		ArrayProcessing processor = new ArrayProcessing();
 		System.out.println(processor.getMinElement(new int[] { 1, 2, -5, 4, 5 }));
 
@@ -31,7 +30,7 @@ public final class FirstAssignmentReuse {
 	/**
 	 * Reusing the HangManGame class.
 	 */
-	static void startHangMan() {
+	public static void startHangMan() {
 		HangManGame game = new HangManGame();
 		game.play(new HangManManualReader());
 	}
@@ -39,7 +38,7 @@ public final class FirstAssignmentReuse {
 	/**
 	 * Reusing the RandomString class.
 	 */
-	static void startRandomString() {
+	public static void startRandomString() {
 		RandomString random = new RandomString();
 		System.out.println(random.generateString(10));
 	}

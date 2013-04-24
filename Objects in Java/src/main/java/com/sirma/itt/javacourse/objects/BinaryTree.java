@@ -26,7 +26,7 @@ public class BinaryTree {
 	 * @param info
 	 *            the value of the node we want to add
 	 */
-	void add(int info) {
+	public void add(int info) {
 		if (info > root.getInfo()) {
 			if (root.getRight() != null) {
 				add(info, root.getRight());
@@ -70,7 +70,7 @@ public class BinaryTree {
 	/**
 	 * Printing out the tree using the In-order depth-first itteration thus printing it out sorted.
 	 */
-	void printSorted() {
+	public void printSorted() {
 		if (root.getLeft() != null) {
 			printSorted(root.getLeft());
 		}
@@ -105,7 +105,7 @@ public class BinaryTree {
 	 *            the value we are looking for
 	 * @return true if it finds the value, false if it does not
 	 */
-	boolean searchTree(int info) {
+	public boolean searchTree(int info) {
 		if (info > root.getInfo() && root.getRight() != null) {
 			return searchTree(info, root.getRight());
 		} else if (info < root.getInfo() && root.getRight() != null) {

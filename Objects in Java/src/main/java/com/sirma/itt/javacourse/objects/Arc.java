@@ -20,7 +20,7 @@ public class Arc extends Figure {
 	 * @param angle
 	 *            the angle of the arc
 	 */
-	protected Arc(Point a, Point b, int angle) {
+	public Arc(Point a, Point b, int angle) {
 		this.setA(a);
 		this.setB(b);
 		this.setAngle(angle);

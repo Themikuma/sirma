@@ -6,10 +6,31 @@ package com.sirma.itt.javacourse.objects;
  * @author user
  */
 public class Quadraliteral extends Figure {
+
 	private Point pointOne;
 	private Point pointTwo;
 	private Point pointThree;
 	private Point pointFour;
+
+	/**
+	 * Creating a Quadraliteral from 4 specified points.
+	 * 
+	 * @param pointOne
+	 *            the first point
+	 * @param pointTwo
+	 *            the second point
+	 * @param pointThree
+	 *            the third point
+	 * @param pointFour
+	 *            the fourth point
+	 */
+	public Quadraliteral(Point pointOne, Point pointTwo, Point pointThree, Point pointFour) {
+		super();
+		this.pointOne = pointOne;
+		this.pointTwo = pointTwo;
+		this.pointThree = pointThree;
+		this.pointFour = pointFour;
+	}
 
 	/**
 	 * Getter method for pointOne.

@@ -15,7 +15,7 @@ public class Ellipse extends Figure {
 	 * @param center
 	 *            the center of the ellipse
 	 */
-	protected Ellipse(Point center) {
+	public Ellipse(Point center) {
 		this.setCenter(center);
 	}
 

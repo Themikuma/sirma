@@ -23,7 +23,9 @@ public class Parallelogram extends Quadraliteral {
 	 *            the angle of the parallelogram
 	 */
 	public Parallelogram(Point pointOne, int width, int height, int angle) {
-		super();
+		super(pointOne, new Point(pointOne.getX() + width, pointOne.getY() + height), new Point(
+				pointOne.getX() + width, pointOne.getY()), new Point(pointOne.getX(),
+				pointOne.getY() + height));
 		this.height = height;
 		this.width = width;
 		this.angle = angle;

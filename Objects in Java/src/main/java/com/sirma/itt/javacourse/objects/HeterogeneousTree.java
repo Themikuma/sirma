@@ -44,7 +44,7 @@ public class HeterogeneousTree {
 	 * @param info
 	 *            the object we are passing to the new node's value.
 	 */
-	void add(Object info) {
+	public void add(Object info) {
 		boolean foundPlace = false;
 		for (HeterogeneousNode currNode : root.getChildren()) {
 			if (info.getClass() == currNode.getInfo().getClass()) {
