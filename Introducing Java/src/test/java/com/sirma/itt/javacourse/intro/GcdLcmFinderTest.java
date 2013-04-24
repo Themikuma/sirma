@@ -9,17 +9,17 @@ import org.junit.Test;
  * 
  * @author metodskiPC
  */
-public class GcdTest {
+public class GcdLcmFinderTest {
 
 	/**
 	 * Method, testing the functionality of the Gcd class, gcd method.
 	 */
 	@Test
 	public void testGcd() {
-		Gcd greatestDivisor = new Gcd();
-		assertEquals(2, greatestDivisor.gcd(20, 2));
-		assertEquals(4, greatestDivisor.gcd(20, 4));
-		assertEquals(12, greatestDivisor.gcd(1332, 600));
+		GcdLcmFinder greatestDivisor = new GcdLcmFinder();
+		assertEquals(2, greatestDivisor.findGcd(20, 2));
+		assertEquals(4, greatestDivisor.findGcd(20, 4));
+		assertEquals(12, greatestDivisor.findGcd(1332, 600));
 	}
 
 	/**
@@ -27,9 +27,9 @@ public class GcdTest {
 	 */
 	@Test
 	public void testLcm() {
-		Gcd test = new Gcd();
-		assertEquals(315, test.lcm(63, 5));
-		assertEquals(55, test.lcm(11, 5));
+		GcdLcmFinder test = new GcdLcmFinder();
+		assertEquals(315, test.findLcm(63, 5));
+		assertEquals(55, test.findLcm(11, 5));
 	}
 
 }

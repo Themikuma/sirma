@@ -13,9 +13,9 @@ import org.junit.Test;
  * 
  * @author metodskiPC
  */
-public class ArrayProcessingTest {
+public class IntegerArrayProcessorTest {
 
-	private static ArrayProcessing arrayClass;
+	private static IntegerArrayProcessor arrayClass;
 	private static ByteArrayOutputStream outContent;
 
 	/**
@@ -26,7 +26,7 @@ public class ArrayProcessingTest {
 	 */
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		arrayClass = new ArrayProcessing();
+		arrayClass = new IntegerArrayProcessor();
 		outContent = new ByteArrayOutputStream();
 		System.setOut(new PrintStream(outContent));
 
@@ -37,9 +37,9 @@ public class ArrayProcessingTest {
 	 */
 	@Test
 	public void testGetMinElement() {
-		assertEquals(1, arrayClass.getMinElement(new int[] { 1, 2, 3, 4, 5 }));
-		assertEquals(-5, arrayClass.getMinElement(new int[] { 1, 2, -5, 4, 5 }));
-		assertEquals(-5, arrayClass.getMinElement(new int[] { -5, -3, -2, -1, -5 }));
+		assertEquals(1, arrayClass.findMinElement(new int[] { 1, 2, 3, 4, 5 }));
+		assertEquals(-5, arrayClass.findMinElement(new int[] { 1, 2, -5, 4, 5 }));
+		assertEquals(-5, arrayClass.findMinElement(new int[] { -5, -3, -2, -1, -5 }));
 	}
 
 	/**
@@ -47,8 +47,8 @@ public class ArrayProcessingTest {
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testGetMinElementException() {
-		assertEquals("Can't handle null arrays", arrayClass.getMinElement(new int[] {}));
-		assertEquals("Can't handle null arrays", arrayClass.getMinElement(null));
+		assertEquals("Can't handle null arrays", arrayClass.findMinElement(new int[] {}));
+		assertEquals("Can't handle null arrays", arrayClass.findMinElement(null));
 	}
 
 	/**
@@ -86,6 +86,27 @@ public class ArrayProcessingTest {
 		arrayClass.printElements(new int[] {});
 		arrayClass.printElements(null);
 		assertEquals("12324222", outContent.toString());
+	}
+
+	/**
+	 * Testing the centerOfMass method.
+	 */
+	@Test
+	public void testCenterOfMass() {
+		assertEquals(4, arrayClass.findCenterOfMass(new int[] { 1, 2, 3, 4, 5 }));
+		assertEquals(4, arrayClass.findCenterOfMass(new int[] { 1, 1, 1, 100, 1, 1 }));
+		assertEquals(2, arrayClass.findCenterOfMass(new int[] { 0, 5, 0 }));
+		assertEquals(4, arrayClass.findCenterOfMass(new int[] { 100, 0, 0, 300 }));
+		assertEquals(3, arrayClass.findCenterOfMass(new int[] { 1, 1, 1, 1 }));
+	}
+
+	/**
+	 * Method, testing the method centerOfMass from the MassOfArray class for exceptions.
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public void testCenterOfMassException() {
+		assertEquals("Can't handle null arrays", arrayClass.findCenterOfMass(new int[] {}));
+		assertEquals("Can't handle null arrays", arrayClass.findCenterOfMass(null));
 	}
 
 }

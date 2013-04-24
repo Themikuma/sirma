@@ -9,7 +9,7 @@ import java.io.InputStreamReader;
  * 
  * @author user
  */
-public class HangManManualReader extends HangManReader {
+public class HangManManualReader implements HangManReader {
 	/**
 	 * Reads a line from the Input stream.
 	 * 

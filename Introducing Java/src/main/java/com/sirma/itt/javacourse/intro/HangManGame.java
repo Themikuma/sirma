@@ -8,9 +8,9 @@ package com.sirma.itt.javacourse.intro;
  */
 public class HangManGame {
 	private HangManReader reader;
-	private int leftGuesses = 9;
+	private int leftGuesses;
 	private String word;
-	private StringBuilder wordBuilder = new StringBuilder();
+	private StringBuilder wordBuilder;
 
 	/**
 	 * * The start of the game. The user inputs the initial word and the method creates a new
@@ -20,6 +20,8 @@ public class HangManGame {
 	 *            The reader that is going to be used.
 	 */
 	private void start(HangManReader reader) {
+		leftGuesses = 9;
+		wordBuilder = new StringBuilder();
 		System.out.println("The game is starting, please choose your word: ");
 		word = reader.getWord();
 		if (wordBuilder.length() > 2)
@@ -57,14 +59,10 @@ public class HangManGame {
 		}
 		if (word.equals(wordBuilder.toString())) {
 			System.out.println("Success ! You guessed the word correctly!");
-			leftGuesses = 9;
-			wordBuilder.delete(0, wordBuilder.length());
 			end();
 			return true;
 		} else {
 			System.out.println("Fail ! You did not guess the word !");
-			leftGuesses = 9;
-			wordBuilder.delete(0, wordBuilder.length());
 			end();
 			return false;
 		}
@@ -74,6 +72,8 @@ public class HangManGame {
 	 * The end of the game. Asks the user if he wants to play the game again.
 	 */
 	private void end() {
+		wordBuilder = null;
+		word = null;
 		System.out.println("Do you want to play again? y/n");
 		String answer = reader.getWord();
 		if ("y".equals(answer)) {

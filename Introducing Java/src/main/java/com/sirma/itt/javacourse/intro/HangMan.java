@@ -8,10 +8,9 @@ package com.sirma.itt.javacourse.intro;
 final class HangMan {
 
 	/**
-	 * Private constructor, throwing an error, preventing anyone from instantiating this class.
+	 * Private constructor, preventing the instantiation of this class.
 	 */
 	private HangMan() {
-		throw new AssertionError("Can't instantiate utility class");
 	}
 
 	/**

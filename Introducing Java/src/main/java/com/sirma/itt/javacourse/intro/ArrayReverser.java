@@ -5,7 +5,7 @@ package com.sirma.itt.javacourse.intro;
  * 
  * @author user
  */
-public class ReverseArray {
+public class ArrayReverser {
 	/**
 	 * Method which reverses an array without using a second one.
 	 * 

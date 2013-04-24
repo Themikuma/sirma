@@ -9,7 +9,7 @@ import org.junit.Test;
  * 
  * @author user
  */
-public class RandomStringTest {
+public class RandomStringGeneratorTest {
 
 	/**
 	 * Testing the generateString method. We can't test for returned random values so we are testing
@@ -17,7 +17,7 @@ public class RandomStringTest {
 	 */
 	@Test
 	public void testGenerateString() {
-		RandomString randomClass = new RandomString();
+		RandomStringGenerator randomClass = new RandomStringGenerator();
 		assertEquals(10, randomClass.generateString(10).length());
 	}
 }

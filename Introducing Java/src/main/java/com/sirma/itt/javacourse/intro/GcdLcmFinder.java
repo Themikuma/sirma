@@ -6,7 +6,7 @@ package com.sirma.itt.javacourse.intro;
  * 
  * @author metodskiPC
  */
-public class Gcd {
+public class GcdLcmFinder {
 
 	/**
 	 * Calculates the greatest common divisor of two numbers.
@@ -17,13 +17,13 @@ public class Gcd {
 	 *            the second number
 	 * @return the greatest common divisor of the numbers
 	 */
-	public int gcd(int firstNum, int secondNum) {
+	public int findGcd(int firstNum, int secondNum) {
 		if (firstNum == secondNum)
 			return firstNum;
 		else if (firstNum > secondNum)
-			return gcd(firstNum - secondNum, secondNum);
+			return findGcd(firstNum - secondNum, secondNum);
 		else
-			return gcd(firstNum, secondNum - firstNum);
+			return findGcd(firstNum, secondNum - firstNum);
 	}
 
 	/**
@@ -35,8 +35,8 @@ public class Gcd {
 	 *            the second number
 	 * @return the least common multiple of two numbers
 	 */
-	public int lcm(int firstNum, int secondNum) {
-		return firstNum * secondNum / gcd(firstNum, secondNum);
+	public int findLcm(int firstNum, int secondNum) {
+		return firstNum * secondNum / findGcd(firstNum, secondNum);
 	}
 
 }

@@ -12,14 +12,14 @@ import org.junit.Test;
  * 
  * @author user
  */
-public class ReverseArrayTest {
+public class ArrayReverserTest {
 
 	/**
 	 * Testing the reverseArray method from the ReverseArray class.
 	 */
 	@Test
 	public void testReverseArray() {
-		ReverseArray reverseClass = new ReverseArray();
+		ArrayReverser reverseClass = new ArrayReverser();
 		assertTrue(Arrays.equals(new int[] { 5, 4, 3, 2, 1 },
 				reverseClass.reverseArray(new int[] { 1, 2, 3, 4, 5 })));
 		assertTrue(Arrays.equals(new int[] { 1, 2 }, reverseClass.reverseArray(new int[] { 2, 1 })));
@@ -32,7 +32,7 @@ public class ReverseArrayTest {
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testReverseArrayException() {
-		ReverseArray reverseClass = new ReverseArray();
+		ArrayReverser reverseClass = new ArrayReverser();
 		assertEquals("Can't handle null arrays", reverseClass.reverseArray(new int[] {}));
 		assertEquals("Can't handle null arrays", reverseClass.reverseArray(null));
 	}

@@ -18,7 +18,7 @@ public class QuickSort {
 	 *            the ending index of some part of the array ( the one we are currently sorting )
 	 * @return the sorted array
 	 */
-	int[] quickSort(int[] inputArray, int startIndex, int endIndex) {
+	private int[] quickSort(int[] inputArray, int startIndex, int endIndex) {
 		int i = startIndex;
 		int j = endIndex;
 		int y = inputArray[i + (j - i) / 2];

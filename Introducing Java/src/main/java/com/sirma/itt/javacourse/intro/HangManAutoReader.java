@@ -6,7 +6,7 @@ package com.sirma.itt.javacourse.intro;
  * 
  * @author user
  */
-public class HangManAutoReader extends HangManReader {
+public class HangManAutoReader implements HangManReader {
 	private String word;
 	private char[] guesses;
 	private int guessIndex = 0;

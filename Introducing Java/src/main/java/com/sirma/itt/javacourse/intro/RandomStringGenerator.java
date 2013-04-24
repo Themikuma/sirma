@@ -5,17 +5,13 @@ package com.sirma.itt.javacourse.intro;
  * 
  * @author user
  */
-public class RandomString {
+public class RandomStringGenerator {
+	private static String alphabet;
+
 	/**
-	 * Generating random strings with fixed length containing numbers, capital and small letters.
-	 * 
-	 * @param arrayLength
-	 *            the length of the string to be generated
-	 * @return the generated string
+	 * Constructor setting the initial alphabet.
 	 */
-	public String generateString(int arrayLength) {
-		String alphabet = "";
-		String result = "";
+	protected RandomStringGenerator() {
 		for (int i = 0; i < 9; i++) {
 			alphabet += i;
 		}
@@ -25,6 +21,17 @@ public class RandomString {
 		for (int i = 97; i < 123; i++) {
 			alphabet += (char) i;
 		}
+	}
+
+	/**
+	 * Generating random strings with fixed length containing numbers, capital and small letters.
+	 * 
+	 * @param arrayLength
+	 *            the length of the string to be generated
+	 * @return the generated string
+	 */
+	public String generateString(int arrayLength) {
+		String result = "";
 		int alphabetLength = alphabet.length();
 		for (int i = 0; i < arrayLength; i++) {
 			int randomNumber = (int) (Math.random() * alphabetLength);
