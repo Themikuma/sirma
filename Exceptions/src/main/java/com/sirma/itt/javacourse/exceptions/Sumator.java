@@ -53,9 +53,7 @@ public class Sumator {
 			firstNumber = Integer.parseInt(numOne);
 			secondNumber = Integer.parseInt(numTwo);
 		} catch (NumberFormatException e) {
-			System.out.println("One of the numbers contains invalid characters");
-		} catch (IllegalArgumentException e) {
-			System.out.println("One of the numbers is null or too big/small");
+			System.out.println("One of the numbers contains invalid characters or is null");
 		}
 		return firstNumber + secondNumber;
 	}

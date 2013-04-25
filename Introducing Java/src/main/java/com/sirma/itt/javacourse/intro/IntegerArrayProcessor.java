@@ -9,20 +9,30 @@ package com.sirma.itt.javacourse.intro;
 public class IntegerArrayProcessor {
 
 	/**
+	 * A public method that checks if the given array is empty.
+	 * 
+	 * @param input
+	 *            the input array
+	 * @return true if it's empty, false if it's not
+	 */
+	public boolean isArrayEmpty(int[] input) {
+		if (input == null || input.length == 0) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
 	 * Static method that can be accessed without instantiating the class, checking if the input
 	 * array is empty or null.
 	 * 
 	 * @param input
 	 *            the input array
-	 * @return false if the array is not empty
 	 */
-	public static boolean isArrayEmpty(int[] input) {
-		if (input == null) {
-			throw new IllegalArgumentException("The input array cannot be null");
-		} else if (input.length == 0) {
-			throw new IllegalArgumentException("The input array cannot be empty");
+	private void checkArrayEmpty(int[] input) {
+		if (isArrayEmpty(input)) {
+			throw new IllegalArgumentException("The input array cannot be null or empty");
 		}
-		return false;
 	}
 
 	/**
@@ -33,7 +43,7 @@ public class IntegerArrayProcessor {
 	 * @return the smallest element in the array
 	 */
 	public int findMinElement(int[] inputArray) {
-		isArrayEmpty(inputArray);
+		checkArrayEmpty(inputArray);
 		int minElement = inputArray[0];
 		for (int number : inputArray) {
 			if (number < minElement) {
@@ -53,7 +63,7 @@ public class IntegerArrayProcessor {
 	 */
 	public int getSum(int[] inputArray) {
 		int sum = 0;
-		isArrayEmpty(inputArray);
+		checkArrayEmpty(inputArray);
 		for (int number : inputArray) {
 			sum += number;
 		}
@@ -69,7 +79,7 @@ public class IntegerArrayProcessor {
 	 *            Input array containing integers
 	 */
 	public void printElements(int[] inputArray) {
-		isArrayEmpty(inputArray);
+		checkArrayEmpty(inputArray);
 		for (int number : inputArray) {
 			System.out.print(number);
 		}
@@ -85,7 +95,7 @@ public class IntegerArrayProcessor {
 	 * @return the index of the element which is the center of mass
 	 */
 	public int findCenterOfMass(int[] inputArray) {
-		isArrayEmpty(inputArray);
+		checkArrayEmpty(inputArray);
 		int arraySum = 0;
 		for (int a : inputArray) {
 			arraySum += a;
@@ -101,4 +111,24 @@ public class IntegerArrayProcessor {
 		return 0;
 	}
 
+	/**
+	 * Method which reverses an array without using a second one.
+	 * 
+	 * @param inputArray
+	 *            an input array yet to be reversed
+	 * @return the reversed array
+	 */
+	public int[] reverseArray(int[] inputArray) {
+		if (inputArray.length == 0 || inputArray == null) {
+			throw new IllegalArgumentException();
+		}
+		int inputLength = inputArray.length;
+		int end = inputLength - 1;
+		for (int i = 0; i < inputLength / 2; i++) {
+			int z = inputArray[i];
+			inputArray[i] = inputArray[end - i];
+			inputArray[end - i] = z;
+		}
+		return inputArray;
+	}
 }

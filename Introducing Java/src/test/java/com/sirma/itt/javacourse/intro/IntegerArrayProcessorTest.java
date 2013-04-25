@@ -1,9 +1,11 @@
 package com.sirma.itt.javacourse.intro;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.Arrays;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -107,6 +109,27 @@ public class IntegerArrayProcessorTest {
 	public void testCenterOfMassException() {
 		assertEquals("Can't handle null arrays", arrayClass.findCenterOfMass(new int[] {}));
 		assertEquals("Can't handle null arrays", arrayClass.findCenterOfMass(null));
+	}
+
+	/**
+	 * Testing the reverseArray method from the ReverseArray class.
+	 */
+	@Test
+	public void testReverseArray() {
+		assertTrue(Arrays.equals(new int[] { 5, 4, 3, 2, 1 },
+				arrayClass.reverseArray(new int[] { 1, 2, 3, 4, 5 })));
+		assertTrue(Arrays.equals(new int[] { 1, 2 }, arrayClass.reverseArray(new int[] { 2, 1 })));
+		assertTrue(Arrays.equals(new int[] { 20, 30, 1, 0, 5 },
+				arrayClass.reverseArray(new int[] { 5, 0, 1, 30, 20 })));
+	}
+
+	/**
+	 * Testing the reverseArray method from the ReverseArray class for exceptions.
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public void testReverseArrayException() {
+		assertEquals("Can't handle null arrays", arrayClass.reverseArray(new int[] {}));
+		assertEquals("Can't handle null arrays", arrayClass.reverseArray(null));
 	}
 
 }

@@ -4,8 +4,20 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+/**
+ * Class with a method that will read one number from the console.
+ * 
+ * @author user
+ */
 public class NumberReader {
 
+	/**
+	 * Method that reads a number from the console and checks if its a valid number and if it's in
+	 * the correct range.
+	 * 
+	 * @throws OutOfBoundsException
+	 *             Exception for when the number is smaller than 0 or higher than 100
+	 */
 	public void readNumber() throws OutOfBoundsException {
 		java.io.InputStream in = System.in;
 		BufferedReader br = new BufferedReader(new InputStreamReader(in));
@@ -14,7 +26,6 @@ public class NumberReader {
 		try {
 			line = br.readLine();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {

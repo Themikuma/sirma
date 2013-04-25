@@ -6,21 +6,20 @@ package com.sirma.itt.javacourse.intro;
  * @author user
  */
 public class RandomStringGenerator {
-	private static String alphabet;
+	private static final String ALPHABET;
 
-	/**
-	 * Constructor setting the initial alphabet.
-	 */
-	protected RandomStringGenerator() {
+	static {
+		String localAlphabet = "";
 		for (int i = 0; i < 9; i++) {
-			alphabet += i;
+			localAlphabet += i;
 		}
 		for (int i = 65; i < 91; i++) {
-			alphabet += (char) i;
+			localAlphabet += (char) i;
 		}
 		for (int i = 97; i < 123; i++) {
-			alphabet += (char) i;
+			localAlphabet += (char) i;
 		}
+		ALPHABET = localAlphabet;
 	}
 
 	/**
@@ -32,10 +31,10 @@ public class RandomStringGenerator {
 	 */
 	public String generateString(int arrayLength) {
 		String result = "";
-		int alphabetLength = alphabet.length();
+		int alphabetLength = ALPHABET.length();
 		for (int i = 0; i < arrayLength; i++) {
 			int randomNumber = (int) (Math.random() * alphabetLength);
-			result += alphabet.charAt(randomNumber);
+			result += ALPHABET.charAt(randomNumber);
 		}
 		return result;
 	}

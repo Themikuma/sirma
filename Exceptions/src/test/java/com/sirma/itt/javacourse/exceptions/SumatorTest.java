@@ -27,6 +27,10 @@ public class SumatorTest {
 				sumClass.calculateSum(new BigDecimal(10.0), new BigDecimal(10.0)));
 	}
 
+	/**
+	 * Tests the method sum of the class Sumator with incorrect input.
+	 */
+	@Test
 	public void testSumatorException() {
 		Sumator sumClass = new Sumator();
 		assertEquals(0, sumClass.calculateSum(null, "10"));
