@@ -28,7 +28,7 @@ public final class DirectoryBrowser {
 	 * 
 	 * @param path
 	 *            the path of the directory/file
-	 * @return directory, if the path is a folder/ file, if the path is a file/ file not found if
+	 * @return directory, if the path is a folder, file, if the path is a file, file not found if
 	 *         the path directory doesnt exist
 	 * @throws NoSuchFileException
 	 *             throws an exception if the file doesnt exist.

@@ -23,8 +23,8 @@ public class ConsoleToFileWriterTest {
 	 */
 	@Test
 	public void testWriteToFile() {
-		String inputString = "hello.txt\nasd\nqweqwe\n.\n";
-		String expectedResult = "asd\nqweqwe\n";
+		String inputString = "hello.txt\nline1\nline2\nline3\n.\n";
+		String expectedResult = "line1\nline2\nline3\n";
 		ConsoleToFileWriter writer = new ConsoleToFileWriterAutomatic(inputString);
 		writer.writeToFile();
 

@@ -7,12 +7,21 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+/**
+ * A class with two methods for saving and reading an object.
+ * 
+ * @author user
+ */
 public class DataClass {
 
-	public DataClass() {
-		// TODO Auto-generated constructor stub
-	}
-
+	/**
+	 * Saves a custom object to a file using serialization.
+	 * 
+	 * @param path
+	 *            the path to the file that is going to be saved
+	 * @param o
+	 *            the object that is going to be saved
+	 */
 	public void saveObject(String path, UserDefinedObject o) {
 		FileOutputStream fileOutput = null;
 		try {
@@ -30,6 +39,13 @@ public class DataClass {
 		}
 	}
 
+	/**
+	 * Reads an object from the specified path.
+	 * 
+	 * @param path
+	 *            the path from which the object is going to be read
+	 * @return the read object
+	 */
 	public UserDefinedObject getObject(String path) {
 		FileInputStream fileInput = null;
 		UserDefinedObject read = null;

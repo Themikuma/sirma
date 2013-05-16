@@ -8,8 +8,19 @@ import java.nio.file.Paths;
 
 import org.junit.Test;
 
+/**
+ * Testing the DirectoryBrowser class.
+ * 
+ * @author user
+ */
 public class DirectoryBrowserTest {
 
+	/**
+	 * Testing the ListContent method to see if it will return file if we pass it a file.
+	 * 
+	 * @throws NoSuchFileException
+	 *             if the file is not found
+	 */
 	@Test
 	public void testListContent() throws NoSuchFileException {
 
@@ -20,6 +31,12 @@ public class DirectoryBrowserTest {
 						+ "hello.txt"));
 	}
 
+	/**
+	 * Testing the ListContent method with a non existent file.
+	 * 
+	 * @throws NoSuchFileException
+	 *             if the file is not found
+	 */
 	@Test(expected = NoSuchFileException.class)
 	public void testListContentException() throws NoSuchFileException {
 		Path path = Paths.get(System.getProperty("user.home"), "asd");

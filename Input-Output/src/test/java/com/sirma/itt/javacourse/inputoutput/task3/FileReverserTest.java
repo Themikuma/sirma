@@ -32,6 +32,7 @@ public class FileReverserTest {
 		String expectedData = "3enil\n2enil\n1enil";
 		fileReverser.reverseFile();
 		assertEquals(expectedData, fileReverser.readFile().toString());
+		fileReverser.reverseFile();
 	}
 
 }
