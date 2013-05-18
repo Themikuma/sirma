@@ -2,7 +2,6 @@ package com.sirma.itt.javacourse.refanreg.task4;
 
 import java.util.Arrays;
 
-
 /**
  * A class with an array of Classes to be sorted.
  * 
@@ -23,6 +22,7 @@ public final class SortNumberedClasses {
 	 *            the input array to be sorted
 	 * @return the sorted array
 	 */
+	// TODO shouldn't print anything
 	public static ParentClass[] sortArray(ParentClass[] classArray) {
 		Arrays.sort(classArray);
 		for (ParentClass parent : classArray) {

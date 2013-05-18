@@ -9,6 +9,8 @@ import java.util.Scanner;
  * @author user
  */
 public class ConsoleReader {
+	// TODO get rid of this and instantiate a new one every method
+	// TODO get rid of duplicates
 	private static Scanner reader;
 
 	/**
@@ -29,7 +31,7 @@ public class ConsoleReader {
 	 * from the console.
 	 * 
 	 * @param in
-	 *            the custom inputstream
+	 *            the custom {@link InputStream}
 	 * @return the red string
 	 */
 	public static String readString(InputStream in) {
@@ -41,9 +43,9 @@ public class ConsoleReader {
 	}
 
 	/**
-	 * Reads an int from the console.
+	 * Reads an integer from the console.
 	 * 
-	 * @return the red int
+	 * @return the red integer
 	 */
 	public static int readInt() {
 		reader = new Scanner(System.in);
@@ -57,11 +59,11 @@ public class ConsoleReader {
 	}
 
 	/**
-	 * Overload method reading an int from a custom InputStream instead of from the console.
+	 * Overload method reading an integer from a custom InputStream instead of from the console.
 	 * 
 	 * @param in
-	 *            the custom inputstream
-	 * @return the red int
+	 *            the custom {@link InputStream}
+	 * @return the red integer
 	 */
 	public static int readInt(InputStream in) {
 		reader = new Scanner(in);
@@ -88,10 +90,11 @@ public class ConsoleReader {
 	}
 
 	/**
-	 * Ovearload method reading a float from a custom inputstream instead of from the console.
+	 * Overload method reading a float from a custom {@link InputStream} instead of from the
+	 * console.
 	 * 
 	 * @param in
-	 *            the custom inputstream
+	 *            the custom {@link InputStream}
 	 * @return the red float
 	 */
 	public static char readChar(InputStream in) {
@@ -108,21 +111,14 @@ public class ConsoleReader {
 	 * @return the red float
 	 */
 	public static float readFloat() {
-		reader = new Scanner(System.in);
-		if (!reader.hasNextFloat()) {
-			throw new IllegalArgumentException("That is not a float");
-		}
-		float floatInput = reader.nextFloat();
-		reader.close();
-		reader = null;
-		return floatInput;
+		return readFloat(System.in);
 	}
 
 	/**
 	 * Overload method reading a float from a custom InputStream instead of from the console.
 	 * 
 	 * @param in
-	 *            the custom inputstream
+	 *            the custom {@link InputStream}ream
 	 * @return the red float
 	 */
 	public static float readFloat(InputStream in) {

@@ -20,6 +20,7 @@ public final class EmailValidator {
 	 *            the email to be checked
 	 * @return true if it is valid, false otherwise
 	 */
+	// TODO make sure that the email ends in .{2-4} characters
 	public static boolean isEmailValid(String email) {
 		if (email.matches("[a-zA-Z][a-zA-Z0-9.-]*[@][a-zA-Z0-9.-]*")) {
 			return true;

@@ -18,10 +18,12 @@ public class PrivateClass {
 
 	/**
 	 * A private method, that must be called outside of this class using reflections.
+	 * 
+	 * @return some string
 	 */
 	@SuppressWarnings("unused")
-	private void callMe() {
-		System.out.println("I have been summoned!");
+	private String callMe() {
+		return "I have been summoned!";
 	}
 
 	/**

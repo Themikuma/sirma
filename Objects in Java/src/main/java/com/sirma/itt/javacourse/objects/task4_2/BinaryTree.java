@@ -1,5 +1,8 @@
 package com.sirma.itt.javacourse.objects.task4_2;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * A binary tree class - Each node is a number and can have 2 child nodes. The left one is with a
  * value smaller than the parent node, the right one is with a value bigger than the parent node.
@@ -27,19 +30,7 @@ public class BinaryTree {
 	 *            the value of the node we want to add
 	 */
 	public void add(int info) {
-		if (info > root.getInfo()) {
-			if (root.getRight() != null) {
-				add(info, root.getRight());
-			} else {
-				root.setRight(new BinaryNode(info));
-			}
-		} else if (info < root.getInfo()) {
-			if (root.getLeft() != null) {
-				add(info, root.getLeft());
-			} else {
-				root.setLeft(new BinaryNode(info));
-			}
-		}
+		add(info, root);
 	}
 
 	/**
@@ -68,32 +59,33 @@ public class BinaryTree {
 	}
 
 	/**
-	 * Printing out the tree using the In-order depth-first itteration thus printing it out sorted.
+	 * * Printing out the tree using the In-order depth-first itteration thus printing it out
+	 * sorted.
+	 * 
+	 * @return an arraylist with the sorted elements
 	 */
-	public void printSorted() {
-		if (root.getLeft() != null) {
-			printSorted(root.getLeft());
-		}
-		System.out.print(root.getInfo() + " ");
-		if (root.getRight() != null) {
-			printSorted(root.getRight());
-		}
+	public List<Integer> printSorted() {
+		return printSorted(root, new ArrayList<Integer>());
 	}
 
 	/**
-	 * Overriding the printSorted method continuing from the root node.
+	 * * Overriding the printSorted method continuing from the root node.
 	 * 
 	 * @param currNode
 	 *            the node that we have currently reached
+	 * @param path
+	 *            a list with the elements we traversed so far
+	 * @return the list with the sorted elements
 	 */
-	private void printSorted(BinaryNode currNode) {
+	private List<Integer> printSorted(BinaryNode currNode, List<Integer> path) {
 		if (currNode.getLeft() != null) {
-			printSorted(currNode.getLeft());
+			printSorted(currNode.getLeft(), path);
 		}
-		System.out.print(currNode.getInfo() + " ");
+		path.add(currNode.getInfo());
 		if (currNode.getRight() != null) {
-			printSorted(currNode.getRight());
+			printSorted(currNode.getRight(), path);
 		}
+		return path;
 
 	}
 
@@ -106,12 +98,7 @@ public class BinaryTree {
 	 * @return true if it finds the value, false if it does not
 	 */
 	public boolean searchTree(int info) {
-		if (info > root.getInfo() && root.getRight() != null) {
-			return searchTree(info, root.getRight());
-		} else if (info < root.getInfo() && root.getRight() != null) {
-			return searchTree(info, root.getLeft());
-		} else
-			return info == root.getInfo();
+		return searchTree(info, root);
 
 	}
 

@@ -1,11 +1,15 @@
 package com.sirma.itt.javacourse.intro;
 
+import java.util.regex.Pattern;
+
 /**
  * A final class that cannot be inherited or instantiated.
  * 
  * @author user
  */
 public final class StringNumberChecker {
+	private static final Pattern REGEX = Pattern.compile("[0-9]+");
+
 	/**
 	 * Private constructor, overriding the default one, disallowing the instantiation of the class.
 	 */
@@ -21,13 +25,13 @@ public final class StringNumberChecker {
 	 */
 	public static boolean isStringNumber(String input) {
 		if (input == null) {
-			throw new IllegalArgumentException("The input string cannot be null");
+			throw new NullPointerException("The input string cannot be null");
 		}
 		if (input.length() == 0) {
-			throw new IllegalArgumentException("The input string cannot be empty");
+			throw new NumberFormatException("The input string cannot be empty");
 		}
-		if (!input.matches("[0-9]+")) {
-			throw new IllegalArgumentException("The input string must consist of numbers only");
+		if (!REGEX.matcher(input).matches()) {
+			throw new NumberFormatException("The input string must consist of numbers only");
 		}
 		return true;
 

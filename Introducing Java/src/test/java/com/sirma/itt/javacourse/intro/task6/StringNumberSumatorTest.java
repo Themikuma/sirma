@@ -24,14 +24,22 @@ public class StringNumberSumatorTest {
 	}
 
 	/**
-	 * Testing the addClass method from the NumberAddition class for exceptions.
+	 * Testing the addClass method from the NumberAddition class for NumberFormatException.
 	 */
-	@Test(expected = IllegalArgumentException.class)
+	@Test(expected = NumberFormatException.class)
 	public void testSumException() {
 		StringNumberSumator addClass = new StringNumberSumator();
 		addClass.sum("a21", "211");
-		addClass.sum(null, "211");
 		addClass.sum("", "211");
+	}
+
+	/**
+	 * Testing the addClass method from the NumberAddition class for NullPointerException.
+	 */
+	@Test(expected = NullPointerException.class)
+	public void testSumNullPointerException() {
+		StringNumberSumator addClass = new StringNumberSumator();
+		addClass.sum(null, "2");
 	}
 
 }

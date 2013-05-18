@@ -3,8 +3,6 @@ package com.sirma.itt.javacourse.intro.task235;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 import java.util.Arrays;
 
 import org.junit.BeforeClass;
@@ -18,19 +16,13 @@ import org.junit.Test;
 public class IntegerArrayProcessorTest {
 
 	private static IntegerArrayProcessor arrayClass;
-	private static ByteArrayOutputStream outContent;
 
 	/**
-	 * Initializes the class and sets a new output stream.
-	 * 
-	 * @throws Exception
-	 *             exception if anything goes wrong
+	 * Initializes the class.
 	 */
 	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
+	public static void setUpBeforeClass() {
 		arrayClass = new IntegerArrayProcessor();
-		outContent = new ByteArrayOutputStream();
-		System.setOut(new PrintStream(outContent));
 
 	}
 
@@ -45,12 +37,21 @@ public class IntegerArrayProcessorTest {
 	}
 
 	/**
-	 * Method, testing the method getMinElement from the ArrayProcessing class for exceptions.
+	 * Method, testing the method getMinElement from the ArrayProcessing class for
+	 * IllegalArgumentException.
 	 */
 	@Test(expected = IllegalArgumentException.class)
-	public void testGetMinElementException() {
-		assertEquals("Can't handle null arrays", arrayClass.findMinElement(new int[] {}));
-		assertEquals("Can't handle null arrays", arrayClass.findMinElement(null));
+	public void testGetMinElementIllegalArgumentException() {
+		arrayClass.findMinElement(new int[] {});
+	}
+
+	/**
+	 * Method, testing the method getMinElement from the ArrayProcessing class for
+	 * NullPointerException.
+	 */
+	@Test(expected = NullPointerException.class)
+	public void testGetMinElementNullPointerException() {
+		arrayClass.findMinElement(null);
 	}
 
 	/**
@@ -63,31 +64,20 @@ public class IntegerArrayProcessorTest {
 	}
 
 	/**
-	 * Method, testing the method getSum from the ArrayProcessing class for exceptions.
+	 * Method, testing the method getSum from the ArrayProcessing class for
+	 * IllegalArgumentException.
 	 */
 	@Test(expected = IllegalArgumentException.class)
-	public void testgetSumtException() {
-		assertEquals("Can't handle null arrays", arrayClass.getSum(new int[] {}));
-		assertEquals("Can't handle null arrays", arrayClass.getSum(null));
+	public void testgetSumIllegalArgumentException() {
+		arrayClass.getSum(new int[] {});
 	}
 
 	/**
-	 * Method, testing the method printElements from the ArrayProcessing class.
+	 * Method, testing the method getSum from the ArrayProcessing class for NullPointerException.
 	 */
-	@Test
-	public void testPrintElements() {
-		arrayClass.printElements(new int[] { 1, 2, 3, 2, 4, 2, 2, 2 });
-		assertEquals("12324222", outContent.toString());
-	}
-
-	/**
-	 * Method, testing the method printElements from the ArrayProcessing class for exceptions.
-	 */
-	@Test(expected = IllegalArgumentException.class)
-	public void testPrintElementsException() {
-		arrayClass.printElements(new int[] {});
-		arrayClass.printElements(null);
-		assertEquals("12324222", outContent.toString());
+	@Test(expected = NullPointerException.class)
+	public void testgetSumNullPointerException() {
+		arrayClass.getSum(null);
 	}
 
 	/**
@@ -103,12 +93,20 @@ public class IntegerArrayProcessorTest {
 	}
 
 	/**
-	 * Method, testing the method centerOfMass from the MassOfArray class for exceptions.
+	 * Method, testing the method centerOfMass from the MassOfArray class for
+	 * IllegalArgumentException.
 	 */
 	@Test(expected = IllegalArgumentException.class)
-	public void testCenterOfMassException() {
-		assertEquals("Can't handle null arrays", arrayClass.findCenterOfMass(new int[] {}));
-		assertEquals("Can't handle null arrays", arrayClass.findCenterOfMass(null));
+	public void testCenterOfMassIllegalArgumentException() {
+		arrayClass.findCenterOfMass(new int[] {});
+	}
+
+	/**
+	 * Method, testing the method centerOfMass from the MassOfArray class for NullPointerException.
+	 */
+	@Test(expected = NullPointerException.class)
+	public void testCenterOfMassNullPointerException() {
+		arrayClass.findCenterOfMass(null);
 	}
 
 	/**
@@ -124,12 +122,19 @@ public class IntegerArrayProcessorTest {
 	}
 
 	/**
-	 * Testing the reverseArray method from the ReverseArray class for exceptions.
+	 * Testing the reverseArray method from the ReverseArray class for IllegalArgumentException.
 	 */
 	@Test(expected = IllegalArgumentException.class)
+	public void testReverseArrayIllegalArgumentException() {
+		arrayClass.reverseArray(new int[] {});
+	}
+
+	/**
+	 * Testing the reverseArray method from the ReverseArray class for NullPointerException.
+	 */
+	@Test(expected = NullPointerException.class)
 	public void testReverseArrayException() {
-		assertEquals("Can't handle null arrays", arrayClass.reverseArray(new int[] {}));
-		assertEquals("Can't handle null arrays", arrayClass.reverseArray(null));
+		arrayClass.reverseArray(null);
 	}
 
 }

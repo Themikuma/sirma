@@ -4,8 +4,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -18,7 +19,6 @@ import org.junit.Test;
 public class BinaryTreeTest {
 
 	private static BinaryTree tree;
-	private static ByteArrayOutputStream outContent;
 
 	/**
 	 * Initializes the tree and sets out the default output stream so we can test the print method
@@ -30,8 +30,14 @@ public class BinaryTreeTest {
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		tree = new BinaryTree(19);
-		outContent = new ByteArrayOutputStream();
-		System.setOut(new PrintStream(outContent));
+		tree.add(31);
+		tree.add(11);
+		tree.add(6);
+		tree.add(25);
+		tree.add(9);
+		tree.add(5);
+		tree.add(3);
+		tree.add(28);
 	}
 
 	/**
@@ -41,14 +47,6 @@ public class BinaryTreeTest {
 	 */
 	@Test
 	public void testAdd() {
-		tree.add(31);
-		tree.add(11);
-		tree.add(6);
-		tree.add(25);
-		tree.add(9);
-		tree.add(5);
-		tree.add(3);
-		tree.add(28);
 		assertEquals(31, tree.getRoot().getRight().getInfo());
 		assertEquals(11, tree.getRoot().getLeft().getInfo());
 	}
@@ -58,8 +56,9 @@ public class BinaryTreeTest {
 	 */
 	@Test
 	public void testPrintSorted() {
-		tree.printSorted();
-		assertEquals("3 5 6 9 11 19 25 28 31 ", outContent.toString());
+		List<Integer> expected = new ArrayList<Integer>(Arrays.asList(3, 5, 6, 9, 11, 19, 25, 28,
+				31));
+		assertEquals(expected, tree.printSorted());
 	}
 
 	/**

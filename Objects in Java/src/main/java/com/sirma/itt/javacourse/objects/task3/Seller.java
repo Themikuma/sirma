@@ -8,13 +8,13 @@ package com.sirma.itt.javacourse.objects.task3;
 public class Seller extends Person implements Worker {
 
 	@Override
-	public void getPaid() {
+	public void getPaid(int salary) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void doWork() {
+	public void doWork(Object work) {
 		// TODO Auto-generated method stub
 
 	}

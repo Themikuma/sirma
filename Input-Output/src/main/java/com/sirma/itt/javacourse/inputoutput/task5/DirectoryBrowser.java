@@ -33,6 +33,7 @@ public final class DirectoryBrowser {
 	 * @throws NoSuchFileException
 	 *             throws an exception if the file doesnt exist.
 	 */
+	// TODO find something better to return
 	public static String listContent(String path) throws NoSuchFileException {
 		Path actualPath = Paths.get(path);
 		String directories = "";

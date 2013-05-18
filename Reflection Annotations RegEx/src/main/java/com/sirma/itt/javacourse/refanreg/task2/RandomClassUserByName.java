@@ -1,20 +1,56 @@
 package com.sirma.itt.javacourse.refanreg.task2;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * A class, instantiating the Random class by its name.
  * 
  * @author user
  */
 public class RandomClassUserByName {
+	private Class<?> randomClass;
 
 	/**
-	 * Trying to instantiate a class by its name and print the interfaces it implements and its
-	 * parent.
+	 * Setting up the randomClass.
+	 * 
+	 * @param className
+	 *            the name of the class to be instantiated
+	 */
+	public RandomClassUserByName(String className) {
+		this.randomClass = initClass(className);
+	}
+
+	/**
+	 * Printing out all the interfaces of a given class.
+	 * 
+	 * @return a list with the class's interfaces
+	 */
+	public List<String> printClassInterfaces() {
+		List<String> interfaces = new ArrayList<String>();
+		for (Class<?> randomObjectInterface : randomClass.getInterfaces()) {
+			interfaces.add(randomObjectInterface.toString());
+		}
+		return interfaces;
+	}
+
+	/**
+	 * Printing out the superclass of a given class.
+	 * 
+	 * @return the superclass converted to string
+	 */
+	public String printClassParrent() {
+		return randomClass.getSuperclass().toString();
+	}
+
+	/**
+	 * Instantiating a class by its name.
 	 * 
 	 * @param name
-	 *            The name of the class we are trying to instantiate
+	 *            the name of the class
+	 * @return the instantiated class itself
 	 */
-	public void printClassInfo(String name) {
+	private Class<?> initClass(String name) {
 		Class<?> randomClass = null;
 		try {
 			randomClass = Class.forName(name);
@@ -29,11 +65,25 @@ public class RandomClassUserByName {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("Printing implemented interfaces");
-		for (Class<?> randomObjectInterface : randomClass.getInterfaces()) {
-			System.out.println(randomObjectInterface);
-		}
-		System.out.println("Printing parent");
-		System.out.println(randomClass.getSuperclass());
+		return randomClass;
+	}
+
+	/**
+	 * Getter method for randomClass.
+	 * 
+	 * @return the randomClass
+	 */
+	public Class<?> getRandomClass() {
+		return randomClass;
+	}
+
+	/**
+	 * Setter method for randomClass.
+	 * 
+	 * @param randomClass
+	 *            the randomClass to set
+	 */
+	public void setRandomClass(Class<?> randomClass) {
+		this.randomClass = randomClass;
 	}
 }

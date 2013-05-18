@@ -6,6 +6,7 @@ package com.sirma.itt.javacourse.refanreg.task4;
  * 
  * @author user
  */
+// TODO learn about COMPARATOR
 public class ParentClass implements Comparable<ParentClass> {
 
 	@Override

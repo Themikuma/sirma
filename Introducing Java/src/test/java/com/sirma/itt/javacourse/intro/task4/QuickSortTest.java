@@ -1,6 +1,5 @@
 package com.sirma.itt.javacourse.intro.task4;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
@@ -19,12 +18,9 @@ public class QuickSortTest {
 
 	/**
 	 * Setting up the QuickSort class before the tests.
-	 * 
-	 * @throws Exception
-	 *             exception if something goes wrong
 	 */
 	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
+	public static void setUpBeforeClass() {
 		sortClass = new QuickSort();
 	}
 
@@ -40,11 +36,18 @@ public class QuickSortTest {
 	}
 
 	/**
-	 * Testing the quickSort method for exceptions(empty/null array).
+	 * Testing the quickSort method for IllegalArgumentException.
 	 */
 	@Test(expected = IllegalArgumentException.class)
-	public void testQuickSortException() {
-		assertEquals("Can't handle null arrays", sortClass.quickSort(new int[] {}));
-		assertEquals("Can't handle null arrays", sortClass.quickSort(null));
+	public void testQuickSortIllegalArgumentException() {
+		sortClass.quickSort(new int[] {});
+	}
+
+	/**
+	 * Testing the quickSort method for NullPointerException.
+	 */
+	@Test(expected = NullPointerException.class)
+	public void testQuickSortNullPointerException() {
+		sortClass.quickSort(null);
 	}
 }

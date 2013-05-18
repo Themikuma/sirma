@@ -1,8 +1,9 @@
 package com.sirma.itt.javacourse.intro.task235;
 
 /**
- * A class, containing a method that returns the smallest element of an int array, method returning
- * the sum of the elements of an int array and a method printing out each element of an int array.
+ * A class, containing a method that returns the smallest element of an integer array, method
+ * returning the sum of the elements of an integer array and a method printing out each element of
+ * an integer array.
  * 
  * @author metodskiPC
  */
@@ -15,23 +16,33 @@ public class IntegerArrayProcessor {
 	 *            the input array
 	 * @return true if it's empty, false if it's not
 	 */
-	public boolean isArrayEmpty(int[] input) {
-		if (input == null || input.length == 0) {
-			return true;
-		}
-		return false;
+	public static boolean isArrayEmpty(int[] input) {
+		return (input.length == 0) ? true : false;
 	}
 
 	/**
-	 * Static method that can be accessed without instantiating the class, checking if the input
-	 * array is empty or null.
+	 * A public method that checks if the given array is null.
+	 * 
+	 * @param input
+	 *            the input array
+	 * @return true if it's null, false if it's not
+	 */
+	public static boolean isArrayNull(int[] input) {
+		return (input == null) ? true : false;
+	}
+
+	/**
+	 * A private method used only in this class, throwing appropriate exceptions.
 	 * 
 	 * @param input
 	 *            the input array
 	 */
-	private void checkArrayEmpty(int[] input) {
+	private void checkArrayEmptyOrNull(int[] input) {
 		if (isArrayEmpty(input)) {
-			throw new IllegalArgumentException("The input array cannot be null or empty");
+			throw new IllegalArgumentException("The input array cannot be empty");
+		}
+		if (isArrayNull(input)) {
+			throw new NullPointerException("The input array cannot be null");
 		}
 	}
 
@@ -43,7 +54,7 @@ public class IntegerArrayProcessor {
 	 * @return the smallest element in the array
 	 */
 	public int findMinElement(int[] inputArray) {
-		checkArrayEmpty(inputArray);
+		checkArrayEmptyOrNull(inputArray);
 		int minElement = inputArray[0];
 		for (int number : inputArray) {
 			if (number < minElement) {
@@ -63,7 +74,7 @@ public class IntegerArrayProcessor {
 	 */
 	public int getSum(int[] inputArray) {
 		int sum = 0;
-		checkArrayEmpty(inputArray);
+		checkArrayEmptyOrNull(inputArray);
 		for (int number : inputArray) {
 			sum += number;
 		}
@@ -79,7 +90,7 @@ public class IntegerArrayProcessor {
 	 *            Input array containing integers
 	 */
 	public void printElements(int[] inputArray) {
-		checkArrayEmpty(inputArray);
+		checkArrayEmptyOrNull(inputArray);
 		for (int number : inputArray) {
 			System.out.print(number);
 		}
@@ -95,7 +106,7 @@ public class IntegerArrayProcessor {
 	 * @return the index of the element which is the center of mass
 	 */
 	public int findCenterOfMass(int[] inputArray) {
-		checkArrayEmpty(inputArray);
+		checkArrayEmptyOrNull(inputArray);
 		int arraySum = 0;
 		for (int a : inputArray) {
 			arraySum += a;
@@ -119,9 +130,7 @@ public class IntegerArrayProcessor {
 	 * @return the reversed array
 	 */
 	public int[] reverseArray(int[] inputArray) {
-		if (inputArray.length == 0 || inputArray == null) {
-			throw new IllegalArgumentException();
-		}
+		checkArrayEmptyOrNull(inputArray);
 		int inputLength = inputArray.length;
 		int end = inputLength - 1;
 		for (int i = 0; i < inputLength / 2; i++) {

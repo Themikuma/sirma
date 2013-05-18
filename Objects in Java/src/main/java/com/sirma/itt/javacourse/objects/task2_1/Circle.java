@@ -1,6 +1,5 @@
 package com.sirma.itt.javacourse.objects.task2_1;
 
-
 /**
  * Circle class extending the Ellipse class. Every circle is an ellipse. The circle has radius and
  * diameter and inherits the center Point from the ellipse class.
@@ -9,8 +8,8 @@ package com.sirma.itt.javacourse.objects.task2_1;
  */
 public class Circle extends Ellipse {
 
+	private Point center;
 	private int radius;
-	private int diameter;
 
 	/**
 	 * Class constructor, sets the radius, diameter and the center for the circle.
@@ -18,33 +17,31 @@ public class Circle extends Ellipse {
 	 * @param center
 	 *            center of the circle
 	 * @param radius
-	 *            radius fo the circle
-	 * @param diameter
-	 *            diameter of the circle
+	 *            radius of the circle
 	 */
-	public Circle(Point center, int radius, int diameter) {
-		super(center);
-		this.setRadius(radius);
-		this.setDiameter(diameter);
+	public Circle(Point center, int radius) {
+		super(center, center, radius, radius);
+		this.center = center;
+		this.radius = radius;
 	}
 
 	/**
-	 * Getter method for diameter.
+	 * Getter method for center.
 	 * 
-	 * @return the diameter
+	 * @return the center
 	 */
-	public int getDiameter() {
-		return diameter;
+	public Point getCenter() {
+		return center;
 	}
 
 	/**
-	 * Setter method for diameter.
+	 * Setter method for center.
 	 * 
-	 * @param diameter
-	 *            the diameter to set
+	 * @param center
+	 *            the center to set
 	 */
-	public void setDiameter(int diameter) {
-		this.diameter = diameter;
+	public void setCenter(Point center) {
+		this.center = center;
 	}
 
 	/**
@@ -65,4 +62,5 @@ public class Circle extends Ellipse {
 	public void setRadius(int radius) {
 		this.radius = radius;
 	}
+
 }

@@ -7,14 +7,14 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 
 /**
- * A class containing a hashmap with exceptions and a message string with added exceptions.
+ * A class containing a {@link HashMap} with exceptions and a message string with added exceptions.
  * 
  * @author user
  */
 public class ExceptionMessageManager {
 	private Map<String, String> exceptions = new HashMap<String, String>();
 	private String message = "";
-	private final String SEPARATOR = "@";
+	private final String separator = "@";
 	private boolean first = true;
 
 	/**
@@ -38,7 +38,7 @@ public class ExceptionMessageManager {
 				message += messageCode;
 				first = false;
 			} else
-				message += SEPARATOR + messageCode;
+				message += separator + messageCode;
 		} else
 			throw new NoSuchElementException("The exception doesn't exist");
 	}
@@ -55,7 +55,7 @@ public class ExceptionMessageManager {
 				message += exceptions.get(messageCode);
 				first = false;
 			} else
-				message += SEPARATOR + exceptions.get(messageCode);
+				message += separator + exceptions.get(messageCode);
 		} else
 			throw new NoSuchElementException("The exception doesn't exist");
 	}

@@ -10,51 +10,64 @@ import com.sirma.itt.javacourse.objects.task2_1.Figure;
  */
 public class PolyLine extends Figure {
 
-	private Line oneLine;
-	private Arc oneArc;
+	private Line[] lines;
+	private Arc[] arcs;
 
 	/**
-	 * Getter method for oneLine.
+	 * Setting the lines and the arcs of the polyline.
 	 * 
-	 * @return the oneLine
+	 * @param lines
+	 *            the lines of the polyline
+	 * @param arcs
+	 *            the arcs of the polyline
 	 */
-	public Line getOneLine() {
-		return oneLine;
-	}
-
-	/**
-	 * Setter method for oneLine.
-	 * 
-	 * @param oneLine
-	 *            the oneLine to set
-	 */
-	public void setOneLine(Line oneLine) {
-		this.oneLine = oneLine;
-	}
-
-	/**
-	 * Getter method for oneArc.
-	 * 
-	 * @return the oneArc
-	 */
-	public Arc getOneArc() {
-		return oneArc;
-	}
-
-	/**
-	 * Setter method for oneArc.
-	 * 
-	 * @param oneArc
-	 *            the oneArc to set
-	 */
-	public void setOneArc(Arc oneArc) {
-		this.oneArc = oneArc;
+	public PolyLine(Line[] lines, Arc[] arcs) {
+		this.lines = lines;
+		this.arcs = arcs;
 	}
 
 	@Override
 	public void draw() {
 		// TODO Auto-generated method stub
 
+	}
+
+	/**
+	 * Getter method for lines.
+	 * 
+	 * @return the lines
+	 */
+	public Line[] getLines() {
+		return lines;
+	}
+
+	/**
+	 * Setter method for lines.
+	 * 
+	 * @param lines
+	 *            the lines to set
+	 */
+	public void setLines(Line[] lines) {
+		this.lines = lines;
+	}
+
+	/**
+	 * Getter method for arcs.
+	 * 
+	 * @return the arcs
+	 */
+	public Arc[] getArcs() {
+		return arcs;
+	}
+
+	/**
+	 * Setter method for arcs.
+	 * 
+	 * @param arcs
+	 *            the arcs to set
+	 */
+	public void setArcs(Arc[] arcs) {
+		this.arcs = arcs;
 	}
 
 }

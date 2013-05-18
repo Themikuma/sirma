@@ -36,6 +36,7 @@ public class TransferObject {
 	 *            the offset at which the transfer starts
 	 * @return the number of bytes successfully transferred
 	 */
+	// TODO fix the method for large files with less RAM allocated
 	public int transfer(int numberOfBytes, int offset) {
 
 		byte[] inputBuffer = new byte[numberOfBytes];

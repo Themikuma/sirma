@@ -4,7 +4,7 @@
   <class id="1" language="java" name="com.sirma.itt.javacourse.objects.task2_2.Quadraliteral" project="Objects in Java" 
     file="/Objects in Java/src/main/java/com/sirma/itt/javacourse/objects/task2_2/Quadraliteral.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="315" width="147" x="135" y="176"/>    
+    <position height="315" width="196" x="228" y="266"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
@@ -14,7 +14,7 @@
   <class id="2" language="java" name="com.sirma.itt.javacourse.objects.task2_2.Parallelogram" project="Objects in Java" 
     file="/Objects in Java/src/main/java/com/sirma/itt/javacourse/objects/task2_2/Parallelogram.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="243" width="163" x="135" y="531"/>    
+    <position height="243" width="183" x="228" y="621"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
@@ -24,7 +24,7 @@
   <class id="3" language="java" name="com.sirma.itt.javacourse.objects.task2_2.Rhombus" project="Objects in Java" 
     file="/Objects in Java/src/main/java/com/sirma/itt/javacourse/objects/task2_2/Rhombus.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="135" width="147" x="228" y="814"/>    
+    <position height="243" width="183" x="241" y="904"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
@@ -34,7 +34,7 @@
   <class id="4" language="java" name="com.sirma.itt.javacourse.objects.task2_2.Rectangle" project="Objects in Java" 
     file="/Objects in Java/src/main/java/com/sirma/itt/javacourse/objects/task2_2/Rectangle.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="81" width="147" x="41" y="814"/>    
+    <position height="243" width="183" x="18" y="904"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
@@ -44,7 +44,7 @@
   <class id="5" language="java" name="com.sirma.itt.javacourse.objects.task2_2.Square" project="Objects in Java" 
     file="/Objects in Java/src/main/java/com/sirma/itt/javacourse/objects/task2_2/Square.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="81" width="147" x="228" y="989"/>    
+    <position height="189" width="183" x="241" y="1187"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
@@ -54,31 +54,41 @@
   <class id="6" language="java" name="com.sirma.itt.javacourse.objects.task2_1.Figure" project="Objects in Java" 
     file="/Objects in Java/src/main/java/com/sirma/itt/javacourse/objects/task2_1/Figure.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="99" width="147" x="135" y="37"/>    
+    <position height="99" width="183" x="241" y="37"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </class>  
-  <generalization id="7">    
-    <end type="SOURCE" refId="2"/>    
-    <end type="TARGET" refId="1"/>  
-  </generalization>  
+  <class id="7" language="java" name="com.sirma.itt.javacourse.objects.task2_1.Point" project="Objects in Java" 
+    file="/Objects in Java/src/main/java/com/sirma/itt/javacourse/objects/task2_1/Point.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="189" width="183" x="18" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
   <generalization id="8">    
     <end type="SOURCE" refId="1"/>    
     <end type="TARGET" refId="6"/>  
   </generalization>  
   <generalization id="9">    
-    <end type="SOURCE" refId="5"/>    
-    <end type="TARGET" refId="3"/>  
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="1"/>  
   </generalization>  
   <generalization id="10">    
-    <end type="SOURCE" refId="4"/>    
+    <end type="SOURCE" refId="3"/>    
     <end type="TARGET" refId="2"/>  
   </generalization>  
   <generalization id="11">    
-    <end type="SOURCE" refId="3"/>    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="3"/>  
+  </generalization>  
+  <generalization id="12">    
+    <end type="SOURCE" refId="4"/>    
     <end type="TARGET" refId="2"/>  
   </generalization>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 

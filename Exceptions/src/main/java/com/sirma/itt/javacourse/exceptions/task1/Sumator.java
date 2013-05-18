@@ -45,6 +45,7 @@ public class Sumator {
 	 *            the second number
 	 * @return the sum
 	 */
+	// TODO fix this method.
 	public int calculateSum(String numOne, String numTwo) {
 		int firstNumber = 0;
 		int secondNumber = 0;

@@ -1,30 +1,29 @@
 package com.sirma.itt.javacourse.objects.task2_1;
 
-
 /**
- * Arc class inheriting the figure class. Contains 2 points and an angle.
+ * Arc class inheriting the figure class. Contains a point and an angle.
  * 
  * @author user
  */
 public class Arc extends Figure {
 	private Point a;
-	private Point b;
 	private int angle;
+	private int length;
 
 	/**
-	 * Class constructor setting the points and the angle of the arc.
+	 * Class constructor setting the point and the angle of the arc.
 	 * 
 	 * @param a
-	 *            the first point of the arc
-	 * @param b
-	 *            the second point of the arc
+	 *            the point of the arc
 	 * @param angle
 	 *            the angle of the arc
+	 * @param length
+	 *            the length of the arc
 	 */
-	public Arc(Point a, Point b, int angle) {
+	public Arc(Point a, int angle, int length) {
 		this.setA(a);
-		this.setB(b);
 		this.setAngle(angle);
+		this.setLength(length);
 	}
 
 	/**
@@ -44,25 +43,6 @@ public class Arc extends Figure {
 	 */
 	public void setA(Point a) {
 		this.a = a;
-	}
-
-	/**
-	 * Getter method for b.
-	 * 
-	 * @return the b
-	 */
-	public Point getB() {
-		return b;
-	}
-
-	/**
-	 * Setter method for b.
-	 * 
-	 * @param b
-	 *            the b to set
-	 */
-	public void setB(Point b) {
-		this.b = b;
 	}
 
 	/**
@@ -88,5 +68,24 @@ public class Arc extends Figure {
 	public void draw() {
 		// TODO Auto-generated method stub
 
+	}
+
+	/**
+	 * Getter method for length.
+	 * 
+	 * @return the length
+	 */
+	public int getLength() {
+		return length;
+	}
+
+	/**
+	 * Setter method for length.
+	 * 
+	 * @param length
+	 *            the length to set
+	 */
+	public void setLength(int length) {
+		this.length = length;
 	}
 }

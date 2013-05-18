@@ -2,6 +2,8 @@ package com.sirma.itt.javacourse.refanreg.task1;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A class that uses the RandomClass class.
@@ -13,24 +15,40 @@ public class RandomClassUser {
 
 	/**
 	 * A class constructor, initializing the RandomClass class.
+	 * 
+	 * @param randomObject
+	 *            the class that is going to be manipulated by this class
 	 */
-	public RandomClassUser() {
-		setRandomObject(new RandomClass());
+	public RandomClassUser(RandomClass randomObject) {
+		this.randomObject = randomObject;
 	}
 
 	/**
-	 * Using reflection to print out the methods and variables of the RandomClass class.
+	 * Using reflection to print out the methods of the RandomClass class.
+	 * 
+	 * @return List of methods from the class
 	 */
-	public void printInfo() {
+	public List<String> printClassMethods() {
 		Class<? extends RandomClass> randomObjectClass = getRandomObject().getClass();
-		System.out.println("Printing class methods");
-		for (Method randomObjectMethod : randomObjectClass.getDeclaredMethods()) {
-			System.out.println(randomObjectMethod);
+		List<String> methods = new ArrayList<String>();
+		for (Method method : randomObjectClass.getDeclaredMethods()) {
+			methods.add(method.toString());
 		}
-		System.out.println("Printing class fields");
-		for (Field randomObjectField : randomObjectClass.getDeclaredFields()) {
-			System.out.println(randomObjectField);
+		return methods;
+	}
+
+	/**
+	 * Using reflection to print out the fields of the RandomClass class.
+	 * 
+	 * @return array of fields from the class
+	 */
+	public List<String> printClassFields() {
+		Class<? extends RandomClass> randomObjectClass = getRandomObject().getClass();
+		List<String> fields = new ArrayList<String>();
+		for (Field field : randomObjectClass.getDeclaredFields()) {
+			fields.add(field.toString());
 		}
+		return fields;
 	}
 
 	/**

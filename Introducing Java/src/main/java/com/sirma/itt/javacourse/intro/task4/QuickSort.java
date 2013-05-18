@@ -1,5 +1,7 @@
 package com.sirma.itt.javacourse.intro.task4;
 
+import com.sirma.itt.javacourse.intro.task235.IntegerArrayProcessor;
+
 /**
  * Class containing a method implementing the quicksort.
  * 
@@ -52,8 +54,11 @@ public class QuickSort {
 	 * @return the sorted array
 	 */
 	public int[] quickSort(int[] inputArray) {
-		if (inputArray.length == 0 || inputArray == null) {
-			throw new IllegalArgumentException();
+		if (IntegerArrayProcessor.isArrayEmpty(inputArray)) {
+			throw new IllegalArgumentException("input array is empty");
+		}
+		if (IntegerArrayProcessor.isArrayNull(inputArray)) {
+			throw new NullPointerException("input array is null");
 		}
 		return quickSort(inputArray, 0, inputArray.length - 1);
 	}

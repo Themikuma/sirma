@@ -8,11 +8,17 @@ package com.sirma.itt.javacourse.objects.task3;
 public interface Worker {
 	/**
 	 * The worker gets paid.
+	 * 
+	 * @param salary
+	 *            the salary he gets paid
 	 */
-	void getPaid();
+	void getPaid(int salary);
 
 	/**
 	 * The worker does his work.
+	 * 
+	 * @param work
+	 *            the work he has to do
 	 */
-	void doWork();
+	void doWork(Object work);
 }

@@ -32,10 +32,11 @@ public class ConsoleToFileWriterManual implements ConsoleToFileWriter {
 				writer.append(line);
 				writer.newLine();
 			}
+			return;
 		} catch (IOException e) {
 			e.printStackTrace();
+		} finally {
+			in.close();
 		}
-		in.close();
 	}
-
 }

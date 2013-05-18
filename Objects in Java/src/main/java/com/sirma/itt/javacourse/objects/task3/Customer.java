@@ -9,12 +9,18 @@ public interface Customer {
 
 	/**
 	 * The client can buy items.
+	 * 
+	 * @param products
+	 *            the list of products, the customer is buying
 	 */
-	void buyItem();
+	void buyItem(Product[] products);
 
 	/**
 	 * The client can pay for an item.
+	 * 
+	 * @param cost
+	 *            the total cost of all the products, the customer is buying
 	 */
-	void payItem();
+	void payItem(int cost);
 
 }

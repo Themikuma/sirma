@@ -1,12 +1,14 @@
 package com.sirma.itt.javacourse.refanreg.task1;
 
+import java.io.Serializable;
+
 /**
  * A random class containing public, private, protected and default methods and variables for the
  * reflection assignments.
  * 
  * @author user
  */
-public class RandomClass {
+public class RandomClass implements Serializable {
 	public String publicString;
 	private int privateInt;
 	protected boolean protectedBool;
