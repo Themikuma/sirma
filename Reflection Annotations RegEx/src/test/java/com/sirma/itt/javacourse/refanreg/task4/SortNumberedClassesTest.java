@@ -23,7 +23,7 @@ public class SortNumberedClassesTest {
 		ChildClassOne firstChild = new ChildClassOne();
 		ChildClassTwo secondChild = new ChildClassTwo();
 		ChildClassThree thirdChild = new ChildClassThree();
-		ParentClass[] inputArray = SortNumberedClasses.sortArray(new ParentClass[] { thirdChild,
+		ParentClass[] inputArray = NumberedSorter.sortArray(new ParentClass[] { thirdChild,
 				firstChild, secondChild });
 		ParentClass[] resultArray = { firstChild, secondChild, thirdChild };
 		assertTrue(Arrays.equals(inputArray, resultArray));

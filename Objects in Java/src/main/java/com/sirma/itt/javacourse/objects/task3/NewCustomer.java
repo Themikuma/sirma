@@ -9,13 +9,11 @@ public class NewCustomer extends Person implements Customer {
 
 	@Override
 	public void buyItem(Product[] products) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void payItem(int cost) {
-		// TODO Auto-generated method stub
 
 	}
 

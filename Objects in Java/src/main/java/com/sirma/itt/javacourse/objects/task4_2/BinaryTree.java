@@ -59,10 +59,9 @@ public class BinaryTree {
 	}
 
 	/**
-	 * * Printing out the tree using the In-order depth-first itteration thus printing it out
-	 * sorted.
+	 * * Printing out the tree using the In-order depth-first iteration thus printing it out sorted.
 	 * 
-	 * @return an arraylist with the sorted elements
+	 * @return an {@link ArrayList}list with the sorted elements
 	 */
 	public List<Integer> printSorted() {
 		return printSorted(root, new ArrayList<Integer>());

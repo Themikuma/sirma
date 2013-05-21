@@ -33,13 +33,13 @@ public class ConsoleToFileWriterTest {
 		String resultString = "";
 		List<String> lines;
 		try {
+			// TODO dont use readalllines
 			lines = Files.readAllLines(file, charset);
 			for (String line : lines) {
 				resultString += line + "\n";
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
 
 		assertEquals(expectedResult, resultString);

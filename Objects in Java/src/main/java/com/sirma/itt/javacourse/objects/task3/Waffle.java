@@ -9,7 +9,7 @@ public class Waffle extends Product implements Sweet {
 
 	@Override
 	public boolean isTooSweet() {
-		// TODO Auto-generated method stub
+
 		return true;
 	}
 

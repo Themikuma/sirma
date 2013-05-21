@@ -51,8 +51,7 @@ public class DataClassTest {
 		try {
 			Files.delete(Paths.get(System.getProperty("user.home") + "/My Documents/userObject.usr"));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new RuntimeException("General I/O exception", e);
 		}
 	}
 

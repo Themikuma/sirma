@@ -7,11 +7,11 @@ import java.util.Arrays;
  * 
  * @author user
  */
-public final class SortNumberedClasses {
+public final class NumberedSorter {
 	/**
 	 * A private constructor, overriding the default one, so the class can't be initialized.
 	 */
-	private SortNumberedClasses() {
+	private NumberedSorter() {
 
 	}
 
@@ -22,12 +22,8 @@ public final class SortNumberedClasses {
 	 *            the input array to be sorted
 	 * @return the sorted array
 	 */
-	// TODO shouldn't print anything
 	public static ParentClass[] sortArray(ParentClass[] classArray) {
 		Arrays.sort(classArray);
-		for (ParentClass parent : classArray) {
-			System.out.println(parent.getClass());
-		}
 		return classArray;
 	}
 }

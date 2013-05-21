@@ -3,6 +3,7 @@ package com.sirma.itt.javacourse.inputoutput.task1;
 import static org.junit.Assert.assertEquals;
 
 import java.io.ByteArrayInputStream;
+import java.util.InputMismatchException;
 
 import org.junit.Test;
 
@@ -36,9 +37,9 @@ public class ConsoleReaderTest {
 	}
 
 	/**
-	 * Testing the readint method of the ConsoleReader class for illegal argument exception.
+	 * Testing the readint method of the ConsoleReader class for InputMismatchException.
 	 */
-	@Test(expected = IllegalArgumentException.class)
+	@Test(expected = InputMismatchException.class)
 	public void testReadIntException() {
 		ByteArrayInputStream input = new ByteArrayInputStream("2w".getBytes());
 		int result = ConsoleReader.readInt(input);
@@ -70,7 +71,7 @@ public class ConsoleReaderTest {
 	/**
 	 * Testing the readFloat method of the ConsoleReader class for exceptions.
 	 */
-	@Test(expected = IllegalArgumentException.class)
+	@Test(expected = InputMismatchException.class)
 	public void testReadFloatException() {
 		ByteArrayInputStream input = new ByteArrayInputStream("25a,43".getBytes());
 		float result = ConsoleReader.readFloat(input);

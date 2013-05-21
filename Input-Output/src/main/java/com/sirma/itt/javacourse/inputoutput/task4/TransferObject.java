@@ -36,19 +36,28 @@ public class TransferObject {
 	 *            the offset at which the transfer starts
 	 * @return the number of bytes successfully transferred
 	 */
-	// TODO fix the method for large files with less RAM allocated
 	public int transfer(int numberOfBytes, int offset) {
 
-		byte[] inputBuffer = new byte[numberOfBytes];
+		byte[] inputBuffer = new byte[10240];
 		int size = 0;
+		int actualBytes = 0;
+		int bytesToRead = 0;
 		try {
 			input.skip(offset);
-			size = input.read(inputBuffer, 0, numberOfBytes);
-			output.write(inputBuffer);
+			while (size != -1 && actualBytes < numberOfBytes) {
+				actualBytes += size;
+				output.write(inputBuffer, 0, size);
+				if ((actualBytes + 10240) > numberOfBytes)
+					bytesToRead = numberOfBytes % 10240;
+				else
+					bytesToRead = 10240;
+				size = input.read(inputBuffer, 0, bytesToRead);
+
+			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new RuntimeException("General I/O exception", e);
 		}
-		return (size == -1) ? 0 : size;
+		return actualBytes;
 	}
 
 	/**

@@ -8,10 +8,13 @@ import java.util.Scanner;
  * 
  * @author user
  */
-public class ConsoleReader {
-	// TODO get rid of this and instantiate a new one every method
-	// TODO get rid of duplicates
-	private static Scanner reader;
+public final class ConsoleReader {
+
+	/**
+	 * A private constructor disallowing the instantiation of this class.
+	 */
+	private ConsoleReader() {
+	}
 
 	/**
 	 * Reads a string from the console.
@@ -19,11 +22,7 @@ public class ConsoleReader {
 	 * @return the red string
 	 */
 	public static String readString() {
-		reader = new Scanner(System.in);
-		String stringInput = reader.nextLine();
-		reader.close();
-		reader = null;
-		return stringInput;
+		return readString(System.in);
 	}
 
 	/**
@@ -35,11 +34,9 @@ public class ConsoleReader {
 	 * @return the red string
 	 */
 	public static String readString(InputStream in) {
-		reader = new Scanner(in);
-		String stringInput = reader.nextLine();
-		reader.close();
-		reader = null;
-		return stringInput;
+		try (Scanner reader = new Scanner(in)) {
+			return reader.nextLine();
+		}
 	}
 
 	/**
@@ -48,14 +45,7 @@ public class ConsoleReader {
 	 * @return the red integer
 	 */
 	public static int readInt() {
-		reader = new Scanner(System.in);
-		if (!reader.hasNextInt()) {
-			throw new IllegalArgumentException("That is not a number");
-		}
-		int intInput = reader.nextInt();
-		reader.close();
-		reader = null;
-		return intInput;
+		return readInt(System.in);
 	}
 
 	/**
@@ -66,14 +56,9 @@ public class ConsoleReader {
 	 * @return the red integer
 	 */
 	public static int readInt(InputStream in) {
-		reader = new Scanner(in);
-		if (!reader.hasNextInt()) {
-			throw new IllegalArgumentException("That is not a number");
+		try (Scanner reader = new Scanner(in)) {
+			return reader.nextInt();
 		}
-		int intInput = reader.nextInt();
-		reader.close();
-		reader = null;
-		return intInput;
 	}
 
 	/**
@@ -82,11 +67,7 @@ public class ConsoleReader {
 	 * @return the red char
 	 */
 	public static char readChar() {
-		reader = new Scanner(System.in);
-		char charInput = reader.next().charAt(0);
-		reader.close();
-		reader = null;
-		return charInput;
+		return readChar(System.in);
 	}
 
 	/**
@@ -98,11 +79,9 @@ public class ConsoleReader {
 	 * @return the red float
 	 */
 	public static char readChar(InputStream in) {
-		reader = new Scanner(in);
-		char charInput = reader.next().charAt(0);
-		reader.close();
-		reader = null;
-		return charInput;
+		try (Scanner reader = new Scanner(in)) {
+			return reader.next().charAt(0);
+		}
 	}
 
 	/**
@@ -122,32 +101,9 @@ public class ConsoleReader {
 	 * @return the red float
 	 */
 	public static float readFloat(InputStream in) {
-		reader = new Scanner(in);
-		if (!reader.hasNextFloat()) {
-			throw new IllegalArgumentException("That is not a float");
+		try (Scanner reader = new Scanner(in)) {
+			return reader.nextFloat();
 		}
-		float floatInput = reader.nextFloat();
-		reader.close();
-		reader = null;
-		return floatInput;
 	}
 
-	/**
-	 * Getter method for reader.
-	 * 
-	 * @return the reader
-	 */
-	public Scanner getReader() {
-		return reader;
-	}
-
-	/**
-	 * Setter method for reader.
-	 * 
-	 * @param reader
-	 *            the reader to set
-	 */
-	public void setReader(Scanner reader) {
-		ConsoleReader.reader = reader;
-	}
 }

@@ -22,7 +22,6 @@ public class Square extends Rhombus {
 	 */
 	public Square(Point pointOne, int sideLength) {
 		super(pointOne, sideLength, 90);
-		// TODO Auto-generated constructor stub
 	}
 
 	/**

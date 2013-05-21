@@ -1,8 +1,7 @@
 package com.sirma.itt.javacourse.intro.task8;
 
-
 /**
- * The automatic reader of the Hangman game. Passes already set word & letters to the hangman game
+ * The automatic reader of the Hang man game. Passes already set word & letters to the hang man game
  * instead user input.
  * 
  * @author user
@@ -19,7 +18,7 @@ public class HangManAutoReader implements HangManReader {
 	 * @param word
 	 *            the word to be guessed
 	 * @param guesses
-	 *            the letters to be passed to the hangman game
+	 *            the letters to be passed to the hang man game
 	 */
 	public HangManAutoReader(String word, char[] guesses) {
 		this.word = word;

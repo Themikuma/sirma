@@ -16,7 +16,7 @@ public class FileReverser {
 	private Path file;
 
 	/**
-	 * Construcotr of the class. Constructs the path field out of the given filePath string.
+	 * Constructor of the class. Constructs the path field out of the given filePath string.
 	 * 
 	 * @param filePath
 	 *            the path of the file to be opened
@@ -36,6 +36,7 @@ public class FileReverser {
 		StringBuffer fileContent = new StringBuffer();
 		boolean first = true;
 		try {
+			// TODO get rid of readalllines
 			List<String> lines = Files.readAllLines(file, charset);
 			for (String line : lines) {
 				if (first) {
@@ -46,8 +47,7 @@ public class FileReverser {
 			}
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new RuntimeException("General I/O exception", e);
 		}
 		return fileContent;
 	}
@@ -61,8 +61,7 @@ public class FileReverser {
 		try {
 			Files.write(file, readFile().reverse().toString().getBytes());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new RuntimeException("General I/O exception", e);
 		}
 	}
 

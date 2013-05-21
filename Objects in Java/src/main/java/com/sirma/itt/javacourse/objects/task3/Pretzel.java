@@ -9,7 +9,6 @@ public class Pretzel extends Product implements Salty {
 
 	@Override
 	public boolean isTooSalty() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

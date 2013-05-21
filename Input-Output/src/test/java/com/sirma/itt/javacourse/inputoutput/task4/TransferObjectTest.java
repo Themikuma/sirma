@@ -18,6 +18,7 @@ public class TransferObjectTest {
 	 * Initializing a TransferObject class and testing its transfer method.
 	 * 
 	 * @throws FileNotFoundException
+	 *             if the file is not found.
 	 */
 	@Test
 	public void testTransfer() throws FileNotFoundException {
@@ -25,7 +26,7 @@ public class TransferObjectTest {
 		TransferObject transferClass = new TransferObject(new FileInputStream(file),
 				new FileOutputStream(
 						"C:\\Users\\user\\Downloads\\eclipse-SDK-4.2.2-win32-x86_64_2.zip"));
-		transferClass.transfer((int) file.length(), 0);
+		System.out.println(transferClass.transfer(20999, 0));
 		// assertEquals(2, transferClass.transfer(2, 1));
 		// assertEquals(3, transferClass.transfer(5, 1));
 	}

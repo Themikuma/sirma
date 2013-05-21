@@ -13,8 +13,8 @@ import org.junit.Test;
  * @author user
  */
 public class RandomClassUserTest {
-
-	private static RandomClassUser randomClass;
+	// TODO rename test files
+	private static ReflectionInfoPrinter randomClass;
 
 	/**
 	 * Setting up the custom class before the tests.
@@ -24,7 +24,7 @@ public class RandomClassUserTest {
 	 */
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		randomClass = new RandomClassUser(new RandomClass());
+		randomClass = new ReflectionInfoPrinter(new RandomClass());
 	}
 
 	/**

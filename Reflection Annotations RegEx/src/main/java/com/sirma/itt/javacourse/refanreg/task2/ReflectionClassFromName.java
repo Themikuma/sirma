@@ -8,7 +8,7 @@ import java.util.List;
  * 
  * @author user
  */
-public class RandomClassUserByName {
+public class ReflectionClassFromName {
 	private Class<?> randomClass;
 
 	/**
@@ -17,7 +17,7 @@ public class RandomClassUserByName {
 	 * @param className
 	 *            the name of the class to be instantiated
 	 */
-	public RandomClassUserByName(String className) {
+	public ReflectionClassFromName(String className) {
 		this.randomClass = initClass(className);
 	}
 

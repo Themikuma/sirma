@@ -15,17 +15,17 @@ import org.junit.Test;
  */
 public class RandomClassUserByNameTest {
 
-	private static RandomClassUserByName randomClass;
+	private static ReflectionClassFromName randomClass;
 
 	/**
-	 * Setting up the {@link RandomClassUserByName} before the tests.
+	 * Setting up the {@link ReflectionClassFromName} before the tests.
 	 * 
 	 * @throws Exception
 	 *             if something goes wrong with the setup
 	 */
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		randomClass = new RandomClassUserByName(
+		randomClass = new ReflectionClassFromName(
 				"com.sirma.itt.javacourse.refanreg.task1.RandomClass");
 	}
 

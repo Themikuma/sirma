@@ -3,14 +3,14 @@ package com.sirma.itt.javacourse.intro.task4;
 import com.sirma.itt.javacourse.intro.task235.IntegerArrayProcessor;
 
 /**
- * Class containing a method implementing the quicksort.
+ * Class containing a method implementing the quick sort algorithm.
  * 
  * @author metodskiPC
  */
 public class QuickSort {
 
 	/**
-	 * A method, sorting the inputArray with the quicksort algorithm.
+	 * A method, sorting the inputArray with the quick sort algorithm.
 	 * 
 	 * @param inputArray
 	 *            the input array yet to be sorted
@@ -46,7 +46,7 @@ public class QuickSort {
 	}
 
 	/**
-	 * An overload method allowing us to start the quicksort method without specifying start index
+	 * An overload method allowing us to start the quick sort method without specifying start index
 	 * and end index.
 	 * 
 	 * @param inputArray

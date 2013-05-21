@@ -19,7 +19,8 @@ public class EmailValidatorTest {
 	public void testIsEmailValid() {
 		assertTrue(EmailValidator.isEmailValid("metodski2@gmail.com"));
 		assertTrue(EmailValidator.isEmailValid("qwer@abv.bg"));
-		assertFalse(EmailValidator.isEmailValid("metodski2gmail.com"));
+		assertFalse(EmailValidator.isEmailValid("qwer@abv.a"));
+		assertFalse(EmailValidator.isEmailValid("metodski2gmail."));
 	}
 
 }

@@ -45,8 +45,7 @@ public class Sumator {
 	 *            the second number
 	 * @return the sum
 	 */
-	// TODO fix this method.
-	public int calculateSum(String numOne, String numTwo) {
+	public String calculateSum(String numOne, String numTwo) {
 		int firstNumber = 0;
 		int secondNumber = 0;
 
@@ -54,9 +53,10 @@ public class Sumator {
 			firstNumber = Integer.parseInt(numOne);
 			secondNumber = Integer.parseInt(numTwo);
 		} catch (NumberFormatException e) {
-			System.out.println("One of the numbers contains invalid characters or is null");
+			System.out.println("The input must contain only numbers");
+			throw e;
 		}
-		return firstNumber + secondNumber;
+		return Integer.toString(firstNumber + secondNumber);
 	}
 
 	/**

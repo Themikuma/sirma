@@ -10,7 +10,7 @@ import java.util.List;
  * 
  * @author user
  */
-public class RandomClassUser {
+public class ReflectionInfoPrinter {
 	private RandomClass randomObject;
 
 	/**
@@ -19,7 +19,7 @@ public class RandomClassUser {
 	 * @param randomObject
 	 *            the class that is going to be manipulated by this class
 	 */
-	public RandomClassUser(RandomClass randomObject) {
+	public ReflectionInfoPrinter(RandomClass randomObject) {
 		this.randomObject = randomObject;
 	}
 

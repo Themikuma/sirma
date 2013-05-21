@@ -5,7 +5,7 @@ package com.sirma.itt.javacourse.exceptions.task2;
  * 
  * @author user
  */
-public class OutOfBoundsException extends Exception {
+public class OutOfBoundsException extends RuntimeException {
 	/**
 	 * Comment for serialVersionUID.
 	 */

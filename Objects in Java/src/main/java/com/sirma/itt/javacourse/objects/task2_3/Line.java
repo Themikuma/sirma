@@ -23,12 +23,10 @@ public class Line extends Arc {
 	public Line(Point a, Point b) {
 		super(a, 0, (int) Math.sqrt(((a.getX() - b.getX()) * (a.getX() - b.getX()))
 				- ((a.getY() - b.getY()) * (a.getY() - b.getY()))));
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void draw() {
-		// TODO Auto-generated method stub
 
 	}
 

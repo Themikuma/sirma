@@ -19,18 +19,9 @@ public class Dice {
 	 * Rolls the dices, generating two random ints from 1 to 6, checking if the pair is already in
 	 * the map and adding the pair with the number of the current dice throw.
 	 */
-	// TODO get rid of repetition
 	public void rollDices() {
 		Random randomIntGenerator = new Random();
-		int firstDice = randomIntGenerator.nextInt(6) + 1;
-		int secondDice = randomIntGenerator.nextInt(6) + 1;
-		String result = firstDice + "," + secondDice;
-		List<Integer> alreadyRolled = rollsHistory.get(result);
-		if (alreadyRolled == null) {
-			alreadyRolled = new ArrayList<>();
-			rollsHistory.put(result, alreadyRolled);
-		}
-		alreadyRolled.add(numRolls++);
+		rollDices(randomIntGenerator.nextInt(6) + 1, randomIntGenerator.nextInt(6) + 1);
 
 	}
 

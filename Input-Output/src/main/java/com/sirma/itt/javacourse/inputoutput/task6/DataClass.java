@@ -1,6 +1,7 @@
 package com.sirma.itt.javacourse.inputoutput.task6;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -27,8 +28,7 @@ public class DataClass {
 			output.writeObject(o);
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new RuntimeException("General I/O exception", e);
 		}
 	}
 
@@ -45,11 +45,13 @@ public class DataClass {
 				ObjectInputStream input = new ObjectInputStream(fileInput)) {
 			return (UserDefinedObject) input.readObject();
 
-		} catch (IOException | ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException("The file can't be found", e);
+		} catch (IOException e) {
+			throw new RuntimeException("General I/O exception", e);
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("The class UserDefinedObject cannot be found", e);
 		}
-		return null;
 
 	}
 }

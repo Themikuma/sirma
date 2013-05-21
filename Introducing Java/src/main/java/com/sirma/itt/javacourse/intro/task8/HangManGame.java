@@ -1,6 +1,5 @@
 package com.sirma.itt.javacourse.intro.task8;
 
-
 /**
  * Main class of the hangman game. Holds the logic of the game like writing the initial word and
  * handling the guessed letters.

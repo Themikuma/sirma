@@ -21,7 +21,7 @@ public class SumatorTest {
 		Sumator sumClass = new Sumator();
 		assertEquals(20, sumClass.calculateSum(10, 10));
 		assertEquals(20f, sumClass.calculateSum(10f, 10f), 0.0001);
-		assertEquals(20, sumClass.calculateSum("10", "10"));
+		assertEquals("20", sumClass.calculateSum("10", "10"));
 		assertEquals(20, sumClass.calculateSum(10, 10));
 		assertEquals(new BigDecimal(20),
 				sumClass.calculateSum(new BigDecimal(10.0), new BigDecimal(10.0)));
@@ -30,10 +30,10 @@ public class SumatorTest {
 	/**
 	 * Tests the method sum of the class Sumator with incorrect input.
 	 */
-	@Test
+	@Test(expected = NumberFormatException.class)
 	public void testSumatorException() {
 		Sumator sumClass = new Sumator();
-		assertEquals(0, sumClass.calculateSum(null, "10"));
-		assertEquals(0, sumClass.calculateSum("asd", "10"));
+		sumClass.calculateSum(null, "10");
+
 	}
 }

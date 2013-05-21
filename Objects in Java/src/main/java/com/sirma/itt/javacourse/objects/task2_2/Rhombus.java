@@ -25,7 +25,6 @@ public class Rhombus extends Parallelogram {
 	public Rhombus(Point pointOne, int sideLength, int angle) {
 		super(pointOne, sideLength, sideLength, angle);
 		this.sideLength = sideLength;
-		// TODO Auto-generated constructor stub
 	}
 
 	/**

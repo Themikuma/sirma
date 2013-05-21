@@ -1,8 +1,6 @@
 package com.sirma.itt.javacourse.exceptions.task2;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.Scanner;
 
 /**
  * Class with a method that will read one number from the console.
@@ -12,28 +10,23 @@ import java.io.InputStreamReader;
 public class NumberReader {
 
 	/**
-	 * Method that reads a number from the console and checks if its a valid number and if it's in
-	 * the correct range.
-	 * 
-	 * @throws OutOfBoundsException
-	 *             Exception for when the number is smaller than 0 or higher than 100
+	 * An overload of the method that is going to read from the console.
 	 */
-	// TODO create tests for this method.
-	public void readNumber() throws OutOfBoundsException {
-		java.io.InputStream in = System.in;
-		BufferedReader br = new BufferedReader(new InputStreamReader(in));
-		String line = null;
-		int number = 0;
-		try {
-			line = br.readLine();
-		} catch (IOException e) {
-			e.printStackTrace();
+	public void readNumber() {
+		try (Scanner in = new Scanner(System.in)) {
+			while (in.hasNextInt()) {
+				checkNumber(in.nextInt());
+			}
 		}
-		try {
-			number = Integer.parseInt(line);
-		} catch (NumberFormatException e) {
-			System.out.println("This is not a valid number");
-		}
+	}
+
+	/**
+	 * Method that checks if the number is in the correct range.
+	 * 
+	 * @param number
+	 *            the number which is going to be checked
+	 */
+	public void checkNumber(int number) {
 		if (number < 0 || number > 100) {
 			throw new OutOfBoundsException("The number must be in the range 0-100");
 		}

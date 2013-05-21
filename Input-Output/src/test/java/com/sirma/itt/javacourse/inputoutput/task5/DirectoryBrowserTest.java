@@ -2,7 +2,6 @@ package com.sirma.itt.javacourse.inputoutput.task5;
 
 import static org.junit.Assert.assertEquals;
 
-import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -17,29 +16,26 @@ public class DirectoryBrowserTest {
 
 	/**
 	 * Testing the ListContent method to see if it will return file if we pass it a file.
-	 * 
-	 * @throws NoSuchFileException
-	 *             if the file is not found
 	 */
 	@Test
-	public void testListContent() throws NoSuchFileException {
+	public void testListContent() {
 
-		assertEquals("directory", DirectoryBrowser.listContent(System.getProperty("user.home")));
 		assertEquals(
-				"file",
+				"The directory containst the following directories: src, and the following files: .classpath,.project,pom.xml,",
+				DirectoryBrowser.listContent(System.getProperty("user.home")
+						+ "/My Documents/maven/intro"));
+		assertEquals(
+				"That's a file",
 				DirectoryBrowser.listContent(System.getProperty("user.home") + "/My Documents/"
 						+ "hello.txt"));
 	}
 
 	/**
 	 * Testing the ListContent method with a non existent file.
-	 * 
-	 * @throws NoSuchFileException
-	 *             if the file is not found
 	 */
-	@Test(expected = NoSuchFileException.class)
-	public void testListContentException() throws NoSuchFileException {
+	@Test
+	public void testListContentException() {
 		Path path = Paths.get(System.getProperty("user.home"), "asd");
-		DirectoryBrowser.listContent(path.toString());
+		assertEquals("The file does not exist", DirectoryBrowser.listContent(path.toString()));
 	}
 }

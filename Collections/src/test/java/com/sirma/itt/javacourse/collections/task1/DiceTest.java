@@ -39,7 +39,7 @@ public class DiceTest {
 		diceRoller.rollDices(6, 6);
 		diceRoller.rollDices(3, 1);
 		diceRoller.rollDices(1, 1);
-		assertTrue("That combination has not been rolled", findDices(diceRoller, "6,6"));
+		assertTrue(findDices(diceRoller, "6,6"));
 		assertFalse(findDices(diceRoller, "2,3"));
 
 	}

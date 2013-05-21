@@ -12,7 +12,7 @@ import org.junit.Test;
 public class ObjectArrayTest {
 
 	/**
-	 * Test to see if the array is initalized with the correct length.
+	 * Test to see if the array is initialized with the correct length.
 	 */
 	@Test
 	public void testArrayInitLength() {

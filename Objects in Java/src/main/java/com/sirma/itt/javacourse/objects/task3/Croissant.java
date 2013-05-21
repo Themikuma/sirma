@@ -9,7 +9,6 @@ public class Croissant extends Product implements Sweet {
 
 	@Override
 	public boolean isTooSweet() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
