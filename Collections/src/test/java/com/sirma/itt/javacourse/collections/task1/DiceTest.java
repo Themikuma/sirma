@@ -1,9 +1,9 @@
 package com.sirma.itt.javacourse.collections.task1;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
@@ -39,8 +39,11 @@ public class DiceTest {
 		diceRoller.rollDices(6, 6);
 		diceRoller.rollDices(3, 1);
 		diceRoller.rollDices(1, 1);
-		assertTrue(findDices(diceRoller, "6,6"));
-		assertFalse(findDices(diceRoller, "2,3"));
+		List<Integer> result = new ArrayList<Integer>();
+		result.add(2);
+		result.add(4);
+		assertTrue(findDices(diceRoller, "3,1").equals(result));
+		assertEquals(null, findDices(diceRoller, "2,3"));
 
 	}
 
@@ -52,20 +55,10 @@ public class DiceTest {
 	 *            the diceroller class containing the map.
 	 * @param key
 	 *            the combination to be found in the map.
-	 * @return false if the combination has not been rolled, true if the combination has been rolled
+	 * @return list of indexes at which the combination has been rolled, null if there are no
+	 *         indexes
 	 */
-	public boolean findDices(Dice diceRoller, String key) {
-		List<Integer> rolledIndexes = diceRoller.getRollsHistory().get(key);
-		if (rolledIndexes == null) {
-			System.out.println("That combination has not been rolled");
-			return false;
-		}
-		System.out.print("The combination {" + key + "} " + "has been rolled at positions ");
-		for (int position : rolledIndexes) {
-			System.out.print(position + " ");
-		}
-		System.out.println();
-		System.out.println("Number of rolls: " + rolledIndexes.size());
-		return true;
+	public List<Integer> findDices(Dice diceRoller, String key) {
+		return diceRoller.getRollsHistory().get(key);
 	}
 }

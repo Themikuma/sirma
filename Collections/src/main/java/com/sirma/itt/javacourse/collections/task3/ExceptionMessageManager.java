@@ -15,7 +15,6 @@ public class ExceptionMessageManager {
 	private Map<String, String> exceptions = new HashMap<String, String>();
 	private String message = "";
 	private final String separator = "@";
-	private boolean first = true;
 
 	/**
 	 * Setting the exceptions in the hashmap.
@@ -34,9 +33,8 @@ public class ExceptionMessageManager {
 	 */
 	public void addExceptionMessage(String messageCode) {
 		if (exceptions.containsValue(messageCode)) {
-			if (first) {
+			if ("".equals(message)) {
 				message += messageCode;
-				first = false;
 			} else
 				message += separator + messageCode;
 		} else
@@ -51,9 +49,8 @@ public class ExceptionMessageManager {
 	 */
 	public void addExceptionMessageUsingCode(String messageCode) {
 		if (exceptions.containsKey(messageCode)) {
-			if (first) {
+			if ("".equals(message)) {
 				message += exceptions.get(messageCode);
-				first = false;
 			} else
 				message += separator + exceptions.get(messageCode);
 		} else
@@ -108,25 +105,6 @@ public class ExceptionMessageManager {
 	 */
 	public void setMessage(String message) {
 		this.message = message;
-	}
-
-	/**
-	 * Getter method for first.
-	 * 
-	 * @return the first
-	 */
-	public boolean isFirst() {
-		return first;
-	}
-
-	/**
-	 * Setter method for first.
-	 * 
-	 * @param first
-	 *            the first to set
-	 */
-	public void setFirst(boolean first) {
-		this.first = first;
 	}
 
 }

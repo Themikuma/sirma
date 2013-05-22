@@ -13,7 +13,7 @@ import org.junit.Test;
  * 
  * @author user
  */
-public class SortNumberedClassesTest {
+public class NumberedSorterTest {
 
 	/**
 	 * Testing the sortArray method of the SortNumberedClasses class.

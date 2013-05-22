@@ -12,16 +12,6 @@ public class ReflectionClassFromName {
 	private Class<?> randomClass;
 
 	/**
-	 * Setting up the randomClass.
-	 * 
-	 * @param className
-	 *            the name of the class to be instantiated
-	 */
-	public ReflectionClassFromName(String className) {
-		this.randomClass = initClass(className);
-	}
-
-	/**
 	 * Printing out all the interfaces of a given class.
 	 * 
 	 * @return a list with the class's interfaces
@@ -48,24 +38,18 @@ public class ReflectionClassFromName {
 	 * 
 	 * @param name
 	 *            the name of the class
-	 * @return the instantiated class itself
+	 * @throws ClassNotFoundException
+	 *             when the class we are trying to instantiate by name does not exist
+	 * @throws IllegalAccessException
+	 *             when we don't have access to the class
+	 * @throws InstantiationException
+	 *             when the class has no means of instantiation
 	 */
-	private Class<?> initClass(String name) {
-		Class<?> randomClass = null;
-		try {
-			randomClass = Class.forName(name);
-			randomClass.newInstance();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return randomClass;
+	public void setClass(String name) throws ClassNotFoundException, InstantiationException,
+			IllegalAccessException {
+		randomClass = Class.forName(name);
+		randomClass.newInstance();
+
 	}
 
 	/**

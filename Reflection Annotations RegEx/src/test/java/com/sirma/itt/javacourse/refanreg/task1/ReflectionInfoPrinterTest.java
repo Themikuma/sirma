@@ -12,8 +12,7 @@ import org.junit.Test;
  * 
  * @author user
  */
-public class RandomClassUserTest {
-	// TODO rename test files
+public class ReflectionInfoPrinterTest {
 	private static ReflectionInfoPrinter randomClass;
 
 	/**

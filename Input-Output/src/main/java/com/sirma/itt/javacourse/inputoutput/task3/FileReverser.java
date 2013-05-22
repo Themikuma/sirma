@@ -1,11 +1,10 @@
 package com.sirma.itt.javacourse.inputoutput.task3;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
 
 /**
  * Class, containing a method for reading a file and a method for reversing the file.
@@ -13,35 +12,22 @@ import java.util.List;
  * @author user
  */
 public class FileReverser {
-	private Path file;
 
 	/**
-	 * Constructor of the class. Constructs the path field out of the given filePath string.
+	 * Reads the file from the specified path. the name of the file to be opened * @param filePath
 	 * 
 	 * @param filePath
-	 *            the path of the file to be opened
-	 */
-	public FileReverser(String filePath) {
-		this.file = Paths.get(filePath);
-	}
-
-	/**
-	 * Reads the file from the specified path. the name of the file to be opened
-	 * 
-	 * @return a StringBuffer containing all lines of the file.
+	 *            the path of the file to be read
+	 * @return a StringBuilder containing all lines of the file.
 	 */
 
-	public StringBuffer readFile() {
-		Charset charset = Charset.forName("UTF-8");
-		StringBuffer fileContent = new StringBuffer();
-		boolean first = true;
-		try {
-			// TODO get rid of readalllines
-			List<String> lines = Files.readAllLines(file, charset);
-			for (String line : lines) {
-				if (first) {
+	public StringBuilder readFile(String filePath) {
+		StringBuilder fileContent = new StringBuilder();
+		try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+			String line = null;
+			while ((line = reader.readLine()) != null) {
+				if (fileContent.length() == 0) {
 					fileContent.append(line);
-					first = false;
 				} else
 					fileContent.append("\n" + line);
 			}
@@ -55,33 +41,17 @@ public class FileReverser {
 	/**
 	 * Reverses the file using the reverse() method of the StringBuffer class and writes the
 	 * reversed data via Files.write(). the name of the file to be reversed
+	 * 
+	 * @param filePath
+	 *            the path of the file to be reversed
 	 */
-	public void reverseFile() {
+	public void reverseFile(String filePath) {
 
 		try {
-			Files.write(file, readFile().reverse().toString().getBytes());
+			Files.write(Paths.get(filePath), readFile(filePath).reverse().toString().getBytes());
 		} catch (IOException e) {
 			throw new RuntimeException("General I/O exception", e);
 		}
-	}
-
-	/**
-	 * Getter method for file.
-	 * 
-	 * @return the file
-	 */
-	public Path getFile() {
-		return file;
-	}
-
-	/**
-	 * Setter method for file.
-	 * 
-	 * @param file
-	 *            the file to set
-	 */
-	public void setFile(Path file) {
-		this.file = file;
 	}
 
 }

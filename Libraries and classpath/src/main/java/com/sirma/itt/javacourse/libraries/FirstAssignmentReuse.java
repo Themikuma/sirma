@@ -43,17 +43,4 @@ public final class FirstAssignmentReuse {
 		System.out.println(random.generateString(10));
 	}
 
-	/**
-	 * @param args
-	 *            command-line arguments
-	 */
-	public static void main(String[] args) {
-		System.out.println("Running Array Processing class");
-		startArrayProcessing();
-		System.out.println("Running Random String class");
-		startRandomString();
-		System.out.println("Running HangMan class");
-		startHangMan();
-	}
-
 }

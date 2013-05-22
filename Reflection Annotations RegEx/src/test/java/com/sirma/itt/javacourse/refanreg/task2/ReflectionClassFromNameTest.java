@@ -13,20 +13,25 @@ import org.junit.Test;
  * 
  * @author user
  */
-public class RandomClassUserByNameTest {
+public class ReflectionClassFromNameTest {
 
 	private static ReflectionClassFromName randomClass;
 
 	/**
 	 * Setting up the {@link ReflectionClassFromName} before the tests.
 	 * 
-	 * @throws Exception
-	 *             if something goes wrong with the setup
+	 * @throws ClassNotFoundException
+	 *             when the class we are trying to instantiate by name does not exist
+	 * @throws IllegalAccessException
+	 *             when we don't have access to the class
+	 * @throws InstantiationException
+	 *             when the class has no means of instantiation
 	 */
 	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-		randomClass = new ReflectionClassFromName(
-				"com.sirma.itt.javacourse.refanreg.task1.RandomClass");
+	public static void setUpBeforeClass() throws ClassNotFoundException, InstantiationException,
+			IllegalAccessException {
+		randomClass = new ReflectionClassFromName();
+		randomClass.setClass("com.sirma.itt.javacourse.refanreg.task1.RandomClass");
 	}
 
 	/**

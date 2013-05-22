@@ -33,7 +33,6 @@ public class ConsoleToFileWriterTest {
 		String resultString = "";
 		List<String> lines;
 		try {
-			// TODO dont use readalllines
 			lines = Files.readAllLines(file, charset);
 			for (String line : lines) {
 				resultString += line + "\n";
