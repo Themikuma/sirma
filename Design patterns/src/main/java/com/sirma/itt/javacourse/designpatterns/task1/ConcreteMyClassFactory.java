@@ -5,7 +5,7 @@ package com.sirma.itt.javacourse.designpatterns.task1;
  * 
  * @author user
  */
-public class MyClassFactory implements AbstractFactory {
+public class ConcreteMyClassFactory implements AbstractFactory {
 
 	@Override
 	public MyClass createInstance() {
@@ -18,13 +18,12 @@ public class MyClassFactory implements AbstractFactory {
 	 * @param className
 	 *            the name of the class
 	 * @return an instance of the class
+	 * @throws ClassNotFoundException
+	 *             if the class with the specified name doesn't exist
 	 */
-	public Object createInstance(String className) {
+	public Object createInstance(String className) throws ClassNotFoundException {
 		try {
 			return Class.forName(className).newInstance();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (InstantiationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
