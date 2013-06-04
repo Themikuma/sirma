@@ -2,6 +2,9 @@ package com.sirma.itt.javacourse.refanreg.task7;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+
 import org.junit.Test;
 
 /**
@@ -21,24 +24,12 @@ public class TagReplacerTest {
 	}
 
 	/**
-	 * Testing the input method of the class for correct data.
-	 */
-	@Test
-	public void testReadCode() {
-		TagReplacer tagReplacer = new TagReplacer();
-		tagReplacer.readCode(CODE_FULL);
-		assertEquals(CODE_FULL, tagReplacer.getCode());
-	}
-
-	/**
 	 * Testing the replaceTags method of the class to see if it modifies the input string
 	 * accordingly.
 	 */
 	@Test
 	public void testReplaceTags() {
-		TagReplacer tagReplacer = new TagReplacer();
-		tagReplacer.readCode(CODE_FULL);
-		String result = tagReplacer.replaceTags();
-		assertEquals(CODE_HIDDEN, result);
+		InputStream input = new ByteArrayInputStream(CODE_FULL.getBytes());
+		assertEquals(CODE_HIDDEN, TagReplacer.replaceTags(input));
 	}
 }

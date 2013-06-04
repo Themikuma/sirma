@@ -1,9 +1,9 @@
 package com.sirma.itt.javacourse.inputoutput.task5;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Test;
 
@@ -18,16 +18,28 @@ public class DirectoryBrowserTest {
 	 * Testing the ListContent method to see if it will return file if we pass it a file.
 	 */
 	@Test
-	public void testListContent() {
+	public void testListContentFile() {
+		DirectoryBrowser.DirectoryInfo directory = DirectoryBrowser.listContent(System
+				.getProperty("user.home") + "/My Documents/" + "hello.txt");
+		assertTrue(directory.isFile());
 
-		assertEquals(
-				"The directory containst the following directories: src, and the following files: .classpath,.project,pom.xml,",
-				DirectoryBrowser.listContent(System.getProperty("user.home")
-						+ "/My Documents/maven/intro"));
-		assertEquals(
-				"That's a file",
-				DirectoryBrowser.listContent(System.getProperty("user.home") + "/My Documents/"
-						+ "hello.txt"));
+	}
+
+	/**
+	 * Testing the listcontent method to see if it will return the correct data if we pass it a
+	 * directory.
+	 */
+	@Test
+	public void testListContentDirectory() {
+		DirectoryBrowser.DirectoryInfo directory = DirectoryBrowser.listContent(System
+				.getProperty("user.home") + "/My Documents/maven/intro");
+		List<String> expected = new ArrayList<>();
+		System.out.println(directory.getFiles());
+		expected.add(".classpath");
+		expected.add(".project");
+		expected.add("pom.xml");
+		expected.add("src");
+		assertTrue(expected.equals(directory.getFiles()));
 	}
 
 	/**
@@ -35,7 +47,8 @@ public class DirectoryBrowserTest {
 	 */
 	@Test
 	public void testListContentException() {
-		Path path = Paths.get(System.getProperty("user.home"), "asd");
-		assertEquals("The file does not exist", DirectoryBrowser.listContent(path.toString()));
+		DirectoryBrowser.DirectoryInfo directory = DirectoryBrowser.listContent(System
+				.getProperty("user.home") + "asd");
+		assertTrue(directory.doesNotExist());
 	}
 }

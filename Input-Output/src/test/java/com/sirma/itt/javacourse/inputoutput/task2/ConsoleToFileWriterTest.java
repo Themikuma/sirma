@@ -2,7 +2,9 @@ package com.sirma.itt.javacourse.inputoutput.task2;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -25,8 +27,9 @@ public class ConsoleToFileWriterTest {
 	public void testWriteToFile() {
 		String inputString = "hello.txt\nline1\nline2\nline3\n.\n";
 		String expectedResult = "line1\nline2\nline3\n";
-		ConsoleToFileWriter writer = new ConsoleToFileWriterAutomatic(inputString);
-		writer.writeToFile();
+		ConsoleToFileWriter writer = new ConsoleToFileWriter();
+		InputStream input = new ByteArrayInputStream(inputString.getBytes());
+		writer.writeToFile(input);
 
 		Path file = Paths.get("hello.txt");
 		Charset charset = Charset.forName("UTF-8");

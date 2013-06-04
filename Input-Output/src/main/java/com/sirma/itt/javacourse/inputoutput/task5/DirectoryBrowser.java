@@ -7,6 +7,8 @@ import java.nio.file.NoSuchFileException;
 import java.nio.file.NotDirectoryException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Prints the content of a directory or the name of a file.
@@ -30,26 +32,80 @@ public final class DirectoryBrowser {
 	 * @return directory, if the path is a folder, file, if the path is a file, file not found if
 	 *         the path directory doesn't exist
 	 */
-	public static String listContent(String path) {
+	public static DirectoryInfo listContent(String path) {
 		Path actualPath = Paths.get(path);
-		String directories = "";
-		String files = "";
+		List<String> files = new ArrayList<>();
 		try (DirectoryStream<Path> stream = Files.newDirectoryStream(actualPath)) {
 
 			for (Path file : stream) {
-				if (Files.isDirectory(file)) {
-					directories += file.getFileName() + ",";
-				} else
-					files += file.getFileName() + ",";
+				files.add(file.getFileName().toString());
 			}
-			return "The directory containst the following directories: " + directories
-					+ " and the following files: " + files;
+			return new DirectoryInfo(files, false, false);
 		} catch (NoSuchFileException e) {
-			return "The file does not exist";
+			return new DirectoryInfo(null, true, false);
 		} catch (NotDirectoryException e) {
-			return "That's a file";
+			return new DirectoryInfo(null, false, true);
 		} catch (IOException e) {
 			throw new RuntimeException("Something went wrong with the file", e);
+		}
+
+	}
+
+	/**
+	 * A Static nested class that contains information for the current file such as a list of the
+	 * files in it, a boolean indicating if the file exists, and a boolean indicating if the path is
+	 * a file or a directory.
+	 * 
+	 * @author user
+	 */
+	public static final class DirectoryInfo {
+		private final List<String> files;
+		private final boolean doesNotExist;
+		private final boolean isFile;
+
+		/**
+		 * Constructing the class. Since the class is immutable, once it has been instantiated, it's
+		 * state can't be changed.
+		 * 
+		 * @param files
+		 *            a list of files in the current directory.
+		 * @param doesNotExist
+		 *            indicates if the file exists.
+		 * @param isFile
+		 *            indicates if the path is a file.
+		 */
+		public DirectoryInfo(List<String> files, boolean doesNotExist, boolean isFile) {
+			super();
+			this.files = files;
+			this.doesNotExist = doesNotExist;
+			this.isFile = isFile;
+		}
+
+		/**
+		 * Getter method for files.
+		 * 
+		 * @return the files
+		 */
+		public List<String> getFiles() {
+			return files;
+		}
+
+		/**
+		 * Getter method for doesNotExist.
+		 * 
+		 * @return the doesNotExist
+		 */
+		public boolean doesNotExist() {
+			return doesNotExist;
+		}
+
+		/**
+		 * Getter method for isFile.
+		 * 
+		 * @return the isFile
+		 */
+		public boolean isFile() {
+			return isFile;
 		}
 
 	}

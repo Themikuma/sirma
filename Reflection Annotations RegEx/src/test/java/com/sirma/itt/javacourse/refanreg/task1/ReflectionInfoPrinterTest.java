@@ -23,7 +23,7 @@ public class ReflectionInfoPrinterTest {
 	 */
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		randomClass = new ReflectionInfoPrinter(new RandomClass());
+		randomClass = new ReflectionInfoPrinter();
 	}
 
 	/**
@@ -32,7 +32,7 @@ public class ReflectionInfoPrinterTest {
 	 */
 	@Test
 	public void testPrintClassMethods() {
-		List<String> classMethods = randomClass.printClassMethods();
+		List<String> classMethods = randomClass.printClassMethods(new RandomClass());
 		assertTrue(classMethods
 				.contains("private void com.sirma.itt.javacourse.refanreg.task1.RandomClass.privateMethod()"));
 
@@ -43,7 +43,7 @@ public class ReflectionInfoPrinterTest {
 	 */
 	@Test
 	public void testPrintClassFields() {
-		List<String> classFields = randomClass.printClassFields();
+		List<String> classFields = randomClass.printClassFields(new RandomClass());
 		assertTrue(classFields
 				.contains("public java.lang.String com.sirma.itt.javacourse.refanreg.task1.RandomClass.publicString"));
 	}

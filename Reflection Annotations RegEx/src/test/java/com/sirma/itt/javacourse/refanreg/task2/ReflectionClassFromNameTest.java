@@ -31,23 +31,31 @@ public class ReflectionClassFromNameTest {
 	public static void setUpBeforeClass() throws ClassNotFoundException, InstantiationException,
 			IllegalAccessException {
 		randomClass = new ReflectionClassFromName();
-		randomClass.setClass("com.sirma.itt.javacourse.refanreg.task1.RandomClass");
 	}
 
 	/**
 	 * Testing to see if the printClassInterfaces method prints out the correct interfaces.
+	 * 
+	 * @throws ClassNotFoundException
+	 *             if the class is not found
 	 */
 	@Test
-	public void testPrintClassInterfaces() {
-		List<String> interfaces = randomClass.printClassInterfaces();
+	public void testPrintClassInterfaces() throws ClassNotFoundException {
+		List<String> interfaces = randomClass
+				.printClassInterfaces("com.sirma.itt.javacourse.refanreg.task1.RandomClass");
 		assertTrue(interfaces.contains("interface java.io.Serializable"));
 	}
 
 	/**
 	 * Testing to see if the printClassParrent method prints out the correct class parrent.
+	 * 
+	 * @throws ClassNotFoundException
+	 *             if the class is not found
 	 */
 	@Test
-	public void testPrintClassParrent() {
-		assertEquals("class java.lang.Object", randomClass.printClassParrent());
+	public void testPrintClassParrent() throws ClassNotFoundException {
+		assertEquals("class java.lang.Object",
+				randomClass
+						.printClassParrent("com.sirma.itt.javacourse.refanreg.task1.RandomClass"));
 	}
 }

@@ -21,15 +21,16 @@ public class FileReverser {
 	 * @return a StringBuilder containing all lines of the file.
 	 */
 
-	public StringBuilder readFile(String filePath) {
+	public StringBuilder readFileReversed(String filePath) {
 		StringBuilder fileContent = new StringBuilder();
+		String line = null;
 		try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-			String line = null;
+
 			while ((line = reader.readLine()) != null) {
 				if (fileContent.length() == 0) {
-					fileContent.append(line);
+					fileContent.insert(0, line);
 				} else
-					fileContent.append("\n" + line);
+					fileContent.insert(0, line + "\n");
 			}
 
 		} catch (IOException e) {
@@ -45,10 +46,9 @@ public class FileReverser {
 	 * @param filePath
 	 *            the path of the file to be reversed
 	 */
-	public void reverseFile(String filePath) {
-
+	public void saveFileReversed(String filePath) {
 		try {
-			Files.write(Paths.get(filePath), readFile(filePath).reverse().toString().getBytes());
+			Files.write(Paths.get(filePath), readFileReversed(filePath).toString().getBytes());
 		} catch (IOException e) {
 			throw new RuntimeException("General I/O exception", e);
 		}

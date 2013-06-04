@@ -1,5 +1,6 @@
 package com.sirma.itt.javacourse.refanreg.task6;
 
+import java.io.InputStream;
 import java.util.Scanner;
 
 /**
@@ -8,69 +9,36 @@ import java.util.Scanner;
  * 
  * @author user
  */
-public class IbanValidator {
-
-	private String ibans;
-
+public final class IbanValidator {
 	/**
-	 * Constructor, intializing the ibans String.
+	 * Private constructor, so the class cant be instantiated.
 	 */
-	public IbanValidator() {
-		ibans = "";
+	private IbanValidator() {
+
 	}
 
 	/**
-	 * Reading the ibans from the console until /bankAccounts is encountered.
+	 * Reading the ibans from the console until /bankAccounts is encountered, hide them and return
+	 * the result.
+	 * 
+	 * @param input
+	 *            The input string containing the ibans
+	 * @return the string with hidden ibans
 	 */
-	public void readIbans() {
-		Scanner reader = new Scanner(System.in);
+	public static String hideIbans(InputStream input) {
+		Scanner reader = new Scanner(input);
+		String ibans = "";
 		while (reader.hasNextLine()) {
 			String currentLine = reader.nextLine();
-			ibans += currentLine + "\n";
+			if ("".equals(ibans))
+				ibans += currentLine;
+			else
+				ibans += "\n" + currentLine;
 			if ("</bankAccounts>".equals(currentLine)) {
 				break;
 			}
 		}
 		reader.close();
-
-	}
-
-	/**
-	 * An overload method for testing purposes, taking string instead of reading from the console.
-	 * 
-	 * @param input
-	 *            the input string
-	 */
-	public void readIbans(String input) {
-		ibans = input;
-	}
-
-	/**
-	 * Replaces the first characters from the BG ibans with * via regex.
-	 * 
-	 * @return the input string, modified with hidden ibans
-	 */
-	public String hideIban() {
-		String newIban = ibans.replaceAll("BG80 BNBG( \\d{4}){3}(?=( \\d{4}){1}<\\/iban>)", "****");
-		return newIban;
-	}
-
-	/**
-	 * Getter method for ibans.
-	 * 
-	 * @return the ibans
-	 */
-	public String getIbans() {
-		return ibans;
-	}
-
-	/**
-	 * Setter method for ibans.
-	 * 
-	 * @param ibans
-	 *            the ibans to set
-	 */
-	public void setIbans(String ibans) {
-		this.ibans = ibans;
+		return ibans.replaceAll("BG80 BNBG( \\d{4}){3}(?=( \\d{4}){1}<\\/iban>)", "****");
 	}
 }

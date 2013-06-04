@@ -2,6 +2,9 @@ package com.sirma.itt.javacourse.refanreg.task6;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+
 import org.junit.Test;
 
 /**
@@ -35,25 +38,13 @@ public class IbanValidatorTest {
 	}
 
 	/**
-	 * Testing the input of the IbanValidator class for correct data.
-	 */
-	@Test
-	public void testReadIbansString() {
-		IbanValidator validator = new IbanValidator();
-		validator.readIbans(BANK_ACCOUNTS);
-		assertEquals(BANK_ACCOUNTS, validator.getIbans());
-	}
-
-	/**
 	 * Testing the HideIban method of the IbanValidator class to see if the BG ibans are hidden
 	 * correctly.
 	 */
 	@Test
 	public void testHideIban() {
-		IbanValidator validator = new IbanValidator();
-		validator.readIbans(BANK_ACCOUNTS);
-		String result = validator.hideIban();
+		InputStream input = new ByteArrayInputStream(BANK_ACCOUNTS.getBytes());
 
-		assertEquals(HIDDEN_ACCOUNTS, result);
+		assertEquals(HIDDEN_ACCOUNTS, IbanValidator.hideIbans(input));
 	}
 }

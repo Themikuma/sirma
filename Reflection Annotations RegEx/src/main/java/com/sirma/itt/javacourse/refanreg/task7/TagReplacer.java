@@ -1,5 +1,6 @@
 package com.sirma.itt.javacourse.refanreg.task7;
 
+import java.io.InputStream;
 import java.util.Scanner;
 
 /**
@@ -7,70 +8,38 @@ import java.util.Scanner;
  * 
  * @author user
  */
-public class TagReplacer {
-	private String code;
-
+public final class TagReplacer {
 	/**
-	 * Initializing the code String.
+	 * Private constructor, so the class cant be instantiated.
 	 */
-	public TagReplacer() {
-		code = "";
+	private TagReplacer() {
+
 	}
 
 	/**
-	 * Reading the code from the console until empty line is encountered.
+	 * Reading the code from the console until empty line is encountered, hide the x tags and return
+	 * the result.
+	 * 
+	 * @param input
+	 *            The input string containing the tags
+	 * @return the string with hidden x tags
 	 */
-	public void readCode() {
-		Scanner reader = new Scanner(System.in);
+	public static String replaceTags(InputStream input) {
+		Scanner reader = new Scanner(input);
+		String code = "";
 		while (reader.hasNextLine()) {
 			String currentLine = reader.nextLine();
-			code += currentLine + "\n";
+			if ("".equals(code))
+				code += currentLine;
+			else
+				code += "\n" + currentLine;
 			if ("".equals(currentLine)) {
 				break;
 			}
 		}
 		reader.close();
+		return code.replaceAll("<x[^<]*[^>]/x>", "<x/>");
 
-	}
-
-	/**
-	 * Overload method for testing purposes, reading the code as a string instead from user input.
-	 * 
-	 * @param inputString
-	 *            the input String
-	 */
-	public void readCode(String inputString) {
-		code = inputString;
-
-	}
-
-	/**
-	 * Removing data between x tags with regex.
-	 * 
-	 * @return the modified string
-	 */
-	public String replaceTags() {
-		String result = code.replaceAll("<x[^<]*[^>]/x>", "<x/>");
-		return result;
-	}
-
-	/**
-	 * Getter method for code.
-	 * 
-	 * @return the code
-	 */
-	public String getCode() {
-		return code;
-	}
-
-	/**
-	 * Setter method for code.
-	 * 
-	 * @param code
-	 *            the code to set
-	 */
-	public void setCode(String code) {
-		this.code = code;
 	}
 
 }

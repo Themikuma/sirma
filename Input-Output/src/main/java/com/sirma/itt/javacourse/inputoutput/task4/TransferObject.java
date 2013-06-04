@@ -38,21 +38,18 @@ public class TransferObject {
 	 */
 	public int transfer(int numberOfBytes, int offset) {
 
-		byte[] inputBuffer = new byte[10240];
+		byte[] Buffer = new byte[10240];
 		int size = 0;
 		int actualBytes = 0;
-		int bytesToRead = 0;
 		try {
 			input.skip(offset);
-			while (size != -1 && actualBytes < numberOfBytes) {
+			while (actualBytes < numberOfBytes) {
+				size = input.read(Buffer);
+				if (size < 0) {
+					break;
+				}
 				actualBytes += size;
-				output.write(inputBuffer, 0, size);
-				if ((actualBytes + 10240) > numberOfBytes)
-					bytesToRead = numberOfBytes % 10240;
-				else
-					bytesToRead = 10240;
-				size = input.read(inputBuffer, 0, bytesToRead);
-
+				output.write(Buffer, 0, size);
 			}
 		} catch (IOException e) {
 			throw new RuntimeException("General I/O exception", e);

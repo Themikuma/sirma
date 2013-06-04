@@ -11,27 +11,17 @@ import java.util.List;
  * @author user
  */
 public class ReflectionInfoPrinter {
-	private RandomClass randomObject;
-
-	/**
-	 * A class constructor, initializing the RandomClass class.
-	 * 
-	 * @param randomObject
-	 *            the class that is going to be manipulated by this class
-	 */
-	public ReflectionInfoPrinter(RandomClass randomObject) {
-		this.randomObject = randomObject;
-	}
 
 	/**
 	 * Using reflection to print out the methods of the RandomClass class.
 	 * 
+	 * @param randomObject
+	 *            The random object which methods we are going to get
 	 * @return List of methods from the class
 	 */
-	public List<String> printClassMethods() {
-		Class<? extends RandomClass> randomObjectClass = getRandomObject().getClass();
+	public List<String> printClassMethods(RandomClass randomObject) {
 		List<String> methods = new ArrayList<String>();
-		for (Method method : randomObjectClass.getDeclaredMethods()) {
+		for (Method method : randomObject.getClass().getDeclaredMethods()) {
 			methods.add(method.toString());
 		}
 		return methods;
@@ -40,33 +30,16 @@ public class ReflectionInfoPrinter {
 	/**
 	 * Using reflection to print out the fields of the RandomClass class.
 	 * 
+	 * @param randomObject
+	 *            The random object which methods we are going to get
 	 * @return array of fields from the class
 	 */
-	public List<String> printClassFields() {
-		Class<? extends RandomClass> randomObjectClass = getRandomObject().getClass();
+	public List<String> printClassFields(RandomClass randomObject) {
 		List<String> fields = new ArrayList<String>();
-		for (Field field : randomObjectClass.getDeclaredFields()) {
+		for (Field field : randomObject.getClass().getDeclaredFields()) {
 			fields.add(field.toString());
 		}
 		return fields;
 	}
 
-	/**
-	 * Getter method for randomObject.
-	 * 
-	 * @return the randomObject
-	 */
-	public RandomClass getRandomObject() {
-		return randomObject;
-	}
-
-	/**
-	 * Setter method for randomObject.
-	 * 
-	 * @param randomObject
-	 *            the randomObject to set
-	 */
-	public void setRandomObject(RandomClass randomObject) {
-		this.randomObject = randomObject;
-	}
 }
