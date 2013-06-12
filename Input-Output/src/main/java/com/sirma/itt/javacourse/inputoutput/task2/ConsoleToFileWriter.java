@@ -20,18 +20,19 @@ public class ConsoleToFileWriter {
 	 * Gets data from the input {@link InputStream} and writes it to a file. Can be used with
 	 * System.in for console input or with any other {@link InputStream}.
 	 * 
+	 * @param fileName
+	 *            the name of the file to be saved to
 	 * @param input
 	 *            the {@link InputStream} containing the data to be written to the file
 	 */
-	// TODO FIX THE SCANNER ! File name in the method signature !
-	public void writeToFile(InputStream input) {
+
+	public void writeToFile(String fileName, InputStream input) {
 		Path file = null;
-		Scanner in = new Scanner(input);
-		String fileName = in.nextLine();
 		file = Paths.get(fileName);
 		Charset charset = Charset.forName("UTF-8");
 
-		try (BufferedWriter writer = Files.newBufferedWriter(file, charset)) {
+		try (BufferedWriter writer = Files.newBufferedWriter(file, charset);
+				Scanner in = new Scanner(input)) {
 			while (in.hasNextLine()) {
 				String line = in.nextLine();
 				if (".".equals(line))
@@ -41,9 +42,8 @@ public class ConsoleToFileWriter {
 				writer.newLine();
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new RuntimeException("A General I/O exception occured", e);
 		}
-		in.close();
 
 	}
 

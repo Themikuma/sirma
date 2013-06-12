@@ -19,8 +19,8 @@ public class DirectoryBrowserTest {
 	 */
 	@Test
 	public void testListContentFile() {
-		DirectoryBrowser.DirectoryInfo directory = DirectoryBrowser.listContent(System
-				.getProperty("user.home") + "/My Documents/" + "hello.txt");
+		DirectoryBrowser.DirectoryInfo directory = DirectoryBrowser
+				.listContent("resources\\hello.txt");
 		assertTrue(directory.isFile());
 
 	}
@@ -31,12 +31,11 @@ public class DirectoryBrowserTest {
 	 */
 	@Test
 	public void testListContentDirectory() {
-		DirectoryBrowser.DirectoryInfo directory = DirectoryBrowser.listContent(System
-				.getProperty("user.home") + "/My Documents/maven/intro");
+		DirectoryBrowser.DirectoryInfo directory = DirectoryBrowser.listContent("resources");
 		List<String> expected = new ArrayList<>();
-		System.out.println(directory.getFiles());
 		expected.add(".classpath");
 		expected.add(".project");
+		expected.add("hello.txt");
 		expected.add("pom.xml");
 		expected.add("src");
 		assertTrue(expected.equals(directory.getFiles()));

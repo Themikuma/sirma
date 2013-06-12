@@ -25,13 +25,13 @@ public class ConsoleToFileWriterTest {
 	 */
 	@Test
 	public void testWriteToFile() {
-		String inputString = "hello.txt\nline1\nline2\nline3\n.\n";
+		String inputString = "line1\nline2\nline3\n.\n";
 		String expectedResult = "line1\nline2\nline3\n";
 		ConsoleToFileWriter writer = new ConsoleToFileWriter();
 		InputStream input = new ByteArrayInputStream(inputString.getBytes());
-		writer.writeToFile(input);
+		writer.writeToFile("resources\\hello.txt", input);
 
-		Path file = Paths.get("hello.txt");
+		Path file = Paths.get("resources\\hello.txt");
 		Charset charset = Charset.forName("UTF-8");
 		String resultString = "";
 		List<String> lines;

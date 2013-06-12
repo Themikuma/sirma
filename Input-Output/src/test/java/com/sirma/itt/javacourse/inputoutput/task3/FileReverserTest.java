@@ -18,7 +18,7 @@ public class FileReverserTest {
 	public void testReadFile() {
 		FileReverser fileReverser = new FileReverser();
 		String expectedData = "line3\nline2\nline1";
-		assertEquals(expectedData, fileReverser.readFileReversed("hello.txt").toString());
+		assertEquals(expectedData, fileReverser.readFileReversed("resources\\hello.txt").toString());
 
 	}
 
@@ -30,9 +30,9 @@ public class FileReverserTest {
 	public void testReverseFile() {
 		FileReverser fileReverser = new FileReverser();
 		String expectedData = "line1\nline2\nline3";
-		fileReverser.saveFileReversed("hello.txt");
-		assertEquals(expectedData, fileReverser.readFileReversed("hello.txt").toString());
-		fileReverser.saveFileReversed("hello.txt");
+		fileReverser.saveFileReversed("resources\\hello.txt");
+		assertEquals(expectedData, fileReverser.readFileReversed("resources\\hello.txt").toString());
+		fileReverser.saveFileReversed("resources\\hello.txt");
 	}
 
 }

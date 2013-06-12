@@ -39,8 +39,7 @@ public class DataClassTest {
 	 */
 	@Before
 	public void createObjectBeforeMethod() {
-		objectManipulator.saveObject(System.getProperty("user.home")
-				+ "/My Documents/userObject.usr", userObject);
+		objectManipulator.saveObject("resources\\userObject.usr", userObject);
 	}
 
 	/**
@@ -49,7 +48,7 @@ public class DataClassTest {
 	@After
 	public void deleteOBjectAfterMethod() {
 		try {
-			Files.delete(Paths.get(System.getProperty("user.home") + "/My Documents/userObject.usr"));
+			Files.delete(Paths.get("resources\\userObject.usr"));
 		} catch (IOException e) {
 			throw new RuntimeException("General I/O exception", e);
 		}
@@ -61,8 +60,7 @@ public class DataClassTest {
 	@Test
 	public void testSaveObject() {
 
-		assertTrue(Files.exists(Paths.get(System.getProperty("user.home")
-				+ "/My Documents/userObject.usr")));
+		assertTrue(Files.exists(Paths.get("resources\\userObject.usr")));
 
 	}
 
@@ -72,8 +70,8 @@ public class DataClassTest {
 	@Test
 	public void testGetObject() {
 
-		UserDefinedObject loadedUserObject = objectManipulator.getObject(System
-				.getProperty("user.home") + "/My Documents/userObject.usr");
+		UserDefinedObject loadedUserObject = objectManipulator
+				.getObject("resources\\userObject.usr");
 		assertEquals("Pesho", loadedUserObject.getName());
 
 	}
