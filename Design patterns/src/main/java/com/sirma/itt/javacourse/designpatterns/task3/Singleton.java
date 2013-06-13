@@ -5,6 +5,7 @@ package com.sirma.itt.javacourse.designpatterns.task3;
  * 
  * @author user
  */
+// TODO fix singleton for threads
 public final class Singleton {
 	private static Singleton instance;
 

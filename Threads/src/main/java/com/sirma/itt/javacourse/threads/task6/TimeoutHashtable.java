@@ -78,6 +78,7 @@ public class TimeoutHashtable {
 		@Override
 		public void run() {
 			while (true) {
+				// TODO iterator
 				for (String key : tableTimes.keySet()) {
 					if (tableTimes.get(key) == time) {
 						remove(key);

@@ -12,6 +12,7 @@ import javax.swing.border.EmptyBorder;
 public class Calculator extends JFrame {
 	private JTextField screen = new JTextField();
 
+	// TODO setoncloseoperation
 	public Calculator(int width, int height) {
 		setSize(width, height);
 		JPanel contentPane = new JPanel(new BorderLayout(15, 15));

@@ -22,8 +22,10 @@ public class CounterThread implements Runnable {
 	@Override
 	public void run() {
 		try {
-			for (seconds = 0; seconds < maxCount; seconds++) {
-				System.out.println(Thread.currentThread().getName() + " " + seconds);
+			Thread currentThread = Thread.currentThread();
+			for (seconds = 0; seconds < maxCount || currentThread.isInterrupted(); seconds++) {
+				System.out.println(currentThread.getName() + " " + seconds);
+
 				Thread.sleep(1000);
 			}
 
