@@ -3,13 +3,6 @@ package com.sirma.itt.javacourse.gui.task2;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -19,7 +12,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 public class DownloadAgent extends JFrame implements ActionListener {
-	private JTextField url = new JTextField();
+	private JTextField urlTxtField = new JTextField();
 	private JProgressBar progressBar = new JProgressBar();
 
 	public DownloadAgent() {
@@ -29,7 +22,7 @@ public class DownloadAgent extends JFrame implements ActionListener {
 
 		JButton downloadBtn = new JButton("Download");
 		downloadBtn.addActionListener(this);
-		contentPane.add(url, BorderLayout.NORTH);
+		contentPane.add(urlTxtField, BorderLayout.NORTH);
 		contentPane.add(downloadBtn, BorderLayout.CENTER);
 		contentPane.add(progressBar, BorderLayout.SOUTH);
 		setContentPane(contentPane);
@@ -38,31 +31,54 @@ public class DownloadAgent extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		URLConnection connection = null;
-		try {
-			URL address = new URL(url.getText());
-			connection = address.openConnection();
+		Thread downloadThread = new Thread(new Downloader(this));
+		downloadThread.start();
+	}
 
-		} catch (MalformedURLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		try (BufferedInputStream reader = new BufferedInputStream(connection.getInputStream());
-				BufferedOutputStream output = new BufferedOutputStream(new FileOutputStream(
-						"asd.png"))) {
-			int line;
-			int i = 0;
-			while ((line = reader.read()) != -1) {
-				// System.out.println(line);
-				output.write(line);
-				progressBar.setValue(i++);
-			}
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+	public String getUrl() {
+		return urlTxtField.getText();
+
+	}
+
+	public void updateProgressBar(int value) {
+		progressBar.setValue(value);
+	}
+
+	/**
+	 * Getter method for url.
+	 * 
+	 * @return the url
+	 */
+	public JTextField getUrlTextField() {
+		return urlTxtField;
+	}
+
+	/**
+	 * Setter method for url.
+	 * 
+	 * @param url
+	 *            the url to set
+	 */
+	public void setUrlTextField(JTextField url) {
+		this.urlTxtField = url;
+	}
+
+	/**
+	 * Getter method for progressBar.
+	 * 
+	 * @return the progressBar
+	 */
+	public JProgressBar getProgressBar() {
+		return progressBar;
+	}
+
+	/**
+	 * Setter method for progressBar.
+	 * 
+	 * @param progressBar
+	 *            the progressBar to set
+	 */
+	public void setProgressBar(JProgressBar progressBar) {
+		this.progressBar = progressBar;
 	}
 }
