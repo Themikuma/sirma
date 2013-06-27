@@ -1,47 +1,46 @@
 package com.sirma.itt.javacourse.gui.task3.Client;
 
 import java.awt.BorderLayout;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.Socket;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 
-import com.sirma.itt.javacourse.gui.sockets.SocketFinder;
-
+/**
+ * The main window of the client.
+ * 
+ * @author user
+ */
 public class Client extends JFrame {
+	/**
+	 * Comment for serialVersionUID.
+	 */
+	private static final long serialVersionUID = 4812376091391793740L;
 	private JTextArea console = new JTextArea();
 
+	/**
+	 * Setting up the size and components of the client window.
+	 */
 	public Client() {
+	}
+
+	public void initUI() {
 		setSize(300, 200);
 		JPanel contentPane = new JPanel(new BorderLayout(15, 15));
 		contentPane.setBorder(new EmptyBorder(15, 15, 15, 15));
 
 		contentPane.add(console, BorderLayout.CENTER);
 		setContentPane(contentPane);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
 	}
 
-	public void connect() {
-		Socket socket = SocketFinder.getAvailableSocket(7000, 7020);
-		console.setText(console.getText() + "Connected to localhost:" + socket.getPort() + "\n");
-		try (BufferedReader reader = new BufferedReader(new InputStreamReader(
-				socket.getInputStream()))) {
-			String line;
-			while ((line = reader.readLine()) != null) {
-				console.setText(console.getText() + line + "\n");
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		console.setText(console.getText() + "The connection has been terminated");
-
+	public void startListening() {
+		Thread thread = new Thread(new ClientListener(JOptionPane.showInputDialog("Enter host"),
+				console));
+		thread.start();
 	}
 
 }

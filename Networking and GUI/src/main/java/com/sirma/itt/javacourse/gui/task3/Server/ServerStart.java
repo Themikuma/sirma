@@ -1,14 +1,36 @@
 package com.sirma.itt.javacourse.gui.task3.Server;
 
-public class ServerStart {
+import javax.swing.SwingUtilities;
+
+/**
+ * Basic use of the {@link Server}.
+ * 
+ * @author user
+ */
+public final class ServerStart {
+	/**
+	 * A private constructor disallowing the instantiation of this class.
+	 */
+	private ServerStart() {
+
+	}
 
 	/**
+	 * The main method of the class.
+	 * 
 	 * @param args
+	 *            command-line arguments
 	 */
 	public static void main(String[] args) {
-		Server server = new Server();
-		server.startListening();
+		final Server server = new Server();
+		SwingUtilities.invokeLater(new Runnable() {
 
+			@Override
+			public void run() {
+				server.initUI();
+			}
+		});
+		server.startListening();
 	}
 
 }

@@ -7,74 +7,57 @@ import java.net.Socket;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 
-import com.sirma.itt.javacourse.gui.sockets.SocketFinder;
-
+/**
+ * The main window of the client.
+ * 
+ * @author user
+ */
 public class Client extends JFrame implements ActionListener {
+	/**
+	 * Comment for serialVersionUID.
+	 */
+	private static final long serialVersionUID = -761330359858286865L;
 	private JTextArea console = new JTextArea();
 	private Socket socket;
 
+	/**
+	 * Setting up the size and components of the window.
+	 */
 	public Client() {
+
+	}
+
+	public void initUI() {
 		setSize(300, 200);
 		JPanel contentPane = new JPanel(new BorderLayout(15, 15));
 		contentPane.setBorder(new EmptyBorder(15, 15, 15, 15));
 
 		JButton downloadBtn = new JButton("Connect");
 		downloadBtn.addActionListener(this);
-
 		contentPane.add(console, BorderLayout.CENTER);
 		contentPane.add(downloadBtn, BorderLayout.SOUTH);
 		setContentPane(contentPane);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		socket = SocketFinder.getAvailableSocket(7000, 7020);
-		console.setText(console.getText() + "Connected to localhost:" + socket.getPort() + "\n");
-		Thread messageReceiver = new Thread(new ClientListener(this));
-		messageReceiver.start();
+		connect(JOptionPane.showInputDialog("Enter host"));
 
 	}
 
 	/**
-	 * Getter method for console.
-	 * 
-	 * @return the console
+	 * Find an available server and connect to it.
 	 */
-	public JTextArea getConsole() {
-		return console;
+	public void connect(String host) {
+		Thread thread = new Thread(new ClientListener(host, console));
+		thread.start();
 	}
 
-	/**
-	 * Setter method for console.
-	 * 
-	 * @param console
-	 *            the console to set
-	 */
-	public void setConsole(JTextArea console) {
-		this.console = console;
-	}
-
-	/**
-	 * Getter method for socket.
-	 * 
-	 * @return the socket
-	 */
-	public Socket getSocket() {
-		return socket;
-	}
-
-	/**
-	 * Setter method for socket.
-	 * 
-	 * @param socket
-	 *            the socket to set
-	 */
-	public void setSocket(Socket socket) {
-		this.socket = socket;
-	}
 }
