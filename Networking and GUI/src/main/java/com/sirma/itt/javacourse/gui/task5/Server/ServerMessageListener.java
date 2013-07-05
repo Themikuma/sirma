@@ -1,34 +1,32 @@
 package com.sirma.itt.javacourse.gui.task5.Server;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.Socket;
 
 import javax.swing.JTextArea;
 
+import com.sirma.itt.javacourse.gui.sockets.ClientWrapper;
+
+/**
+ * The runnable that is going to listen for each client's messages and send them back reversed.
+ * 
+ * @author user
+ */
 public class ServerMessageListener implements Runnable {
-	private Socket socket;
+	private ClientWrapper client;
 	private JTextArea console;
-	private BufferedReader reader;
-	private BufferedWriter writer;
 
 	/**
-	 * @param socket
+	 * setting up the socket and console.
+	 * 
+	 * @param client
+	 *            the client connection
+	 * @param console
+	 *            the console which is going to be updated with the clients messages
 	 */
-	public ServerMessageListener(Socket socket, JTextArea console) {
+	public ServerMessageListener(ClientWrapper client, JTextArea console) {
 		super();
-		this.socket = socket;
+		this.client = client;
 		this.console = console;
-		try {
-			reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-			writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 
 	}
 
@@ -37,12 +35,13 @@ public class ServerMessageListener implements Runnable {
 		String msg = null;
 		try {
 			while (!".".equals(msg)) {
+
 				msg = readClientMessage();
-				sendReversedMessage(msg);
+				if (msg != null)
+					sendReversedMessage(msg);
 
 			}
-
-			socket.close();
+			client.closeConnection();
 		} catch (IOException e) {
 			System.out.println("The client has terminated the conection");
 		}
@@ -50,24 +49,30 @@ public class ServerMessageListener implements Runnable {
 
 	}
 
+	/**
+	 * Read an incomming message from the client.
+	 * 
+	 * @return the read message
+	 * @throws IOException
+	 *             if the client has terminated the connection
+	 */
 	private String readClientMessage() throws IOException {
 
-		String msg = reader.readLine();
+		String msg = client.receiveMessage();
 		console.setText(console.getText() + "Client: " + msg + "\n");
 		return msg;
 
 	}
 
-	// TODO add a welcome msg
+	/**
+	 * Send the reversed message back to the client.
+	 * 
+	 * @param message
+	 *            the message that is going to reversed and sent back
+	 */
 	private void sendReversedMessage(String message) {
-		try {
-			console.setText(console.getText() + "Sending back to client reversed message\n");
-			writer.write(new StringBuilder(message).reverse().toString());
-			writer.newLine();
-			writer.flush();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		console.setText(console.getText() + "Sending back to client reversed message\n");
+		client.sendMessage(new StringBuilder(message).reverse().toString());
+
 	}
 }

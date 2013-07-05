@@ -22,12 +22,11 @@ public final class ClientStart {
 	 *            command-line arguments
 	 */
 	public static void main(String[] args) {
-		final Client client = new Client();
 		SwingUtilities.invokeLater(new Runnable() {
 
 			@Override
 			public void run() {
-				client.initUI();
+				new Client().initUI();
 			}
 		});
 	}

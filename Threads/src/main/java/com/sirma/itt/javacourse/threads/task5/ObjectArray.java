@@ -8,7 +8,6 @@ package com.sirma.itt.javacourse.threads.task5;
 public class ObjectArray {
 	private Object[] objectArray;
 	private int iterator = 0;
-	private boolean continueExecution;
 
 	/**
 	 * Constructor of the class, specifying the length of the array of objects.
@@ -28,25 +27,17 @@ public class ObjectArray {
 	 *            the object to be added to the array.
 	 */
 	public synchronized void add(Object object) {
-
-		if (iterator == objectArray.length) {
-
+		while (iterator == objectArray.length) {
 			System.out.println(Thread.currentThread().getName()
 					+ " is waiting for an object to be removed ");
-			continueExecution = false;
 			try {
-				wait(1000);
+				wait();
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			if (!continueExecution)
-				return;
 		}
-		objectArray[iterator] = object;
-		iterator++;
-
-		continueExecution = true;
+		objectArray[iterator++] = object;
 		notifyAll();
 		System.out.println(Thread.currentThread().getName() + " object added");
 	}
@@ -56,24 +47,17 @@ public class ObjectArray {
 	 * remove and an exception is thrown.
 	 */
 	public synchronized void remove() {
-
-		if (iterator == 0) {
-
+		while (iterator == 0) {
 			System.out.println(Thread.currentThread().getName()
 					+ " is waiting for an object in the array");
-			continueExecution = false;
 			try {
-				wait(1000);
+				wait();
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			if (!continueExecution)
-				return;
 		}
-		objectArray[iterator - 1] = null;
-		iterator--;
-		continueExecution = true;
+		objectArray[--iterator] = null;
 		notifyAll();
 		System.out.println(Thread.currentThread().getName() + " object removed");
 

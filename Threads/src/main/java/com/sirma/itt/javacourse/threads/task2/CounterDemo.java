@@ -1,5 +1,7 @@
 package com.sirma.itt.javacourse.threads.task2;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 /**
  * A simple test of the {@link Counter}, since we can't write tests because we don't know what the
  * outcome will be .
@@ -21,10 +23,10 @@ public final class CounterDemo {
 	 *            command-line arguments
 	 */
 	public static void main(String[] args) {
-		Counter runnableThread = new Counter(1, 10000);
-		Counter runnableThreadTwo = new Counter(1, 3);
-		Thread thread = new Thread(runnableThread);
-		Thread secondThread = new Thread(runnableThreadTwo);
+		AtomicBoolean finished = new AtomicBoolean();
+
+		Thread thread = new Thread(new Counter(1, 4000, finished));
+		Thread secondThread = new Thread(new Counter(1, 3, finished));
 		thread.start();
 		secondThread.start();
 

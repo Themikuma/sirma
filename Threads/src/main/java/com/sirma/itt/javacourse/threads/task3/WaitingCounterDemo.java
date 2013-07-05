@@ -1,5 +1,7 @@
 package com.sirma.itt.javacourse.threads.task3;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 /**
  * A simple test of the {@link WaitingCounter}, since we can't write tests because we don't know
  * what the outcome will be .
@@ -21,8 +23,9 @@ public final class WaitingCounterDemo {
 	 *            command-line arguments
 	 */
 	public static void main(String[] args) {
-		WaitingCounter runnableThread = new WaitingCounter(1, 10000);
-		WaitingCounter runnableThreadTwo = new WaitingCounter(1, 3);
+		AtomicBoolean finished = new AtomicBoolean();
+		WaitingCounter runnableThread = new WaitingCounter(1, 10000, finished);
+		WaitingCounter runnableThreadTwo = new WaitingCounter(1, 3, finished);
 		Thread thread = new Thread(runnableThread);
 		Thread secondThread = new Thread(runnableThreadTwo);
 		thread.start();

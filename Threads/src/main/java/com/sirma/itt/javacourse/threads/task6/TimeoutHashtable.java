@@ -1,6 +1,7 @@
 package com.sirma.itt.javacourse.threads.task6;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -64,7 +65,7 @@ public class TimeoutHashtable {
 	 */
 	public void remove(String key) {
 		table.remove(key);
-		tableTimes.remove(key);
+		// tableTimes.remove(key);
 	}
 
 	/**
@@ -78,21 +79,24 @@ public class TimeoutHashtable {
 		@Override
 		public void run() {
 			while (true) {
-				// TODO iterator
-				for (String key : tableTimes.keySet()) {
-					if (tableTimes.get(key) == time) {
-						remove(key);
-						System.out.println(key + " has been removed");
-						break;
-					} else {
-						tableTimes.put(key, tableTimes.get(key) + 1);
-						System.out.println(tableTimes.get(key) + " seconds elapsed from " + key
-								+ " element insertion");
-						try {
-							Thread.sleep(100);
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+				synchronized (tableTimes) {
+					Iterator<String> iterator = tableTimes.keySet().iterator();
+					while (iterator.hasNext()) {
+						String key = iterator.next();
+						if (tableTimes.get(key) == time) {
+							iterator.remove();
+							remove(key);
+							System.out.println(key + " has been removed");
+						} else {
+							tableTimes.put(key, tableTimes.get(key) + 1);
+							System.out.println(tableTimes.get(key) + " seconds elapsed from " + key
+									+ " element insertion");
+							try {
+								Thread.sleep(100);
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 						}
 					}
 				}

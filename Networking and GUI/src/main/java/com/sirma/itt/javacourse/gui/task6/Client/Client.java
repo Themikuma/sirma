@@ -1,12 +1,12 @@
 package com.sirma.itt.javacourse.gui.task6.Client;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.GraphicsEnvironment;
 import java.awt.GridLayout;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.net.Socket;
 
 import javax.swing.JButton;
@@ -18,114 +18,75 @@ import javax.swing.border.EmptyBorder;
 
 import com.sirma.itt.javacourse.gui.sockets.SocketFinder;
 
+/**
+ * The main window of the client.
+ * 
+ * @author user
+ */
 public class Client extends JFrame implements ActionListener {
-	// TODO not a client socket
-	private Socket socket;
-	private JTextArea console = new JTextArea();
 
-	public Client() {
-		setSize(300, 400);
+	/**
+	 * Comment for serialVersionUID.
+	 */
+	private static final long serialVersionUID = -5253366624548030477L;
+	private JTextArea console = new JTextArea();
+	private CustomClientListener listener;
+
+	/**
+	 * Setting up the size and components of the window.
+	 */
+	public void initUI() {
+		setPreferredSize(new Dimension(300, 400));
 		JPanel contentPane = new JPanel(new BorderLayout(15, 15));
-		JPanel buttonPane = new JPanel(new GridLayout(0, 1));
 		contentPane.setBorder(new EmptyBorder(15, 15, 15, 15));
-		JButton downloadBtn = new JButton("Connect");
-		JButton closeBtn = new JButton("Close");
-		downloadBtn.addActionListener(this);
+		JButton connectBtn = new JButton("Connect");
+		JButton closeBtn = new JButton("Disconnect");
+		connectBtn.setActionCommand("Connect");
+		closeBtn.setActionCommand("Disconnect");
+		connectBtn.addActionListener(this);
 		closeBtn.addActionListener(this);
 		contentPane.add(console, BorderLayout.CENTER);
-		buttonPane.add(downloadBtn);
+
+		JPanel buttonPane = new JPanel(new GridLayout(0, 1));
+		buttonPane.add(connectBtn);
 		buttonPane.add(closeBtn);
 		contentPane.add(buttonPane, BorderLayout.SOUTH);
 		setContentPane(contentPane);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		Point screenCentre = GraphicsEnvironment.getLocalGraphicsEnvironment().getCenterPoint();
+		pack();
+		setLocation(screenCentre.x - getHeight() / 2, screenCentre.y - getWidth() / 2);
 		setVisible(true);
 	}
 
+	/**
+	 * Start the thread that is going to connect to the server at the given host. the host of the
+	 * server to connect to
+	 */
 	public void connect() {
-		socket = SocketFinder.getAvailableSocket(7000, 7020);
-		console.setText(console.getText() + "Connected to localhost:" + socket.getPort() + "\n");
-		Thread thread = new Thread(new ClientListener(this));
+		Socket socket;
+		setEnabled(false);
+		while ((socket = SocketFinder.getAvailableSocket(JOptionPane.showInputDialog("host"), 7000,
+				7020)) == null) {
+		}
+		setEnabled(true);
+
+		listener = new CustomClientListener(socket, console);
+		Thread thread = new Thread(listener);
+		thread.setDaemon(true);
 		thread.start();
 
-	}
-
-	public void disconnect() {
-
-		try {
-			BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(
-					socket.getOutputStream()));
-			writer.write("disconnect");
-			writer.newLine();
-			writer.flush();
-
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-
-	}
-
-	private void connectToChannel(String channel) {
-		try {
-			setTitle(channel);
-			BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(
-					socket.getOutputStream()));
-			writer.write("connect:" + channel);
-			writer.newLine();
-			writer.flush();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * Getter method for socket.
-	 * 
-	 * @return the socket
-	 */
-	public Socket getSocket() {
-		return socket;
-	}
-
-	/**
-	 * Setter method for socket.
-	 * 
-	 * @param socket
-	 *            the socket to set
-	 */
-	public void setSocket(Socket socket) {
-		this.socket = socket;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String command = e.getActionCommand();
 		if ("Connect".equals(command))
-			connectToChannel(JOptionPane.showInputDialog(null, "Enter the channel's ip: "));
+			listener.sendMessage("connect:"
+					+ JOptionPane.showInputDialog(null, "Enter the channel's ip: "));
 		else {
-			disconnect();
+			listener.sendMessage("disconnect");
 		}
 
 	}
-
-	/**
-	 * Getter method for console.
-	 * 
-	 * @return the console
-	 */
-	public JTextArea getConsole() {
-		return console;
-	}
-
-	/**
-	 * Setter method for console.
-	 * 
-	 * @param console
-	 *            the console to set
-	 */
-	public void setConsole(JTextArea console) {
-		this.console = console;
-	}
-
 }

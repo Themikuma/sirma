@@ -21,8 +21,8 @@ public final class ObjectArrayTest {
 	 */
 	public static void main(String[] args) {
 		ThreadSafeObjectArray demo = new ThreadSafeObjectArray(4);
-		Thread firstThread = new Thread(demo.addElements(4));
-		Thread secondThread = new Thread(demo.removeElements(5));
+		Thread firstThread = new Thread(demo.addElements(40));
+		Thread secondThread = new Thread(demo.removeElements(50));
 		firstThread.start();
 		secondThread.start();
 

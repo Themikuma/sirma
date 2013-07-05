@@ -1,14 +1,37 @@
 package com.sirma.itt.javacourse.gui.task6.Client;
 
-public class ClientStart {
+import javax.swing.SwingUtilities;
+
+/**
+ * Basic use of the client.
+ * 
+ * @author user
+ */
+public final class ClientStart {
 
 	/**
+	 * Private constructor disallowing the instantiation of the class.
+	 */
+	private ClientStart() {
+
+	}
+
+	/**
+	 * Starting the client and connecting to a server.
+	 * 
 	 * @param args
+	 *            command-line arguments
 	 */
 	public static void main(String[] args) {
-		Client client = new Client();
-		client.connect();
+		final Client client = new Client();
+		SwingUtilities.invokeLater(new Runnable() {
 
+			@Override
+			public void run() {
+				client.initUI();
+			}
+		});
+		client.connect();
 	}
 
 }

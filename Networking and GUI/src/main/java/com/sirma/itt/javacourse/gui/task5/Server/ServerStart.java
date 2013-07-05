@@ -2,10 +2,24 @@ package com.sirma.itt.javacourse.gui.task5.Server;
 
 import javax.swing.SwingUtilities;
 
-public class ServerStart {
+/**
+ * Basic use of the server.
+ * 
+ * @author user
+ */
+public final class ServerStart {
+	/**
+	 * Private constructor disallowing the instantiation of the class.
+	 */
+	private ServerStart() {
+
+	}
 
 	/**
+	 * Start the server and start listening for clients.
+	 * 
 	 * @param args
+	 *            command-line arguments
 	 */
 	public static void main(String[] args) {
 		final Server server = new Server();

@@ -25,6 +25,7 @@ public final class TimeoutDemo {
 		TimeoutHashtable table = new TimeoutHashtable(5);
 		table.put("first", 1);
 		table.put("second", 2);
+		table.put("third", 50);
 		Thread.sleep(500);
 		System.out.println("The second element has been added again.. resetting timer");
 		table.put("second", 2);

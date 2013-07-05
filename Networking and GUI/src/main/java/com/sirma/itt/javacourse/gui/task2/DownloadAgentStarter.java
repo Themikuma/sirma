@@ -26,7 +26,7 @@ public final class DownloadAgentStarter {
 
 			@Override
 			public void run() {
-				DownloadAgent agent = new DownloadAgent();
+				new DownloadAgent().initUI();
 			}
 		});
 	}

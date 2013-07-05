@@ -20,67 +20,47 @@ import javax.swing.SwingWorker;
 public class Downloader extends SwingWorker<Void, BigInteger> {
 
 	private String link;
+	private String saveFile;
 
 	/**
 	 * Setting the agent.
 	 * 
-	 * @param agent
-	 *            the agent that the runnable is going to manipulate.
+	 * @param link
+	 *            path to the file to be downloaded
+	 * @param saveFile
+	 *            the location of the file to be saved
 	 */
-	public Downloader(String link) {
+	public Downloader(String link, String saveFile) {
 		this.link = link;
+		this.saveFile = saveFile;
 	}
 
 	@Override
 	protected Void doInBackground() throws Exception {
-		downloadFile(link, getFileName(link));
+		downloadFile();
 		return null;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected void done() {
-		// TODO Auto-generated method stub
-		super.done();
-	}
-
-	/**
-	 * Gets the name of the file from the path.
-	 * 
-	 * @param path
-	 *            the full path to the file
-	 * @return the name of the file from the path
-	 */
-	public String getFileName(String path) {
-		return path.substring(path.lastIndexOf("/") + 1);
 	}
 
 	/**
 	 * Download the file from the given path to the given destination.
 	 * 
-	 * @param path
-	 *            the path from which the file is going to be downloaded. It can be either a local
-	 *            file or an online one.
-	 * @param destination
-	 *            the destination to which the file is going to be copied/downloaded
 	 * @return the total number of bytes copied
 	 */
-	public BigInteger downloadFile(String path, String destination) {
+	public BigInteger downloadFile() {
 		URLConnection connection = null;
 		try {
-			connection = new URL(path).openConnection();
+			connection = new URL(link).openConnection();
 		} catch (MalformedURLException e1) {
 			JOptionPane.showMessageDialog(null, "Invalid url format");
 			return null;
 		} catch (IOException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "General I/O exception has occured");
+			return null;
 		}
 		int contentLength = connection.getContentLength();
 
 		try (BufferedInputStream reader = new BufferedInputStream(connection.getInputStream());
-				FileOutputStream output = new FileOutputStream("resources\\" + destination)) {
+				FileOutputStream output = new FileOutputStream(saveFile)) {
 			byte[] buffer = new byte[10240];
 			int size = 0;
 			BigInteger readBytes = new BigInteger("0");
@@ -88,20 +68,15 @@ public class Downloader extends SwingWorker<Void, BigInteger> {
 			while ((size = reader.read(buffer)) > 0) {
 				output.write(buffer, 0, size);
 				readBytes = readBytes.add(new BigInteger(Integer.toString(size)));
-				System.out.println(readBytes.intValue()
-						+ " are "
-						+ readBytes.multiply(new BigInteger("100"))
-								.divide(new BigInteger(Integer.toString(contentLength))).intValue()
-						+ "% of " + contentLength);
-				setProgress(readBytes.multiply(new BigInteger("100"))
-						.divide(new BigInteger(Integer.toString(contentLength))).intValue());
+				int progress = readBytes.multiply(BigInteger.valueOf(100))
+						.divide(BigInteger.valueOf(contentLength)).intValue();
+				setProgress(progress);
 			}
 			return readBytes;
 		} catch (FileNotFoundException e) {
 			JOptionPane.showMessageDialog(null, "File can't be opened for some reason");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "A General I/O exception occured.");
 		}
 		return null;
 	}

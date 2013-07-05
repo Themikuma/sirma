@@ -18,8 +18,8 @@ public class SingletonTest {
 	 */
 	@Test
 	public void test() {
-		Singleton singleton = Singleton.getInstance();
-		Singleton secondSingleton = Singleton.getInstance();
+		Singleton singleton = Singleton.INSTANCE;
+		Singleton secondSingleton = Singleton.INSTANCE;
 		assertEquals(singleton, secondSingleton);
 	}
 

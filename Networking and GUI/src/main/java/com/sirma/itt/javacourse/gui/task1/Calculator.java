@@ -9,11 +9,27 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+/**
+ * The main window of the calculator.
+ * 
+ * @author user
+ */
 public class Calculator extends JFrame {
+	/**
+	 * Comment for serialVersionUID.
+	 */
+	private static final long serialVersionUID = -6687411057486141891L;
 	private JTextField screen = new JTextField();
 
-	// TODO setoncloseoperation
-	public Calculator(int width, int height) {
+	/**
+	 * Init the ui with the given widht and height and set up the components.
+	 * 
+	 * @param width
+	 *            the width of the window
+	 * @param height
+	 *            the height of the window
+	 */
+	public void initUI(int width, int height) {
 		setSize(width, height);
 		JPanel contentPane = new JPanel(new BorderLayout(15, 15));
 		contentPane.setBorder(new EmptyBorder(15, 15, 15, 15));
@@ -23,14 +39,26 @@ public class Calculator extends JFrame {
 		screen.setBackground(Color.white);
 		contentPane.add(screen, BorderLayout.NORTH);
 		contentPane.add(new ButtonPane(new CommandListener(this)), BorderLayout.CENTER);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setContentPane(contentPane);
 		setVisible(true);
 	}
 
+	/**
+	 * Set the screen text directly instead of getting its instance first.
+	 * 
+	 * @param text
+	 *            the text to be set
+	 */
 	public void setScreenText(String text) {
 		screen.setText(text);
 	}
 
+	/**
+	 * Get the screen text directly instead of tettings its instance first.
+	 * 
+	 * @return the text from the screen
+	 */
 	public String getScreenText() {
 		return screen.getText();
 	}

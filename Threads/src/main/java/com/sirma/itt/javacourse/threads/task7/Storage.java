@@ -1,5 +1,7 @@
 package com.sirma.itt.javacourse.threads.task7;
 
+import com.sirma.itt.javacourse.threads.task5.ObjectArray;
+
 /**
  * A child of the {@link ObjectArray} adding Producers and Consumers that will add and remove
  * elements.

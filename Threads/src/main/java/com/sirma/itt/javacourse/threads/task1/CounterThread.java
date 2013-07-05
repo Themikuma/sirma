@@ -23,15 +23,14 @@ public class CounterThread implements Runnable {
 	public void run() {
 		try {
 			Thread currentThread = Thread.currentThread();
-			for (seconds = 0; seconds < maxCount || currentThread.isInterrupted(); seconds++) {
+			while (seconds < maxCount || currentThread.isInterrupted()) {
 				System.out.println(currentThread.getName() + " " + seconds);
-
 				Thread.sleep(1000);
+				seconds++;
 			}
 
 		} catch (InterruptedException e) {
 			return;
-			// TODO ?? was ist das??
 		}
 
 	}

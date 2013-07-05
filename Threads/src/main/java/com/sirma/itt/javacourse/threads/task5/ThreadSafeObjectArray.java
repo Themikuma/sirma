@@ -29,7 +29,7 @@ public class ThreadSafeObjectArray extends ObjectArray {
 	}
 
 	/**
-	 * Creates a new {@link ElementRemover} runnable which rmeoves elements from the object array.
+	 * Creates a new {@link ElementRemover} runnable which removes elements from the object array.
 	 * 
 	 * @param count
 	 *            the number of elements to be removed

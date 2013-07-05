@@ -15,7 +15,6 @@ public class Counter {
 	private final CounterThread counter;
 	private final Thread counterThread;
 
-	// TODO generate getters and setters for all
 	/**
 	 * Setting up the maximum number and the thread on which the runnable object will count.
 	 * 

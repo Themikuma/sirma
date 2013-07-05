@@ -7,28 +7,29 @@ import java.math.BigInteger;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+/**
+ * Testing the {@link DownloadAgent} class.
+ * 
+ * @author user
+ */
 public class DownloadAgentTest {
 
 	private static Downloader downloader;
 
+	/**
+	 * Set up the file that we are going to work on before the tests.
+	 */
 	@BeforeClass
 	public static void setUp() {
-		downloader = new Downloader(
-				"file:///C:/Users/user/Documents/GitHub/sirma/Networking%20and%20GUI/resources/eclipse-SDK-4.2.2-win32-x86_64.zip");
+		downloader = new Downloader("file:resources/Awesome.png", "resources//Awesome_2.png");
 	}
 
-	@Test
-	public void testFileName() {
-		assertEquals("Awesome.png", downloader.getFileName("resources/Awesome.png"));
-
-	}
-
+	/**
+	 * Test the downloaded's file bytes.
+	 */
 	@Test
 	public void testDownloadFile() {
-		BigInteger bytesRead = downloader
-				.downloadFile(
-						"file:///C:/Users/user/Documents/GitHub/sirma/Networking%20and%20GUI/resources/eclipse-SDK-4.2.2-win32-x86_64.zip",
-						"eclipse_2.zip");
-		assertEquals(192270521, bytesRead.intValue());
+		BigInteger bytesRead = downloader.downloadFile();
+		assertEquals(634316, bytesRead.intValue());
 	}
 }
