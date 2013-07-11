@@ -2,9 +2,8 @@ package com.sirma.itt.javacourse.gui.task5.Server;
 
 import java.io.IOException;
 
-import javax.swing.JTextArea;
-
 import com.sirma.itt.javacourse.gui.sockets.ClientWrapper;
+import com.sirma.itt.javacourse.gui.sockets.Console;
 
 /**
  * The runnable that is going to listen for each client's messages and send them back reversed.
@@ -13,7 +12,7 @@ import com.sirma.itt.javacourse.gui.sockets.ClientWrapper;
  */
 public class ServerMessageListener implements Runnable {
 	private ClientWrapper client;
-	private JTextArea console;
+	private Console console;
 
 	/**
 	 * setting up the socket and console.
@@ -23,7 +22,7 @@ public class ServerMessageListener implements Runnable {
 	 * @param console
 	 *            the console which is going to be updated with the clients messages
 	 */
-	public ServerMessageListener(ClientWrapper client, JTextArea console) {
+	public ServerMessageListener(ClientWrapper client, Console console) {
 		super();
 		this.client = client;
 		this.console = console;
@@ -45,7 +44,7 @@ public class ServerMessageListener implements Runnable {
 		} catch (IOException e) {
 			System.out.println("The client has terminated the conection");
 		}
-		console.setText(console.getText() + "Client thread destroyed\n");
+		console.appendLine(console.getText() + "Client thread destroyed");
 
 	}
 
@@ -59,7 +58,7 @@ public class ServerMessageListener implements Runnable {
 	private String readClientMessage() throws IOException {
 
 		String msg = client.receiveMessage();
-		console.setText(console.getText() + "Client: " + msg + "\n");
+		console.appendLine(console.getText() + "Client: " + msg);
 		return msg;
 
 	}
@@ -71,7 +70,7 @@ public class ServerMessageListener implements Runnable {
 	 *            the message that is going to reversed and sent back
 	 */
 	private void sendReversedMessage(String message) {
-		console.setText(console.getText() + "Sending back to client reversed message\n");
+		console.appendLine(console.getText() + "Sending back to client reversed message");
 		client.sendMessage(new StringBuilder(message).reverse().toString());
 
 	}

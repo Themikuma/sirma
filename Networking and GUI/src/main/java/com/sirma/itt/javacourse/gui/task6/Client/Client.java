@@ -13,9 +13,9 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 
+import com.sirma.itt.javacourse.gui.sockets.Console;
 import com.sirma.itt.javacourse.gui.sockets.SocketFinder;
 
 /**
@@ -29,8 +29,9 @@ public class Client extends JFrame implements ActionListener {
 	 * Comment for serialVersionUID.
 	 */
 	private static final long serialVersionUID = -5253366624548030477L;
-	private JTextArea console = new JTextArea();
+	private Console console = new Console();
 	private CustomClientListener listener;
+	private boolean continueExecution;
 
 	/**
 	 * Setting up the size and components of the window.
@@ -64,17 +65,23 @@ public class Client extends JFrame implements ActionListener {
 	 * server to connect to
 	 */
 	public void connect() {
-		Socket socket;
 		setEnabled(false);
-		while ((socket = SocketFinder.getAvailableSocket(JOptionPane.showInputDialog("host"), 7000,
-				7020)) == null) {
-		}
-		setEnabled(true);
+		String host;
 
-		listener = new CustomClientListener(socket, console);
-		Thread thread = new Thread(listener);
-		thread.setDaemon(true);
-		thread.start();
+		while ((host = JOptionPane.showInputDialog("host")) != null) {
+			Socket socket = SocketFinder.getAvailableSocket(host, 7000, 7020);
+			if (socket != null) {
+				setEnabled(true);
+				listener = new CustomClientListener(socket, console);
+				Thread thread = new Thread(listener);
+				thread.setDaemon(true);
+				thread.start();
+				continueExecution = true;
+				break;
+			}
+		}
+		if (!continueExecution)
+			dispose();
 
 	}
 

@@ -46,7 +46,7 @@ public abstract class ServerListener implements Runnable {
 	 */
 	public void waitForClients() {
 
-		while (true) {
+		while (!Thread.interrupted()) {
 			acceptClient();
 		}
 

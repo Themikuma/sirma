@@ -5,9 +5,8 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 
-import javax.swing.JTextArea;
-
 import com.sirma.itt.javacourse.gui.sockets.ClientListener;
+import com.sirma.itt.javacourse.gui.sockets.Console;
 
 /**
  * Handles the connection to the server, sending and receiving messages.
@@ -16,7 +15,7 @@ import com.sirma.itt.javacourse.gui.sockets.ClientListener;
  */
 public class CustomClientListener extends ClientListener {
 	private BufferedWriter writer;
-	private JTextArea console;
+	private Console console;
 
 	/**
 	 * Setting up the host and console.
@@ -26,7 +25,7 @@ public class CustomClientListener extends ClientListener {
 	 * @param console
 	 *            the console to which the client is going to write.
 	 */
-	public CustomClientListener(Socket socket, JTextArea console) {
+	public CustomClientListener(Socket socket, Console console) {
 		super(socket);
 		this.console = console;
 	}
@@ -46,15 +45,15 @@ public class CustomClientListener extends ClientListener {
 			writer.flush();
 
 		} catch (IOException e1) {
-			console.append("The connection with the server has already been terminated\n");
+			console.appendLine("The connection with the server has already been terminated");
 		}
 
 	}
 
 	@Override
 	public void onConnect() {
-		console.append("Connected to " + getSocket().getInetAddress() + " on port"
-				+ getSocket().getPort() + "\n");
+		console.appendLine("Connected to " + getSocket().getInetAddress() + " on port"
+				+ getSocket().getPort());
 		try {
 			writer = new BufferedWriter(new OutputStreamWriter(getSocket().getOutputStream()));
 		} catch (IOException e) {
@@ -66,7 +65,7 @@ public class CustomClientListener extends ClientListener {
 
 	@Override
 	public void onMessageReceived(String message) {
-		console.append(message + "\n");
+		console.appendLine(message);
 
 	}
 }

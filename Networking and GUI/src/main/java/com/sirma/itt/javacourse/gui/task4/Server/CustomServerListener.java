@@ -3,10 +3,11 @@ package com.sirma.itt.javacourse.gui.task4.Server;
 import java.net.ServerSocket;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.swing.JTextArea;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import com.sirma.itt.javacourse.gui.sockets.ClientWrapper;
+import com.sirma.itt.javacourse.gui.sockets.Console;
 import com.sirma.itt.javacourse.gui.sockets.ServerListener;
 
 /**
@@ -15,8 +16,9 @@ import com.sirma.itt.javacourse.gui.sockets.ServerListener;
  * @author user
  */
 public class CustomServerListener extends ServerListener {
-	private JTextArea console;
+	private Console console;
 	private List<ClientWrapper> clientList = new ArrayList<>();
+	private ExecutorService threadPool = Executors.newCachedThreadPool();
 
 	/**
 	 * @param socket
@@ -24,27 +26,22 @@ public class CustomServerListener extends ServerListener {
 	 * @param console
 	 *            the console to which the server is going to write the received messages
 	 */
-	public CustomServerListener(ServerSocket socket, JTextArea console) {
+	public CustomServerListener(ServerSocket socket, Console console) {
 		super(socket);
 		this.console = console;
 	}
 
 	@Override
 	public void onConnect() {
-		console.append("Server started on " + getSocket().getInetAddress() + " port "
-				+ getSocket().getLocalPort() + "\n");
+		console.appendLine("Server started on " + getSocket().getInetAddress() + " port "
+				+ getSocket().getLocalPort());
 
 	}
 
 	@Override
 	public void onClientConnect(ClientWrapper client) {
 		clientList.add(client);
-
-		console.setText(console.getText() + "Client N" + clientList.size() + " has connected"
-				+ "\n");
-		Thread updateThread = new Thread(new ClientNotifier(clientList));
-		updateThread.setDaemon(true);
-		updateThread.start();
-
+		console.appendLine("Client N" + clientList.size() + " has connected");
+		threadPool.execute(new ClientNotifier(clientList));
 	}
 }

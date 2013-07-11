@@ -1,7 +1,5 @@
 package com.sirma.itt.javacourse.gui.task6.Server;
 
-import javax.swing.DefaultListModel;
-
 import com.sirma.itt.javacourse.gui.sockets.ClientWrapper;
 import com.sirma.itt.javacourse.gui.task6.ChannelManager;
 
@@ -21,11 +19,8 @@ public class ServerMessageListener implements Runnable {
 	 *            the client
 	 * @param mediator
 	 *            the mediator that handles the messages
-	 * @param model
-	 *            the model of the list containing the channels
 	 */
-	public ServerMessageListener(ClientWrapper client, ChannelManager mediator,
-			DefaultListModel<String> model) {
+	public ServerMessageListener(ClientWrapper client, ChannelManager mediator) {
 		super();
 		this.client = client;
 		this.mediator = mediator;

@@ -1,10 +1,15 @@
 package com.sirma.itt.javacourse.gui.task6;
 
+import java.text.DateFormatSymbols;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import com.sirma.itt.javacourse.gui.sockets.ClientWrapper;
 
@@ -15,6 +20,7 @@ import com.sirma.itt.javacourse.gui.sockets.ClientWrapper;
  */
 public class ChannelManager {
 	private Map<String, List<ClientWrapper>> channelList = new HashMap<>();
+	private Locale[] supported = { Locale.ENGLISH, new Locale("bg") };
 
 	/**
 	 * Add a user to the specified channel in the map.
@@ -70,8 +76,14 @@ public class ChannelManager {
 	 */
 	public void sendMessage(String channelName, String message) {
 		List<ClientWrapper> users = channelList.get(channelName);
+
+		ResourceBundle daysBundle = ResourceBundle.getBundle("DaysBundle", supported[1]);
+		SimpleDateFormat formatter;
+		DateFormatSymbols symbols = new DateFormatSymbols(supported[1]);
+		symbols.setShortWeekdays(daysBundle.getString("days").split(","));
+		formatter = new SimpleDateFormat("E H:mm", symbols);
 		for (ClientWrapper user : users) {
-			user.sendMessage(message);
+			user.sendMessage(formatter.format(new Date()) + ":" + message);
 		}
 	}
 }

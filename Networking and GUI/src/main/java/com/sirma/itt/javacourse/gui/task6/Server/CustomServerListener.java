@@ -2,8 +2,6 @@ package com.sirma.itt.javacourse.gui.task6.Server;
 
 import java.net.ServerSocket;
 
-import javax.swing.DefaultListModel;
-
 import com.sirma.itt.javacourse.gui.sockets.ClientWrapper;
 import com.sirma.itt.javacourse.gui.sockets.ServerListener;
 import com.sirma.itt.javacourse.gui.task6.ChannelManager;
@@ -16,7 +14,6 @@ import com.sirma.itt.javacourse.gui.task6.ChannelManager;
 public class CustomServerListener extends ServerListener {
 
 	private ChannelManager mediator;
-	private DefaultListModel<String> model;
 
 	/**
 	 * Setting up the host, mediator and model.
@@ -25,19 +22,15 @@ public class CustomServerListener extends ServerListener {
 	 *            the socket connection
 	 * @param mediator
 	 *            the mediator that handles messages
-	 * @param model
-	 *            the model of the list with the channels
 	 */
-	public CustomServerListener(ServerSocket socket, ChannelManager mediator,
-			DefaultListModel<String> model) {
+	public CustomServerListener(ServerSocket socket, ChannelManager mediator) {
 		super(socket);
 		this.mediator = mediator;
-		this.model = model;
 	}
 
 	@Override
 	public void onClientConnect(ClientWrapper client) {
-		Thread updateThread = new Thread(new ServerMessageListener(client, mediator, model));
+		Thread updateThread = new Thread(new ServerMessageListener(client, mediator));
 		updateThread.setDaemon(true);
 		updateThread.start();
 

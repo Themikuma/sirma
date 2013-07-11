@@ -2,9 +2,8 @@ package com.sirma.itt.javacourse.gui.task3.Client;
 
 import java.net.Socket;
 
-import javax.swing.JTextArea;
-
 import com.sirma.itt.javacourse.gui.sockets.ClientListener;
+import com.sirma.itt.javacourse.gui.sockets.Console;
 
 /**
  * The runnable that connects to the server and listens for messages from him.
@@ -12,7 +11,7 @@ import com.sirma.itt.javacourse.gui.sockets.ClientListener;
  * @author user
  */
 public class CustomClientListener extends ClientListener {
-	private JTextArea console;
+	private Console console;
 
 	/**
 	 * Setting up the host and console.
@@ -22,22 +21,22 @@ public class CustomClientListener extends ClientListener {
 	 * @param console
 	 *            the console to which the client is going to write.
 	 */
-	public CustomClientListener(Socket socket, JTextArea console) {
+	public CustomClientListener(Socket socket, Console console) {
 		super(socket);
 		this.console = console;
 	}
 
 	@Override
 	public void onConnect() {
-		console.append("Connected to " + getSocket().getInetAddress() + " on port"
-				+ getSocket().getPort() + "\n");
+		console.appendLine("Connected to " + getSocket().getInetAddress() + " on port"
+				+ getSocket().getPort());
 	}
 
 	@Override
 	public void onMessageReceived(String message) {
-		console.append(message + "\n");
+		console.appendLine(message);
 		closeConnection();
-		console.append("Connection closed");
+		console.appendLine("Connection closed");
 	}
 
 }

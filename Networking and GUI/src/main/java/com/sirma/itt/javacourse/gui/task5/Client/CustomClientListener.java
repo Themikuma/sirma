@@ -5,9 +5,8 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 
-import javax.swing.JTextArea;
-
 import com.sirma.itt.javacourse.gui.sockets.ClientListener;
+import com.sirma.itt.javacourse.gui.sockets.Console;
 import com.sirma.itt.javacourse.gui.sockets.MessageSender;
 
 /**
@@ -17,7 +16,7 @@ import com.sirma.itt.javacourse.gui.sockets.MessageSender;
  */
 public class CustomClientListener extends ClientListener {
 
-	private JTextArea console;
+	private Console console;
 	private MessageSender messager;
 
 	/**
@@ -28,7 +27,7 @@ public class CustomClientListener extends ClientListener {
 	 * @param console
 	 *            the console to which the client is going to write.
 	 */
-	public CustomClientListener(Socket socket, JTextArea console) {
+	public CustomClientListener(Socket socket, Console console) {
 		super(socket);
 		this.console = console;
 	}
@@ -46,8 +45,8 @@ public class CustomClientListener extends ClientListener {
 
 	@Override
 	public void onConnect() {
-		console.append("Connected to " + getSocket().getInetAddress() + " on port"
-				+ getSocket().getPort() + "\n");
+		console.appendLine("Connected to " + getSocket().getInetAddress() + " on port"
+				+ getSocket().getPort());
 		try {
 			messager = new MessageSender(new BufferedWriter(new OutputStreamWriter(getSocket()
 					.getOutputStream())));
@@ -62,7 +61,7 @@ public class CustomClientListener extends ClientListener {
 
 	@Override
 	public void onMessageReceived(String message) {
-		console.append(message + "\n");
+		console.appendLine(message);
 
 	}
 }

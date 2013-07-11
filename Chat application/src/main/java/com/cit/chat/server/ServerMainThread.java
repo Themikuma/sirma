@@ -63,7 +63,6 @@ public class ServerMainThread implements Runnable {
 			Thread thread = new Thread(new ClientMessagesReadThread(client, console, clientList));
 			thread.start();
 		} catch (IOException e) {
-			// TODO auto
 		}
 	}
 }

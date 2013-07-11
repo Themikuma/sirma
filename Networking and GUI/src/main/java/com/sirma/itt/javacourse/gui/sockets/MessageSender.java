@@ -3,8 +3,8 @@ package com.sirma.itt.javacourse.gui.sockets;
 import java.awt.GraphicsEnvironment;
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 import javax.swing.JOptionPane;
 
@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
  * @author user
  */
 public class MessageSender implements Runnable {
-	private BlockingQueue<String> messages = new ArrayBlockingQueue<>(10);
+	private BlockingQueue<String> messages = new LinkedBlockingQueue<String>();
 	private BufferedWriter writer;
 
 	/**
@@ -30,7 +30,7 @@ public class MessageSender implements Runnable {
 
 	@Override
 	public void run() {
-		while (true) {
+		while (!Thread.interrupted()) {
 			try {
 				writer.write(messages.take());
 				writer.newLine();

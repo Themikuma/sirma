@@ -117,7 +117,6 @@ public class ClientWrapper {
 			writer.newLine();
 			writer.flush();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

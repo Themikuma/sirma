@@ -6,10 +6,9 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import javax.swing.JTextArea;
-
 import org.junit.Test;
 
+import com.sirma.itt.javacourse.gui.sockets.Console;
 import com.sirma.itt.javacourse.gui.sockets.SocketFinder;
 import com.sirma.itt.javacourse.gui.task5.Client.CustomClientListener;
 import com.sirma.itt.javacourse.gui.task5.Server.CustomServerListener;
@@ -32,20 +31,32 @@ public class CommunicationTest {
 	public void test() throws IOException {
 
 		ServerSocket serverSocket = SocketFinder.getAvailableServerSocket("localhost", 7000, 7020);
-		Socket clientSocket = SocketFinder.getAvailableSocket("localhost", 7000, 7020);
-		JTextArea dummyConsole = new JTextArea();
+
+		Console dummyConsole = new Console();
+
 		CustomServerListener listener = new CustomServerListener(serverSocket, dummyConsole);
 		Thread serverThread = new Thread(listener);
 		serverThread.start();
+
+		Socket clientSocket = SocketFinder.getAvailableSocket("localhost", 7000, 7020);
 		CustomClientListener client = new CustomClientListener(clientSocket, dummyConsole);
-		CustomClientListener secondClient = new CustomClientListener(clientSocket, dummyConsole);
 		client.connect();
+
+		Socket secondClientSocket = SocketFinder.getAvailableSocket("localhost", 7000, 7020);
+		CustomClientListener secondClient = new CustomClientListener(secondClientSocket,
+				dummyConsole);
 		secondClient.connect();
+
 		secondClient.sendMessage("Outline");
+		String secondResult = secondClient.waitForMessage();
+
 		client.sendMessage("hello");
 		String result = client.waitForMessage();
-		String secondResult = secondClient.waitForMessage();
+
 		listener.stopServer();
+		client.closeConnection();
+		secondClient.closeConnection();
+
 		assertTrue("olleh".equals(result) && "eniltuO".equals(secondResult));
 
 	}

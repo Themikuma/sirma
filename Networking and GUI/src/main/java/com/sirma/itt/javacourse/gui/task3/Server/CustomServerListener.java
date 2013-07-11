@@ -2,10 +2,11 @@ package com.sirma.itt.javacourse.gui.task3.Server;
 
 import java.net.ServerSocket;
 import java.util.Date;
-
-import javax.swing.JTextArea;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import com.sirma.itt.javacourse.gui.sockets.ClientWrapper;
+import com.sirma.itt.javacourse.gui.sockets.Console;
 import com.sirma.itt.javacourse.gui.sockets.ServerListener;
 
 /**
@@ -15,7 +16,8 @@ import com.sirma.itt.javacourse.gui.sockets.ServerListener;
  */
 public class CustomServerListener extends ServerListener {
 
-	private JTextArea console;
+	private Console console;
+	private ExecutorService threadPool = Executors.newCachedThreadPool();
 
 	/**
 	 * @param socket
@@ -23,21 +25,21 @@ public class CustomServerListener extends ServerListener {
 	 * @param console
 	 *            the console to which the server is going to write the received messages
 	 */
-	public CustomServerListener(ServerSocket socket, JTextArea console) {
+	public CustomServerListener(ServerSocket socket, Console console) {
 		super(socket);
 		this.console = console;
 	}
 
 	@Override
 	public void onConnect() {
-		console.append("Server started on " + getSocket().getInetAddress() + " port "
-				+ getSocket().getLocalPort() + "\n");
+		console.appendLine("Server started on " + getSocket().getInetAddress() + " port "
+				+ getSocket().getLocalPort());
 
 	}
 
 	@Override
 	public void onClientConnect(ClientWrapper client) {
-		console.append("A client has connected" + "\n");
+		console.appendLine("A client has connected");
 		sendMessage(client);
 
 	}
@@ -50,8 +52,8 @@ public class CustomServerListener extends ServerListener {
 	 *            the client to which the server is going to send the message to
 	 */
 	private void sendMessage(ClientWrapper client) {
-		client.sendMessage("Hello! " + new Date());
-		console.append("Sent a message to the client" + "\n");
-		client.closeConnection();
+		threadPool.execute(new ClientMessager(client, "Hello! " + new Date()));
+		console.appendLine("Sent a message to the client");
+
 	}
 }

@@ -8,6 +8,8 @@ import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.ServerSocket;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -33,6 +35,9 @@ public class Server extends JFrame implements ActionListener {
 	private ChannelManager mediator = new ChannelManager();
 	private DefaultListModel<String> model = new DefaultListModel<>();
 	private JList<String> channels = new JList<>(model);
+	private boolean continueExecution;
+	private Locale[] supported = { Locale.ENGLISH, Locale.GERMAN, new Locale("bg") };
+	private ResourceBundle stringBundle = ResourceBundle.getBundle("StringsBundle", supported[2]);
 
 	/**
 	 * Set the size and components of the window.
@@ -43,12 +48,16 @@ public class Server extends JFrame implements ActionListener {
 		JPanel controlPane = new JPanel(new GridLayout(0, 3, 15, 15));
 		contentPane.setBorder(new EmptyBorder(15, 15, 15, 15));
 
-		JButton addChannel = new JButton("+");
-		JButton removeChannel = new JButton("-");
-		JButton sendSignal = new JButton("Send");
+		ResourceBundle bundle = ResourceBundle.getBundle("ButtonsBundle", supported[2]);
+
+		JButton addChannel = new JButton(bundle.getString("addChannel"));
+		JButton removeChannel = new JButton(bundle.getString("removeChannel"));
+		JButton sendSignal = new JButton(bundle.getString("sendSignal"));
+
 		addChannel.setActionCommand("+");
 		removeChannel.setActionCommand("-");
 		sendSignal.setActionCommand("Send");
+
 		addChannel.addActionListener(this);
 		removeChannel.addActionListener(this);
 		sendSignal.addActionListener(this);
@@ -69,16 +78,22 @@ public class Server extends JFrame implements ActionListener {
 	 * Start the thread that is going to listen for clients connection.
 	 */
 	public void startListening() {
-		ServerSocket socket;
 		setEnabled(false);
-		while ((socket = SocketFinder.getAvailableServerSocket(JOptionPane.showInputDialog("host"),
-				7000, 7020)) == null) {
+		String host;
 
+		while ((host = JOptionPane.showInputDialog(stringBundle.getString("host"))) != null) {
+			ServerSocket socket = SocketFinder.getAvailableServerSocket(host, 7000, 7020);
+			if (socket != null) {
+				setEnabled(true);
+				Thread thread = new Thread(new CustomServerListener(socket, mediator));
+				thread.setDaemon(true);
+				thread.start();
+				continueExecution = true;
+				break;
+			}
 		}
-		setEnabled(true);
-		Thread thread = new Thread(new CustomServerListener(socket, mediator, model));
-		thread.setDaemon(true);
-		thread.start();
+		if (!continueExecution)
+			dispose();
 
 	}
 
@@ -86,14 +101,15 @@ public class Server extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		String command = e.getActionCommand();
 		if ("+".equals(command)) {
-			String channelName = JOptionPane.showInputDialog(null, "Enter the channel's ip: ");
+			String channelName = JOptionPane.showInputDialog(null,
+					stringBundle.getObject("enterName"));
 			model.addElement(channelName);
 			mediator.addChannel(channelName);
 
 		} else if ("-".equals(command)) {
 			model.remove(channels.getSelectedIndex());
 		} else {
-			mediator.sendMessage(channels.getSelectedValue(), "You have been selected");
+			mediator.sendMessage(channels.getSelectedValue(), stringBundle.getString("message"));
 		}
 
 	}

@@ -3,6 +3,9 @@ package com.sirma.itt.javacourse.gui.task1;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.ComponentOrientation;
+import java.awt.Dimension;
+import java.awt.GraphicsEnvironment;
+import java.awt.Point;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -22,7 +25,7 @@ public class Calculator extends JFrame {
 	private JTextField screen = new JTextField();
 
 	/**
-	 * Init the ui with the given widht and height and set up the components.
+	 * Init the ui with the given width and height and set up the components.
 	 * 
 	 * @param width
 	 *            the width of the window
@@ -30,7 +33,7 @@ public class Calculator extends JFrame {
 	 *            the height of the window
 	 */
 	public void initUI(int width, int height) {
-		setSize(width, height);
+		setPreferredSize(new Dimension(width, height));
 		JPanel contentPane = new JPanel(new BorderLayout(15, 15));
 		contentPane.setBorder(new EmptyBorder(15, 15, 15, 15));
 		screen.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
@@ -41,6 +44,9 @@ public class Calculator extends JFrame {
 		contentPane.add(new ButtonPane(new CommandListener(this)), BorderLayout.CENTER);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setContentPane(contentPane);
+		Point screenCentre = GraphicsEnvironment.getLocalGraphicsEnvironment().getCenterPoint();
+		pack();
+		setLocation(screenCentre.x - getHeight() / 2, screenCentre.y - getWidth() / 2);
 		setVisible(true);
 	}
 
@@ -55,7 +61,7 @@ public class Calculator extends JFrame {
 	}
 
 	/**
-	 * Get the screen text directly instead of tettings its instance first.
+	 * Get the screen text directly instead of setting its instance first.
 	 * 
 	 * @return the text from the screen
 	 */

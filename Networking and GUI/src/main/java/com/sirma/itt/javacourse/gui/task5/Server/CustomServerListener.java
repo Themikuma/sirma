@@ -2,9 +2,8 @@ package com.sirma.itt.javacourse.gui.task5.Server;
 
 import java.net.ServerSocket;
 
-import javax.swing.JTextArea;
-
 import com.sirma.itt.javacourse.gui.sockets.ClientWrapper;
+import com.sirma.itt.javacourse.gui.sockets.Console;
 import com.sirma.itt.javacourse.gui.sockets.ServerListener;
 
 /**
@@ -13,7 +12,7 @@ import com.sirma.itt.javacourse.gui.sockets.ServerListener;
  * @author user
  */
 public class CustomServerListener extends ServerListener {
-	private JTextArea console;
+	private Console console;
 
 	/**
 	 * @param socket
@@ -21,22 +20,22 @@ public class CustomServerListener extends ServerListener {
 	 * @param console
 	 *            the console to which the server is going to write the received messages
 	 */
-	public CustomServerListener(ServerSocket socket, JTextArea console) {
+	public CustomServerListener(ServerSocket socket, Console console) {
 		super(socket);
 		this.console = console;
 	}
 
 	@Override
 	public void onConnect() {
-		console.append("Server started on " + getSocket().getInetAddress() + " port "
-				+ getSocket().getLocalPort() + "\n");
+		console.appendLine("Server started on " + getSocket().getInetAddress() + " port "
+				+ getSocket().getLocalPort());
 
 	}
 
 	@Override
 	public void onClientConnect(ClientWrapper client) {
 		Thread updateThread = new Thread(new ServerMessageListener(client, console));
-		console.append("A client has connected" + "\n");
+		console.appendLine("A client has connected");
 		updateThread.setDaemon(true);
 		updateThread.start();
 

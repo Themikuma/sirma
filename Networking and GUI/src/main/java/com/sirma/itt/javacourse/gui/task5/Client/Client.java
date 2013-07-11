@@ -16,10 +16,10 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import com.sirma.itt.javacourse.gui.sockets.Console;
 import com.sirma.itt.javacourse.gui.sockets.SocketFinder;
 import com.sirma.itt.javacourse.gui.task5.Memento;
 import com.sirma.itt.javacourse.gui.task5.Originator;
@@ -34,12 +34,13 @@ public class Client extends JFrame implements ActionListener, KeyListener {
 	 * Comment for serialVersionUID.
 	 */
 	private static final long serialVersionUID = 9043239861663899088L;
-	private JTextArea console = new JTextArea();
+	private Console console = new Console();
 	private JTextField msgField = new JTextField();
 	private List<Memento> states = new ArrayList<>();
 	private Originator originator = new Originator();
 	private int index;
 	private CustomClientListener listener;
+	private boolean continueExecution;
 
 	/**
 	 * Setting up the size and components of the window.
@@ -69,17 +70,23 @@ public class Client extends JFrame implements ActionListener, KeyListener {
 	 * Start the thread that is going to connect to the server and listen for messages.
 	 */
 	public void connect() {
-		Socket socket;
 		setEnabled(false);
-		while ((socket = SocketFinder.getAvailableSocket(JOptionPane.showInputDialog("host"), 7000,
-				7020)) == null) {
-		}
-		setEnabled(true);
+		String host;
 
-		listener = new CustomClientListener(socket, console);
-		Thread thread = new Thread(listener);
-		thread.setDaemon(true);
-		thread.start();
+		while ((host = JOptionPane.showInputDialog("host")) != null) {
+			Socket socket = SocketFinder.getAvailableSocket(host, 7000, 7020);
+			if (socket != null) {
+				setEnabled(true);
+				listener = new CustomClientListener(socket, console);
+				Thread thread = new Thread(listener);
+				thread.setDaemon(true);
+				thread.start();
+				continueExecution = true;
+				break;
+			}
+		}
+		if (!continueExecution)
+			dispose();
 
 	}
 
