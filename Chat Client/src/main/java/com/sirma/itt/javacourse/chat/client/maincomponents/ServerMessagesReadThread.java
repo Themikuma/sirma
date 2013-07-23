@@ -1,8 +1,7 @@
-package com.cit.chat.client;
+package com.sirma.itt.javacourse.chat.client.maincomponents;
 
 import java.util.Date;
 
-import com.sirma.itt.javacourse.chat.client.maincomponents.MainUnit;
 import com.sirma.itt.javacourse.chat.client.strategies.Decider;
 import com.sirma.itt.javacourse.chat.structures.Message;
 import com.sirma.itt.javacourse.chat.structures.Server;

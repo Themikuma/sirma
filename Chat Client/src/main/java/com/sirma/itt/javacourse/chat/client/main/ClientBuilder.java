@@ -1,4 +1,4 @@
-package com.cit.chat.client;
+package com.sirma.itt.javacourse.chat.client.main;
 
 import com.sirma.itt.javacourse.chat.client.maincomponents.MainUnit;
 import com.sirma.itt.javacourse.chat.client.maincomponents.SwingClient;

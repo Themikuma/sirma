@@ -1,6 +1,11 @@
 package com.sirma.itt.javacourse.chat.server.maincomponents;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.GraphicsEnvironment;
+import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -8,23 +13,39 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 
-public class GraphicalServer extends JFrame implements ServerWindow {
+/**
+ * A graphical implementation of the {@link ServerWindow}.
+ * 
+ * @author user
+ */
+public class SwingServer extends ServerWindow implements ActionListener {
 
 	private JTextArea console = new JTextArea();
+	private JFrame frame = new JFrame();
+	// TODO close button handling
 	/**
 	 * Comment for serialVersionUID.
 	 */
+	@SuppressWarnings("unused")
 	private static final long serialVersionUID = -4342026673924478849L;
 
+	/**
+	 * Init the UI. This is done on the EDT.
+	 */
 	public void initUI() {
-		setSize(300, 300);
+		frame.setPreferredSize(new Dimension(300, 300));
 
 		JButton closeButton = new JButton("Close");
+		closeButton.addActionListener(this);
 		JScrollPane scroll = new JScrollPane(console);
-		add(scroll, BorderLayout.CENTER);
-		add(closeButton, BorderLayout.SOUTH);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setVisible(true);
+		frame.add(scroll, BorderLayout.CENTER);
+		frame.add(closeButton, BorderLayout.SOUTH);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		Point screenCentre = GraphicsEnvironment.getLocalGraphicsEnvironment().getCenterPoint();
+		frame.pack();
+		frame.setLocation(screenCentre.x - frame.getHeight() / 2, screenCentre.y - frame.getWidth()
+				/ 2);
+		frame.setVisible(true);
 	}
 
 	@Override
@@ -60,20 +81,26 @@ public class GraphicalServer extends JFrame implements ServerWindow {
 	}
 
 	@Override
-	public void connected(String client) {
+	public void onClientConnected(String client) {
 		console.append(client + " has connected.\n");
 
 	}
 
 	@Override
-	public void disconnected(String client) {
+	public void onClientDisconnected(String client) {
 		console.append(client + " has disconnected.\n");
 
 	}
 
 	@Override
 	public void stop() {
-		dispose();
+		frame.dispose();
+
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		stop();
 
 	}
 

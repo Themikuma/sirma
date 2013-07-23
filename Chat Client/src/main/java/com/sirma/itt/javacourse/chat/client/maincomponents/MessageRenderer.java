@@ -1,4 +1,4 @@
-package com.cit.chat.client;
+package com.sirma.itt.javacourse.chat.client.maincomponents;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

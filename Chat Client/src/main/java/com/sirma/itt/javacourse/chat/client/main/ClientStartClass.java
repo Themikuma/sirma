@@ -1,6 +1,5 @@
-package com.cit.chat.clientmain;
+package com.sirma.itt.javacourse.chat.client.main;
 
-import com.cit.chat.client.ClientBuilder;
 import com.sirma.itt.javacourse.chat.client.maincomponents.ConsoleClient;
 import com.sirma.itt.javacourse.chat.connectionconfigs.DialogConnection;
 

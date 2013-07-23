@@ -7,6 +7,11 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 
+/**
+ * A wrapper of the object, representing a client.
+ * 
+ * @author user
+ */
 public class Client {
 
 	private Socket socket;
@@ -15,7 +20,12 @@ public class Client {
 	private BufferedWriter writer;
 
 	/**
+	 * Setting up the socket and the name.
+	 * 
 	 * @param socket
+	 *            the socket representing the connection to the client
+	 * @param name
+	 *            the username of the client
 	 */
 	public Client(Socket socket, String name) {
 		super();
@@ -87,6 +97,12 @@ public class Client {
 		this.username = username;
 	}
 
+	/**
+	 * Send a message to the client.
+	 * 
+	 * @param message
+	 *            the message to be sent
+	 */
 	public void sendMessage(String message) {
 		try {
 			writer.write(message);
@@ -98,6 +114,9 @@ public class Client {
 
 	}
 
+	/**
+	 * Close the established connection.
+	 */
 	public void closeConnection() {
 		try {
 			socket.close();
@@ -107,6 +126,11 @@ public class Client {
 		}
 	}
 
+	/**
+	 * Wait for a message from the client.
+	 * 
+	 * @return the read message
+	 */
 	public String readMessage() {
 		try {
 			return reader.readLine();

@@ -74,7 +74,7 @@ public class UsersManager {
 	public void addUser(Client client) {
 		Matcher matcher = pattern.matcher(client.getUsername());
 		if (!clientSet.contains(client) && !matcher.find()) {
-			serverWindow.connected(client.getUsername());
+			serverWindow.onClientConnected(client.getUsername());
 			client.sendMessage(IServerMessages.NICK_OK.toString());
 			broadcastMessage(IServerMessages.ADD_TO_LIST + "|" + client.getUsername());
 			clientSet.add(client);
@@ -91,7 +91,7 @@ public class UsersManager {
 	 *            the user that disconnected
 	 */
 	public void removeUser(Client client) {
-		serverWindow.disconnected(client.getUsername());
+		serverWindow.onClientDisconnected(client.getUsername());
 		client.closeConnection();
 		clientSet.remove(client);
 		broadcastMessage(IServerMessages.CLIENT_DISCONNECTED + "|" + client.getUsername());

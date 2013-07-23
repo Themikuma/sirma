@@ -3,10 +3,13 @@ package com.sirma.itt.javacourse.chat.connectionconfigs;
 import java.awt.BorderLayout;
 import java.awt.Dialog.ModalityType;
 import java.awt.Dimension;
+import java.awt.GraphicsEnvironment;
 import java.awt.GridLayout;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -62,8 +65,8 @@ public class DialogConnection extends ConnectionUnit implements ActionListener {
 		cancelButton.addActionListener(this);
 		connectButton.setActionCommand("connect");
 		cancelButton.setActionCommand("cancel");
-		dialog.setLayout(new BorderLayout(15, 15));
-		JPanel contentPane = new JPanel(new GridLayout(0, 2));
+		JPanel contentPane = new JPanel(new GridLayout(0, 2, 5, 5));
+		contentPane.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 		contentPane.add(new JLabel("Host:"));
 		contentPane.add(host);
 		contentPane.add(new JLabel("Username:"));
@@ -77,7 +80,10 @@ public class DialogConnection extends ConnectionUnit implements ActionListener {
 		dialog.add(contentPane, BorderLayout.CENTER);
 		dialog.add(status, BorderLayout.NORTH);
 		status.setHorizontalAlignment(SwingConstants.CENTER);
+		Point screenCentre = GraphicsEnvironment.getLocalGraphicsEnvironment().getCenterPoint();
 		dialog.pack();
+		dialog.setLocation(screenCentre.x - dialog.getHeight() / 2,
+				screenCentre.y - dialog.getWidth() / 2);
 		dialog.setVisible(true);
 	}
 

@@ -26,10 +26,8 @@ public final class SocketFinder {
 	 * 
 	 * @param host
 	 *            the host to start the server on
-	 * @param min
-	 *            the starting port
-	 * @param max
-	 *            the ending port
+	 * @param port
+	 *            the port
 	 * @return the found socket
 	 */
 	public static ServerSocket getAvailableServerSocket(String host, int port) {
@@ -51,10 +49,8 @@ public final class SocketFinder {
 	 * 
 	 * @param host
 	 *            the host at which the server is
-	 * @param min
-	 *            the starting port
-	 * @param max
-	 *            the ending port
+	 * @param port
+	 *            the port
 	 * @return the found socket
 	 */
 	public static Socket getAvailableSocket(String host, int port) {

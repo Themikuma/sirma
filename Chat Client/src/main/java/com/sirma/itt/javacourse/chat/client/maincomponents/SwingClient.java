@@ -3,6 +3,8 @@ package com.sirma.itt.javacourse.chat.client.maincomponents;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GraphicsEnvironment;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -17,7 +19,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
-import com.cit.chat.client.MessageRenderer;
 import com.sirma.itt.javacourse.chat.messages.IClientMessages;
 import com.sirma.itt.javacourse.chat.structures.Message;
 
@@ -70,7 +71,10 @@ public class SwingClient extends MainUnit implements ActionListener, KeyListener
 		mainFrame.add(messagePane, BorderLayout.SOUTH);
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+		Point screenCentre = GraphicsEnvironment.getLocalGraphicsEnvironment().getCenterPoint();
 		mainFrame.pack();
+		mainFrame.setLocation(screenCentre.x - mainFrame.getHeight() / 2, screenCentre.y
+				- mainFrame.getWidth() / 2);
 		mainFrame.setVisible(true);
 
 	}

@@ -2,7 +2,7 @@ package com.cit.chat.server;
 
 import com.cit.chat.server.connectionconfigs.ConnectionUnit;
 import com.cit.chat.server.connectionconfigs.DialogConnection;
-import com.sirma.itt.javacourse.chat.server.maincomponents.GraphicalServer;
+import com.sirma.itt.javacourse.chat.server.maincomponents.SwingServer;
 import com.sirma.itt.javacourse.chat.server.maincomponents.ServerWindow;
 
 /**
@@ -11,7 +11,7 @@ import com.sirma.itt.javacourse.chat.server.maincomponents.ServerWindow;
  * @author user
  */
 public class ServerBuilder {
-	private ServerWindow mainWindow = new GraphicalServer();
+	private ServerWindow mainWindow = new SwingServer();
 	private ConnectionUnit connectionWindow = new DialogConnection();
 
 	/**

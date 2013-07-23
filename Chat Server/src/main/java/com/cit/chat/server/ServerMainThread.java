@@ -34,7 +34,6 @@ public class ServerMainThread implements Runnable {
 	 * @param serverWindow
 	 *            the main unit
 	 */
-	// TODO port string, check for correct port
 	public ServerMainThread(String host, int port, ConnectionUnit window, ServerWindow serverWindow) {
 		super();
 		this.host = host;

@@ -34,9 +34,17 @@ public abstract class ConnectionUnit {
 	 * @param port
 	 *            the port
 	 */
-	public void tryConnect(String host, int port) {
-		Thread thread = new Thread(new ServerMainThread(host, port, this, getMainWindow()));
-		thread.start();
+	public void tryConnect(String host, String port) {
+		int portInt;
+		try {
+			portInt = Integer.parseInt(port);
+			Thread thread = new Thread(new ServerMainThread(host, portInt, this, getMainWindow()));
+			thread.setDaemon(true);
+			thread.start();
+		} catch (NumberFormatException e) {
+			updateStatus("Invalid host format");
+		}
+
 	}
 
 	/**

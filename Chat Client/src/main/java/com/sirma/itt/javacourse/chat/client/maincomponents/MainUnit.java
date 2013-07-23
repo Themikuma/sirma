@@ -1,6 +1,5 @@
 package com.sirma.itt.javacourse.chat.client.maincomponents;
 
-import com.cit.chat.client.ServerMessagesReadThread;
 import com.sirma.itt.javacourse.chat.structures.Message;
 import com.sirma.itt.javacourse.chat.structures.Server;
 
