@@ -7,6 +7,11 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 
+/**
+ * A wrapper object representing the server.
+ * 
+ * @author user
+ */
 public class Server {
 	private Socket socket;
 	private BufferedWriter writer;
@@ -14,6 +19,12 @@ public class Server {
 	// TODO executor vs queue
 	private MessageSender messager;
 
+	/**
+	 * Setting up the socket with the already established connection to the server.
+	 * 
+	 * @param socket
+	 *            the socket
+	 */
 	public Server(Socket socket) {
 		this.socket = socket;
 		try {
@@ -28,6 +39,12 @@ public class Server {
 		thread.start();
 	}
 
+	/**
+	 * Add a message to the queue of messages if the message is not empty.
+	 * 
+	 * @param message
+	 *            the message to add to the queue
+	 */
 	public void sendMessage(String message) {
 
 		if (message.split("[|]").length > 1) {
@@ -36,6 +53,11 @@ public class Server {
 		}
 	}
 
+	/**
+	 * Waits for a message from the server.
+	 * 
+	 * @return the received message
+	 */
 	public String getMessage() {
 		try {
 			return reader.readLine();
@@ -45,6 +67,9 @@ public class Server {
 		return null;
 	}
 
+	/**
+	 * Close the connection to the server.
+	 */
 	public void closeConnection() {
 		try {
 			socket.close();

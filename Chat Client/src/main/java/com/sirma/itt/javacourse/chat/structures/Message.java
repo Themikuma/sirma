@@ -2,11 +2,21 @@ package com.sirma.itt.javacourse.chat.structures;
 
 import java.util.Date;
 
+/**
+ * A wrapper object representing a message.
+ * 
+ * @author user
+ */
 public class Message {
 	/**
+	 * Setting up the message text, the date, and the sender.
+	 * 
 	 * @param message
+	 *            the text of the message
 	 * @param date
+	 *            the date of the message
 	 * @param sender
+	 *            the sender of the message
 	 */
 	public Message(String message, Date date, String sender) {
 		super();

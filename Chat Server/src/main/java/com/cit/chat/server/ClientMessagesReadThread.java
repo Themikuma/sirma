@@ -4,12 +4,22 @@ import com.sirma.itt.javacourse.chat.messages.IClientMessages;
 import com.sirma.itt.javacourse.chat.messages.IServerMessages;
 import com.sirma.itt.javacourse.chat.server.structures.Client;
 
+/**
+ * The runnable object that is going to listen for messages from the client.
+ * 
+ * @author user
+ */
 public class ClientMessagesReadThread implements Runnable {
 	private Client client;
 	private UsersManager usersManager;
 
 	/**
-	 * @param socket
+	 * Set up the client and the messageManager.
+	 * 
+	 * @param client
+	 *            the client
+	 * @param messageManager
+	 *            the manager
 	 */
 	public ClientMessagesReadThread(Client client, UsersManager messageManager) {
 		super();

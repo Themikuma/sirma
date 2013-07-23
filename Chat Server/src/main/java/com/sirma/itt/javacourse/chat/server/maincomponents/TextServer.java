@@ -1,8 +1,5 @@
 package com.sirma.itt.javacourse.chat.server.maincomponents;
 
-import javax.swing.JOptionPane;
-
-import com.cit.chat.server.ServerMainThread;
 
 public class TextServer implements ServerWindow {
 
@@ -20,9 +17,12 @@ public class TextServer implements ServerWindow {
 
 	@Override
 	public void start() {
-		Thread thread = new Thread(new ServerMainThread(JOptionPane.showInputDialog("Host"), 8007,
-				this));
-		thread.start();
+	}
+
+	@Override
+	public void stop() {
+		// TODO Auto-generated method stub
+
 	}
 
 }

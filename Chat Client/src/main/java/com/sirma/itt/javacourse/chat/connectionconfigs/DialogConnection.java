@@ -1,6 +1,7 @@
 package com.sirma.itt.javacourse.chat.connectionconfigs;
 
 import java.awt.BorderLayout;
+import java.awt.Dialog.ModalityType;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -13,13 +14,18 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-import com.sirma.itt.javacourse.chat.client.maincomponents.MainUnit;
-
-public class DialogConnection extends JDialog implements ActionListener, ConnectionUnit {
+/**
+ * A graphical implementation of the {@link ConnectionUnit}. Uses a {@link JDialog} to display
+ * components.
+ * 
+ * @author user
+ */
+public class DialogConnection extends ConnectionUnit implements ActionListener {
 
 	/**
 	 * Comment for serialVersionUID.
 	 */
+	@SuppressWarnings("unused")
 	private static final long serialVersionUID = 3256466009104642108L;
 	private JTextField host = new JTextField();
 	private JTextField userName = new JTextField();
@@ -27,8 +33,8 @@ public class DialogConnection extends JDialog implements ActionListener, Connect
 	private JLabel status = new JLabel();
 	private JButton connectButton = new JButton("connect");
 	private JButton cancelButton = new JButton("cancel");
-	private MainUnit mainWindow;
-	private ServerConnectionThread connectionListener;
+
+	private JDialog dialog = new JDialog();
 
 	/**
 	 * Getter method for status.
@@ -49,18 +55,14 @@ public class DialogConnection extends JDialog implements ActionListener, Connect
 		this.status = status;
 	}
 
-	public DialogConnection(MainUnit parent) {
-		this.mainWindow = parent;
-	}
-
 	@Override
 	public void start() {
-		setPreferredSize(new Dimension(300, 200));
+		dialog.setPreferredSize(new Dimension(300, 200));
 		connectButton.addActionListener(this);
 		cancelButton.addActionListener(this);
 		connectButton.setActionCommand("connect");
 		cancelButton.setActionCommand("cancel");
-		setLayout(new BorderLayout(15, 15));
+		dialog.setLayout(new BorderLayout(15, 15));
 		JPanel contentPane = new JPanel(new GridLayout(0, 2));
 		contentPane.add(new JLabel("Host:"));
 		contentPane.add(host);
@@ -70,22 +72,22 @@ public class DialogConnection extends JDialog implements ActionListener, Connect
 		contentPane.add(port);
 		contentPane.add(connectButton);
 		contentPane.add(cancelButton);
-		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		setModalityType(ModalityType.APPLICATION_MODAL);
-		add(contentPane, BorderLayout.CENTER);
-		add(status, BorderLayout.NORTH);
+		dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		dialog.setModalityType(ModalityType.APPLICATION_MODAL);
+		dialog.add(contentPane, BorderLayout.CENTER);
+		dialog.add(status, BorderLayout.NORTH);
 		status.setHorizontalAlignment(SwingConstants.CENTER);
-		pack();
-		setVisible(true);
+		dialog.pack();
+		dialog.setVisible(true);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getActionCommand().equals("cancel")) {
-			mainWindow.stop();
-			dispose();
-		} else if (e.getActionCommand().equals("connect")) {
-			tryConnect(host.getText(), userName.getText(), Integer.parseInt(port.getText()));
+		if ("cancel".equals(e.getActionCommand())) {
+			getMainWindow().stop();
+			dialog.dispose();
+		} else if ("connect".equals(e.getActionCommand())) {
+			tryConnect(host.getText(), userName.getText(), port.getText());
 		}
 	}
 
@@ -93,18 +95,9 @@ public class DialogConnection extends JDialog implements ActionListener, Connect
 	public void updateStatus(String status) {
 		this.status.setText(status);
 		if ("ok".equals(status)) {
-			mainWindow.startListening(connectionListener.getServer());
-			dispose();
+			getMainWindow().startListening(getConnectionListener().getServer());
+			dialog.dispose();
 		}
-	}
-
-	@Override
-	public void tryConnect(String host, String username, int port) {
-		status.setText("Connecting...");
-		connectionListener = new ServerConnectionThread(host, username, port, this);
-		Thread thread = new Thread(connectionListener);
-		thread.start();
-
 	}
 
 }

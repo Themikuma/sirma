@@ -18,28 +18,36 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 import com.cit.chat.client.MessageRenderer;
-import com.cit.chat.client.ServerMessagesReadThread;
 import com.sirma.itt.javacourse.chat.messages.IClientMessages;
 import com.sirma.itt.javacourse.chat.structures.Message;
-import com.sirma.itt.javacourse.chat.structures.Server;
 
-public class GraphicalClient extends JFrame implements ActionListener, MainUnit, KeyListener {
+/**
+ * A graphical implementation of the {@link MainUnit}. Uses swing and a {@link JFrame} to display
+ * components.
+ * 
+ * @author user
+ */
+public class SwingClient extends MainUnit implements ActionListener, KeyListener {
 	private DefaultListModel<Message> messageModel = new DefaultListModel<>();
 	private JList<Message> console = new JList<Message>(messageModel);
 	private JTextField messageField = new JTextField();
 	private DefaultListModel<String> userListModel = new DefaultListModel<>();
-	private ServerMessagesReadThread listener;
-
-	private Server server;
+	// TODO nope
+	private JFrame mainFrame = new JFrame();
 
 	/**
 	 * Comment for serialVersionUID.
 	 */
+	@SuppressWarnings("unused")
 	private static final long serialVersionUID = -7758850056548062247L;
 
+	/**
+	 * Init the UI. This is where the overriding of the start method is required. The UI is
+	 * initiated in the EDT.
+	 */
 	public void initUI() {
 
-		setPreferredSize(new Dimension(700, 600));
+		mainFrame.setPreferredSize(new Dimension(700, 600));
 
 		JPanel messagePane = new JPanel(new BorderLayout(15, 15));
 		JList<String> userList = new JList<String>(userListModel);
@@ -57,13 +65,13 @@ public class GraphicalClient extends JFrame implements ActionListener, MainUnit,
 		console.setBackground(Color.white);
 		console.setCellRenderer(new MessageRenderer());
 		sendButton.addActionListener(this);
-		add(scroll, BorderLayout.CENTER);
-		add(userList, BorderLayout.EAST);
-		add(messagePane, BorderLayout.SOUTH);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		mainFrame.add(scroll, BorderLayout.CENTER);
+		mainFrame.add(userList, BorderLayout.EAST);
+		mainFrame.add(messagePane, BorderLayout.SOUTH);
+		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		pack();
-		setVisible(true);
+		mainFrame.pack();
+		mainFrame.setVisible(true);
 
 	}
 
@@ -78,41 +86,36 @@ public class GraphicalClient extends JFrame implements ActionListener, MainUnit,
 
 			}
 		});
-		// connection.start();
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		server.sendMessage(IClientMessages.CLIENT_MESSAGE + "|" + messageField.getText());
+		getServer().sendMessage(IClientMessages.CLIENT_MESSAGE + "|" + messageField.getText());
 
-	}
-
-	public DefaultListModel<Message> getMessageModel() {
-		return messageModel;
 	}
 
 	// TODO add memento
 	@Override
-	public void addUser(String user) {
+	public void onUserAdded(String user) {
 		userListModel.addElement(user);
 
 	}
 
 	@Override
-	public void removeUser(String user) {
+	public void onUserRemoved(String user) {
 		userListModel.removeElement(user);
 
 	}
 
 	@Override
-	public void reloadList(String users) {
+	public void onListReloadRequest(String users) {
 		for (String userName : users.split(","))
 			userListModel.addElement(userName);
 
 	}
 
 	@Override
-	public void addMessage(Message message) {
+	public void onMessageAdded(Message message) {
 		messageModel.addElement(message);
 
 	}
@@ -132,7 +135,7 @@ public class GraphicalClient extends JFrame implements ActionListener, MainUnit,
 	@Override
 	public void keyReleased(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-			server.sendMessage(IClientMessages.CLIENT_MESSAGE + "|" + messageField.getText());
+			getServer().sendMessage(IClientMessages.CLIENT_MESSAGE + "|" + messageField.getText());
 			messageField.setText("");
 		}
 
@@ -140,17 +143,7 @@ public class GraphicalClient extends JFrame implements ActionListener, MainUnit,
 
 	@Override
 	public void stop() {
-		dispose();
-
-	}
-
-	@Override
-	public void startListening(Server server) {
-		this.server = server;
-		listener = new ServerMessagesReadThread(server, this);
-		Thread thread = new Thread(listener);
-		thread.setDaemon(true);
-		thread.start();
+		mainFrame.dispose();
 
 	}
 

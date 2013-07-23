@@ -5,28 +5,25 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import com.sirma.itt.javacourse.chat.client.maincomponents.MainUnit;
-import com.sirma.itt.javacourse.chat.structures.Server;
+/**
+ * A file based implementation of the {@link ConnectionUnit}. Loads the info from a file.
+ * 
+ * @author user
+ */
+public class FileConnection extends ConnectionUnit {
 
-public class FileConnection implements ConnectionUnit {
-	private ServerConnectionThread connection;
-	private Server server;
-	private MainUnit mainWindow;
 	private String path;
 
-	public FileConnection(MainUnit mainWindow, String path) {
-		this.mainWindow = mainWindow;
+	/**
+	 * Sets up the path to the file.
+	 * 
+	 * @param path
+	 *            path to the file.
+	 */
+	// TODO handle file errors.
+	public FileConnection(String path) {
 		this.path = path;
 
-	}
-
-	/**
-	 * Getter method for server.
-	 * 
-	 * @return the server
-	 */
-	public Server getServer() {
-		return server;
 	}
 
 	@Override
@@ -39,7 +36,7 @@ public class FileConnection implements ConnectionUnit {
 			e.printStackTrace();
 		}
 		String[] splitConfig = config.split("[|]");
-		tryConnect(splitConfig[0], splitConfig[1], Integer.parseInt(splitConfig[2]));
+		tryConnect(splitConfig[0], splitConfig[1], splitConfig[2]);
 
 	}
 
@@ -47,15 +44,8 @@ public class FileConnection implements ConnectionUnit {
 	public void updateStatus(String status) {
 		System.out.println(status);
 		if ("ok".equals(status))
-			mainWindow.startListening(connection.getServer());
+			getMainWindow().startListening(getConnectionListener().getServer());
 
 	}
 
-	@Override
-	public void tryConnect(String host, String username, int port) {
-		connection = new ServerConnectionThread(host, username, port, this);
-		Thread thread = new Thread(connection);
-		thread.start();
-
-	}
 }

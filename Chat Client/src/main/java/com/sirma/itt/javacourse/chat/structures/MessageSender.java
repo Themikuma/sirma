@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
  * @author user
  */
 public class MessageSender implements Runnable {
+	// TODO nope
 	private BlockingQueue<String> messages = new LinkedBlockingQueue<String>();
 	private BufferedWriter writer;
 

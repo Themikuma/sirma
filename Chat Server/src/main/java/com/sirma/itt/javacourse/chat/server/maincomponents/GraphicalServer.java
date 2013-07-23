@@ -4,12 +4,9 @@ import java.awt.BorderLayout;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
-
-import com.cit.chat.server.ServerMainThread;
 
 public class GraphicalServer extends JFrame implements ServerWindow {
 
@@ -26,7 +23,6 @@ public class GraphicalServer extends JFrame implements ServerWindow {
 		JScrollPane scroll = new JScrollPane(console);
 		add(scroll, BorderLayout.CENTER);
 		add(closeButton, BorderLayout.SOUTH);
-
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
 	}
@@ -41,9 +37,7 @@ public class GraphicalServer extends JFrame implements ServerWindow {
 
 			}
 		});
-		Thread thread = new Thread(new ServerMainThread(JOptionPane.showInputDialog("Host"), 7000,
-				this));
-		thread.start();
+
 	}
 
 	/**
@@ -74,6 +68,12 @@ public class GraphicalServer extends JFrame implements ServerWindow {
 	@Override
 	public void disconnected(String client) {
 		console.append(client + " has disconnected.\n");
+
+	}
+
+	@Override
+	public void stop() {
+		dispose();
 
 	}
 

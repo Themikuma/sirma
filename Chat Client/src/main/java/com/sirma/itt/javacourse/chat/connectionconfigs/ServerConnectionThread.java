@@ -7,17 +7,30 @@ import com.sirma.itt.javacourse.chat.messages.IServerMessages;
 import com.sirma.itt.javacourse.chat.sockets.SocketFinder;
 import com.sirma.itt.javacourse.chat.structures.Server;
 
+/**
+ * The thread that tries to establish connection the server socket and send the username.
+ * 
+ * @author user
+ */
 public class ServerConnectionThread implements Runnable {
 	// TODO why use observer with only one observer ?
 	private Server server;
 	private String host;
 	private String username;
-	private String status;
 	private ConnectionUnit connectionUnit;
 	private int port;
 
 	/**
+	 * Setting up the host, username, port and {@link ConnectionUnit}.
 	 * 
+	 * @param host
+	 *            the host to connect to
+	 * @param userName
+	 *            the username to try to connect with
+	 * @param port
+	 *            the port of the host
+	 * @param connectionUnit
+	 *            the {@link ConnectionUnit} that started this runnable
 	 */
 	public ServerConnectionThread(String host, String userName, int port,
 			ConnectionUnit connectionUnit) {
@@ -29,8 +42,9 @@ public class ServerConnectionThread implements Runnable {
 
 	@Override
 	public void run() {
-
+		connectionUnit.updateStatus("Connecting...");
 		Socket socket = SocketFinder.getAvailableSocket(host, port);
+		String status;
 		if (socket == null) {
 			status = "Invalid host";
 		} else {
@@ -46,6 +60,11 @@ public class ServerConnectionThread implements Runnable {
 		connectionUnit.updateStatus(status);
 	}
 
+	/**
+	 * Getter method of the server.
+	 * 
+	 * @return the Server
+	 */
 	public Server getServer() {
 		return server;
 	}

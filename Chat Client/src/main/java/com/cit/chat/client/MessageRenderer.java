@@ -13,6 +13,12 @@ import javax.swing.ListCellRenderer;
 
 import com.sirma.itt.javacourse.chat.structures.Message;
 
+/**
+ * A {@link JPanel} determining how the fields of the {@link Message} object are going to be shown
+ * in each cell of the JList.
+ * 
+ * @author user
+ */
 public class MessageRenderer extends JPanel implements ListCellRenderer<Message> {
 
 	/**

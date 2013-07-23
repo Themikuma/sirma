@@ -1,21 +1,33 @@
 package com.cit.chat.clientmain;
 
-import com.sirma.itt.javacourse.chat.client.maincomponents.GraphicalClient;
-import com.sirma.itt.javacourse.chat.client.maincomponents.MainUnit;
-import com.sirma.itt.javacourse.chat.connectionconfigs.ConnectionUnit;
+import com.cit.chat.client.ClientBuilder;
+import com.sirma.itt.javacourse.chat.client.maincomponents.ConsoleClient;
 import com.sirma.itt.javacourse.chat.connectionconfigs.DialogConnection;
 
-public class ClientStartClass {
+/**
+ * An example use of the chat client.
+ * 
+ * @author user
+ */
+public final class ClientStartClass {
 
 	/**
+	 * A private constructor, disallowing the instantiation of this class.
+	 */
+	private ClientStartClass() {
+
+	}
+
+	/**
+	 * Building the client via a {@link ClientBuilder}.
+	 * 
 	 * @param args
+	 *            command-line arguments
 	 */
 	public static void main(String[] args) {
 
-		MainUnit mainFrame = new GraphicalClient();
-		ConnectionUnit connection = new DialogConnection(mainFrame);
-		mainFrame.start();
-		connection.start();
+		ClientBuilder builder = new ClientBuilder();
+		builder.setMainUnit(new ConsoleClient()).setConnectionFrame(new DialogConnection()).build();
 
 	}
 }
