@@ -34,9 +34,9 @@
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </class>  
-  <class id="4" language="java" name="com.sirma.itt.javacourse.chat.connectionconfigs.ServerConnectionThread" 
+  <class id="4" language="java" name="com.sirma.itt.javacourse.chat.client.threads.ServerConnectionThread" 
     project="Chat Client" 
-    file="/Chat Client/src/main/java/com/sirma/itt/javacourse/chat/connectionconfigs/ServerConnectionThread.java" 
+    file="/Chat Client/src/main/java/com/sirma/itt/javacourse/chat/client/threads/ServerConnectionThread.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="189" width="303" x="175" y="37"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 

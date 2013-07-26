@@ -38,7 +38,6 @@ public abstract class ClientListener implements Runnable {
 				onMessageReceived(msg);
 			}
 		} catch (IOException e) {
-			// TODO log4j, SLF4J
 			if (!GraphicsEnvironment.isHeadless())
 				JOptionPane.showMessageDialog(null, "The server has been stopped");
 			else

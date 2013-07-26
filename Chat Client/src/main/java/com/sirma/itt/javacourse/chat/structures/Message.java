@@ -1,6 +1,5 @@
 package com.sirma.itt.javacourse.chat.structures;
 
-import java.util.Date;
 
 /**
  * A wrapper object representing a message.
@@ -18,7 +17,7 @@ public class Message {
 	 * @param sender
 	 *            the sender of the message
 	 */
-	public Message(String message, Date date, String sender) {
+	public Message(String message, String date, String sender) {
 		super();
 		this.message = message;
 		this.date = date;
@@ -26,7 +25,7 @@ public class Message {
 	}
 
 	private String message;
-	private Date date;
+	private String date;
 	private String sender;
 
 	/**
@@ -39,32 +38,12 @@ public class Message {
 	}
 
 	/**
-	 * Setter method for message.
-	 * 
-	 * @param message
-	 *            the message to set
-	 */
-	public void setMessage(String message) {
-		this.message = message;
-	}
-
-	/**
 	 * Getter method for date.
 	 * 
 	 * @return the date
 	 */
-	public Date getDate() {
+	public String getDate() {
 		return date;
-	}
-
-	/**
-	 * Setter method for date.
-	 * 
-	 * @param date
-	 *            the date to set
-	 */
-	public void setDate(Date date) {
-		this.date = date;
 	}
 
 	/**
@@ -76,13 +55,4 @@ public class Message {
 		return sender;
 	}
 
-	/**
-	 * Setter method for sender.
-	 * 
-	 * @param sender
-	 *            the sender to set
-	 */
-	public void setSender(String sender) {
-		this.sender = sender;
-	}
 }

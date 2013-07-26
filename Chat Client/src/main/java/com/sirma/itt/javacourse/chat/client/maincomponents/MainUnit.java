@@ -1,7 +1,9 @@
 package com.sirma.itt.javacourse.chat.client.maincomponents;
 
+import java.util.Locale;
+
+import com.sirma.itt.javacourse.chat.client.main.Client;
 import com.sirma.itt.javacourse.chat.structures.Message;
-import com.sirma.itt.javacourse.chat.structures.Server;
 
 /**
  * Provides the structure of every main unit. Defines behavior for listening for server messages.
@@ -10,14 +12,99 @@ import com.sirma.itt.javacourse.chat.structures.Server;
  */
 public abstract class MainUnit {
 
-	private ServerMessagesReadThread listener;
-	private Server server;
+	private Client client;
 
 	/**
-	 * Empty method. Not every main unit requires some kind of configuration when starting so
-	 * overriding is not forced.
+	 * Starts the connection unit. Lets the implementation decide when to call this method.
 	 */
-	public void start() {
+	public void startConnectionUnit() {
+		if (!client.isConnected())
+			client.getConnectionUnit().start();
+
+	}
+
+	/**
+	 * Disconnects from the server. Lets the implementation decide when to call this method.
+	 */
+	public void disconnect() {
+		if (client.isConnected()) {
+			client.getServer().closeConnection();
+			client.setConnected(false);
+			onServerStopped();
+		}
+	}
+
+	/**
+	 * Sends a message to the server. Lets the implementation decide when to call this method.
+	 * 
+	 * @param message
+	 *            the message to be sent
+	 */
+	public void sendMessage(String message) {
+		if (message.split("[|]").length > 1 && client.isConnected()) {
+			client.getServer().sendMessage(message);
+		}
+	}
+
+	/**
+	 * Log a message.
+	 * 
+	 * @param message
+	 *            the message to be logged
+	 */
+	public void logMessage(String message) {
+		client.getLogger().info(message);
+	}
+
+	/**
+	 * Log an error.
+	 * 
+	 * @param message
+	 *            the message of the error to be logged
+	 */
+	public void logError(String message) {
+		client.getLogger().error(message);
+
+	}
+
+	/**
+	 * Setter method for client.
+	 * 
+	 * @param client
+	 *            the client to set
+	 */
+	public void setClient(Client client) {
+		this.client = client;
+	}
+
+	/**
+	 * Get the supported locale from the array of supported locales.
+	 * 
+	 * @param index
+	 *            the index of the locale
+	 * @return the locale
+	 */
+	public Locale getSupportedLocale(int index) {
+		return client.getSupported()[index];
+	}
+
+	/**
+	 * Set the currently used locale to be used from the main unit and the connection unit.
+	 * 
+	 * @param locale
+	 *            the locale
+	 */
+	public void setLocale(Locale locale) {
+		client.setLocale(locale);
+	}
+
+	/**
+	 * Get the current locale that is being used by all components of the client object.
+	 * 
+	 * @return the locale
+	 */
+	public Locale getCurrentLocale() {
+		return client.getLocale();
 	}
 
 	/**
@@ -53,34 +140,14 @@ public abstract class MainUnit {
 	public abstract void onMessageAdded(Message message);
 
 	/**
-	 * Empty method. Not every implementation requires some kind of configuration when stopping so
-	 * overriding is not forced.
+	 * Called once the Client object has been created and all of it's components are set up
+	 * correctly.
 	 */
-	public void stop() {
-	}
+	public abstract void start();
 
 	/**
-	 * After the connection has been established, start listening for messages from the server. This
-	 * message is called from the connection unit.
-	 * 
-	 * @param server
-	 *            the server to listen for messages from
+	 * Called when the server has been stopped or a disconnect has been forced.
 	 */
-	public void startListening(Server server) {
-		this.server = server;
-		listener = new ServerMessagesReadThread(server, this);
-		Thread thread = new Thread(listener);
-		thread.setDaemon(true);
-		thread.start();
+	public abstract void onServerStopped();
 
-	}
-
-	/**
-	 * Getter method for server.
-	 * 
-	 * @return the server
-	 */
-	public Server getServer() {
-		return server;
-	}
 }

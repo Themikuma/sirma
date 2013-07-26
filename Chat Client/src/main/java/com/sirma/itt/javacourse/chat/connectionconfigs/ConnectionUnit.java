@@ -1,6 +1,8 @@
 package com.sirma.itt.javacourse.chat.connectionconfigs;
 
-import com.sirma.itt.javacourse.chat.client.maincomponents.MainUnit;
+import java.util.Locale;
+
+import com.sirma.itt.javacourse.chat.client.main.Client;
 
 /**
  * The structure of each connection unit. Defines behavior for connecting to the server.
@@ -8,75 +10,57 @@ import com.sirma.itt.javacourse.chat.client.maincomponents.MainUnit;
  * @author user
  */
 public abstract class ConnectionUnit {
-	private ServerConnectionThread connectionListener;
-	private MainUnit mainWindow;
+	private Client client;
 
 	/**
-	 * Method, called from the connection thread to display information about the connection to the
-	 * server.
-	 * 
-	 * @param status
-	 *            the status to be displayed
-	 */
-	public abstract void updateStatus(String status);
-
-	/**
-	 * Empty method. Not every connection unit requires some kind of configuration when starting so
-	 * overriding is not forced.
-	 */
-	public void start() {
-	}
-
-	/**
-	 * Try connecting to the given host:port with the given username.
+	 * Try to establish a connection on the given host port with the given username. Lets the
+	 * implementation decide when to call this method.
 	 * 
 	 * @param host
-	 *            the host to connect to
-	 * @param username
-	 *            the username to connect with
+	 *            the host to try to connect to
 	 * @param port
-	 *            the port of the host
+	 *            the port to try to connect on
+	 * @param username
+	 *            the username to try to connect with
 	 */
-	public void tryConnect(String host, String username, String port) {
-		int portInt = 0;
-		try {
-			portInt = Integer.parseInt(port);
-			connectionListener = new ServerConnectionThread(host, username, portInt, this);
-			Thread thread = new Thread(connectionListener);
-			thread.start();
-		} catch (NumberFormatException e) {
-			updateStatus("Invalid host");
-		}
-
+	public void connect(String host, String port, String username) {
+		client.tryConnect(host, username, port);
 	}
 
 	/**
-	 * Setter method for window.
+	 * Get the currently used locale from the main client class.
 	 * 
-	 * @param window
-	 *            the MainUnit
+	 * @return the locale
 	 */
-	public void setParent(MainUnit window) {
-		this.mainWindow = window;
-
+	public Locale getCurrentLocale() {
+		return client.getLocale();
 	}
 
 	/**
-	 * Getter method for connectionListener.
+	 * Setter method for client.
 	 * 
-	 * @return the connectionListener
+	 * @param client
+	 *            the client to set
 	 */
-	public ServerConnectionThread getConnectionListener() {
-		return connectionListener;
+	public void setClient(Client client) {
+		this.client = client;
 	}
 
 	/**
-	 * Getter method for mainWindow.
-	 * 
-	 * @return the mainWindow
+	 * Called when the main unit implementation decides. Starts the connection unit implementation.
 	 */
-	public MainUnit getMainWindow() {
-		return mainWindow;
-	}
+	public abstract void start();
 
+	/**
+	 * Called when a succesfull connection is established.
+	 */
+	public abstract void connectionEstablished();
+
+	/**
+	 * Called when a connection is not established for some reason.
+	 * 
+	 * @param error
+	 *            the error that occurred during the connection
+	 */
+	public abstract void connectionRefused(String error);
 }

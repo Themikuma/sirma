@@ -1,9 +1,9 @@
-package com.cit.chat.server;
+package com.sirma.itt.javacourse.chat.server.main;
 
-import com.cit.chat.server.connectionconfigs.ConnectionUnit;
-import com.cit.chat.server.connectionconfigs.DialogConnection;
+import com.sirma.itt.javacourse.chat.server.connectionconfigs.ConnectionUnit;
+import com.sirma.itt.javacourse.chat.server.connectionconfigs.DialogConnection;
+import com.sirma.itt.javacourse.chat.server.maincomponents.MainUnit;
 import com.sirma.itt.javacourse.chat.server.maincomponents.SwingServer;
-import com.sirma.itt.javacourse.chat.server.maincomponents.ServerWindow;
 
 /**
  * Using a builder pattern to build the server from the given main unit and connection unit.
@@ -11,7 +11,7 @@ import com.sirma.itt.javacourse.chat.server.maincomponents.ServerWindow;
  * @author user
  */
 public class ServerBuilder {
-	private ServerWindow mainWindow = new SwingServer();
+	private MainUnit mainWindow = new SwingServer();
 	private ConnectionUnit connectionWindow = new DialogConnection();
 
 	/**
@@ -21,7 +21,7 @@ public class ServerBuilder {
 	 *            the main unit
 	 * @return this so we can continue building
 	 */
-	public ServerBuilder setMainWindow(ServerWindow window) {
+	public ServerBuilder setMainUnit(MainUnit window) {
 		this.mainWindow = window;
 		return this;
 	}
@@ -33,17 +33,17 @@ public class ServerBuilder {
 	 *            the connection unit
 	 * @return this so we can continue building
 	 */
-	public ServerBuilder setConnectionWindow(ConnectionUnit window) {
+	public ServerBuilder setConnectionUnit(ConnectionUnit window) {
 		this.connectionWindow = window;
 		return this;
 	}
 
 	/**
 	 * Build the server from the specified units. If none are specified, use the default ones.
+	 * 
+	 * @return the built server
 	 */
-	public void build() {
-		mainWindow.start();
-		connectionWindow.setParrent(mainWindow);
-		connectionWindow.start();
+	public Server build() {
+		return new Server(mainWindow, connectionWindow);
 	}
 }

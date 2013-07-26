@@ -2,7 +2,6 @@ package com.sirma.itt.javacourse.chat.sockets;
 
 import java.io.IOException;
 import java.net.BindException;
-import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -30,10 +29,10 @@ public final class SocketFinder {
 	 *            the port
 	 * @return the found socket
 	 */
-	public static ServerSocket getAvailableServerSocket(String host, int port) {
+	public static ServerSocket getAvailableServerSocket(int port) {
 
 		try {
-			ServerSocket socket = new ServerSocket(port, 0, InetAddress.getByName(host));
+			ServerSocket socket = new ServerSocket(port);
 			return socket;
 		} catch (BindException e) {
 			System.out.println("Port " + port + " is already in use.");

@@ -1,1 +1,1 @@
-localhost|hello|7000
+localhost|7000|hello

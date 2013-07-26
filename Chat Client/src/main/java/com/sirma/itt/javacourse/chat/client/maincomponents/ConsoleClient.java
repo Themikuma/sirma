@@ -32,4 +32,26 @@ public class ConsoleClient extends MainUnit {
 		System.out.println(message.getSender() + " : " + message.getMessage());
 
 	}
+
+	@Override
+	public void start() {
+		startConnectionUnit();
+		// BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+		// String line;
+		// try {
+		// while ((line = reader.readLine()) != null) {
+		// sendMessage(IClientMessages.CLIENT_MESSAGE + "|" + line);
+		// }
+		// } catch (IOException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
+		// disconnect();
+	}
+
+	@Override
+	public void onServerStopped() {
+		System.out.println("Server stopped.");
+	}
+
 }

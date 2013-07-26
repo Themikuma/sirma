@@ -41,7 +41,7 @@ public class MessageRenderer extends JPanel implements ListCellRenderer<Message>
 		senderLabel.setBackground(Color.darkGray);
 		senderLabel.setForeground(Color.white);
 		senderLabel.setOpaque(true);
-		add(new JLabel(value.getDate().toString()), BorderLayout.EAST);
+		add(new JLabel(value.getDate()), BorderLayout.EAST);
 		add(messageLabel, BorderLayout.CENTER);
 		add(senderLabel, BorderLayout.NORTH);
 		if (isSelected) {

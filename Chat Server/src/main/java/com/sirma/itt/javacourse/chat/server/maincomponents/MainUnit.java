@@ -1,11 +1,12 @@
 package com.sirma.itt.javacourse.chat.server.maincomponents;
 
+
 /**
  * Provides structure of the main units.
  * 
  * @author user
  */
-public abstract class ServerWindow {
+public abstract class MainUnit {
 
 	/**
 	 * Method, called when a client has established a connection with the server.
@@ -24,16 +25,16 @@ public abstract class ServerWindow {
 	public abstract void onClientDisconnected(String client);
 
 	/**
-	 * Empty method. Some implementations of the main unit don't require a starting configuration so
-	 * we are not forcing this method.
+	 * Log a message.
+	 * 
+	 * @param message
+	 *            the message to log
 	 */
-	public void start() {
-	}
+	public abstract void logMessage(String message);
 
 	/**
-	 * Empty method. Some implementations of the main unit don't require a stopping configuration so
-	 * we are not forcing this method.
+	 * Called when a connection is established from the connection unit.
 	 */
-	public void stop() {
-	}
+	public abstract void start();
+
 }

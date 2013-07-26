@@ -1,7 +1,8 @@
-package com.sirma.itt.javacourse.chat.connectionconfigs;
+package com.sirma.itt.javacourse.chat.client.threads;
 
 import java.net.Socket;
 
+import com.sirma.itt.javacourse.chat.client.main.Client;
 import com.sirma.itt.javacourse.chat.messages.IClientMessages;
 import com.sirma.itt.javacourse.chat.messages.IServerMessages;
 import com.sirma.itt.javacourse.chat.sockets.SocketFinder;
@@ -13,15 +14,13 @@ import com.sirma.itt.javacourse.chat.structures.Server;
  * @author user
  */
 public class ServerConnectionThread implements Runnable {
-	// TODO why use observer with only one observer ?
-	private Server server;
 	private String host;
 	private String username;
-	private ConnectionUnit connectionUnit;
+	private Client client;
 	private int port;
 
 	/**
-	 * Setting up the host, username, port and {@link ConnectionUnit}.
+	 * Setting up the host, username, port and Client.
 	 * 
 	 * @param host
 	 *            the host to connect to
@@ -29,44 +28,35 @@ public class ServerConnectionThread implements Runnable {
 	 *            the username to try to connect with
 	 * @param port
 	 *            the port of the host
-	 * @param connectionUnit
-	 *            the {@link ConnectionUnit} that started this runnable
+	 * @param client
+	 *            the client mediator
 	 */
-	public ServerConnectionThread(String host, String userName, int port,
-			ConnectionUnit connectionUnit) {
+	public ServerConnectionThread(String host, String userName, int port, Client client) {
 		this.host = host;
 		this.username = userName;
 		this.port = port;
-		this.connectionUnit = connectionUnit;
+		this.client = client;
 	}
 
 	@Override
 	public void run() {
-		connectionUnit.updateStatus("Connecting...");
+		client.getConnectionUnit().connectionRefused("Connecting...");
 		Socket socket = SocketFinder.getAvailableSocket(host, port);
-		String status;
 		if (socket == null) {
-			status = "Invalid host";
+			client.getConnectionUnit().connectionRefused("Invalid host");
 		} else {
-			server = new Server(socket);
+			Server server = new Server(socket, client);
 			server.sendMessage(IClientMessages.CONNECTION_ATTEMPT + "|" + username);
 			String msg = server.getMessage();
-			System.out.println(msg);
 			if (IServerMessages.NICK_OK.toString().equals(msg)) {
-				status = "ok";
+				client.setConnected(true);
+				client.setServer(server);
+				client.getConnectionUnit().connectionEstablished();
+				client.startListening();
 			} else
-				status = "Invalid nickname";
+				client.getConnectionUnit().connectionRefused("Invalid nickname");
 		}
-		connectionUnit.updateStatus(status);
-	}
 
-	/**
-	 * Getter method of the server.
-	 * 
-	 * @return the Server
-	 */
-	public Server getServer() {
-		return server;
 	}
 
 }

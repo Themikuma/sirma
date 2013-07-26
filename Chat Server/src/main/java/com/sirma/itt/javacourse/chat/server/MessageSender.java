@@ -1,12 +1,10 @@
-package com.sirma.itt.javacourse.chat.structures;
+package com.sirma.itt.javacourse.chat.server;
 
-import java.awt.GraphicsEnvironment;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import javax.swing.JOptionPane;
+import com.sirma.itt.javacourse.chat.server.structures.Client;
 
 /**
  * A runnable that will send messages when available.
@@ -16,35 +14,37 @@ import javax.swing.JOptionPane;
 public class MessageSender implements Runnable {
 	// TODO nope
 	private BlockingQueue<String> messages = new LinkedBlockingQueue<String>();
-	private BufferedWriter writer;
+	private Client client;
 
 	/**
-	 * Set up the writer of the server to which the message is going to be sent.
+	 * Set up the client to which the message is going to be sent.
 	 * 
-	 * @param writer
-	 *            the writer
+	 * @param client
+	 *            the client
 	 */
-	public MessageSender(BufferedWriter writer) {
+	public MessageSender(Client client) {
 		super();
-		this.writer = writer;
+		this.client = client;
 	}
 
 	@Override
 	public void run() {
 		while (!Thread.currentThread().isInterrupted()) {
 			try {
-				writer.write(messages.take());
-				writer.newLine();
-				writer.flush();
+
+				client.getWriter().write(messages.take());
+				client.getWriter().newLine();
+				client.getWriter().flush();
+			} catch (IOException e) {
+				// if (!GraphicsEnvironment.isHeadless())
+				// JOptionPane.showMessageDialog(null,
+				// "The connection to the server has been terminated");
+				// else
+				// System.out.println("The connection to the server has been terminated");
+
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} catch (IOException e) {
-				if (!GraphicsEnvironment.isHeadless())
-					JOptionPane.showMessageDialog(null,
-							"The connection to the server has been terminated");
-				else
-					System.out.println("The connection to the server has been terminated");
 			}
 		}
 

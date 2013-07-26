@@ -1,8 +1,6 @@
-package com.cit.chat.servermain;
+package com.sirma.itt.javacourse.chat.server.main;
 
-import com.cit.chat.server.ServerBuilder;
-import com.cit.chat.server.connectionconfigs.DialogConnection;
-import com.sirma.itt.javacourse.chat.server.maincomponents.SwingServer;
+import com.sirma.itt.javacourse.chat.server.connectionconfigs.FileConnection;
 
 /**
  * Example use of the server.
@@ -25,7 +23,6 @@ public final class ServerStartClass {
 	 */
 	public static void main(String[] args) {
 		ServerBuilder builder = new ServerBuilder();
-		builder.setMainWindow(new SwingServer()).setConnectionWindow(new DialogConnection())
-				.build();
+		builder.setConnectionUnit(new FileConnection("config.txt")).build();
 	}
 }

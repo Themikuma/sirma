@@ -1,4 +1,4 @@
-package com.cit.chat.server.connectionconfigs;
+package com.sirma.itt.javacourse.chat.server.connectionconfigs;
 
 import java.awt.BorderLayout;
 import java.awt.Dialog.ModalityType;
@@ -24,7 +24,6 @@ import javax.swing.SwingUtilities;
  * @author user
  */
 public class DialogConnection extends ConnectionUnit implements ActionListener {
-	private JTextField hostField;
 	private JTextField portField;
 	private JLabel status = new JLabel();
 
@@ -39,15 +38,13 @@ public class DialogConnection extends ConnectionUnit implements ActionListener {
 	 * Init the UI. This is where the overriding of the start method is required. The UI is
 	 * initiated in the EDT.
 	 */
-	public void initUI() {
+	private void initUI() {
 
 		dialog.setPreferredSize(new Dimension(300, 200));
+		dialog.setTitle("Connection");
 
 		JPanel contentPane = new JPanel(new GridLayout(0, 2, 15, 15));
-		hostField = new JTextField();
 		portField = new JTextField();
-		contentPane.add(new JLabel("Host"));
-		contentPane.add(hostField);
 		contentPane.add(new JLabel("Port"));
 		contentPane.add(portField);
 
@@ -56,7 +53,7 @@ public class DialogConnection extends ConnectionUnit implements ActionListener {
 
 		okButton.addActionListener(this);
 		cancelButton.addActionListener(this);
-		contentPane.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
+		contentPane.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
 		contentPane.add(okButton);
 		contentPane.add(cancelButton);
 		status.setHorizontalAlignment(SwingConstants.CENTER);
@@ -69,14 +66,6 @@ public class DialogConnection extends ConnectionUnit implements ActionListener {
 				screenCentre.y - dialog.getWidth() / 2);
 		dialog.setVisible(true);
 
-	}
-
-	@Override
-	public void updateStatus(String status) {
-		if ("ok".equals(status)) {
-			dialog.dispose();
-		} else
-			this.status.setText(status);
 	}
 
 	@Override
@@ -96,11 +85,22 @@ public class DialogConnection extends ConnectionUnit implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 
 		if ("Cancel".equals(e.getActionCommand())) {
-			getMainWindow().stop();
 			dialog.dispose();
 		} else if ("Start".equals(e.getActionCommand())) {
-			tryConnect(hostField.getText(), portField.getText());
+			tryConnect(portField.getText());
 		}
+
+	}
+
+	@Override
+	public void connectionEstablished() {
+		dialog.dispose();
+
+	}
+
+	@Override
+	public void connectionFailed(String message) {
+		this.status.setText(message);
 
 	}
 

@@ -17,7 +17,6 @@ public class Storage extends ObjectArray {
 	 */
 	public Storage(int length) {
 		super(length);
-		// TODO Auto-generated constructor stub
 	}
 
 	/**

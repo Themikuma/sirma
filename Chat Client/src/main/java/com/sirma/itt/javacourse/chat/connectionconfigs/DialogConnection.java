@@ -8,6 +8,7 @@ import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ResourceBundle;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -16,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 
 /**
  * A graphical implementation of the {@link ConnectionUnit}. Uses a {@link JDialog} to display
@@ -26,6 +28,19 @@ import javax.swing.SwingConstants;
 public class DialogConnection extends ConnectionUnit implements ActionListener {
 
 	/**
+	 * Called when the connection unit is created.Inits the ui in the EDT thread.
+	 */
+	public DialogConnection() {
+		SwingUtilities.invokeLater(new Runnable() {
+
+			@Override
+			public void run() {
+				initUI();
+			}
+		});
+	}
+
+	/**
 	 * Comment for serialVersionUID.
 	 */
 	@SuppressWarnings("unused")
@@ -34,44 +49,34 @@ public class DialogConnection extends ConnectionUnit implements ActionListener {
 	private JTextField userName = new JTextField();
 	private JTextField port = new JTextField();
 	private JLabel status = new JLabel();
-	private JButton connectButton = new JButton("connect");
-	private JButton cancelButton = new JButton("cancel");
-
+	private JLabel hostLabel = new JLabel();
+	private JLabel portLabel = new JLabel();
+	private JLabel usernameLabel = new JLabel();
 	private JDialog dialog = new JDialog();
+	private ResourceBundle buttonsBundle;
+	private ResourceBundle labelsBundle;
+	private JButton connectButton = new JButton();
+	private JButton cancelButton = new JButton();
 
 	/**
-	 * Getter method for status.
-	 * 
-	 * @return the status
+	 * Init the UI. This is where the overriding of the start method is required. The UI is
+	 * initiated in the EDT.
 	 */
-	public JLabel getStatus() {
-		return status;
-	}
+	private void initUI() {
 
-	/**
-	 * Setter method for status.
-	 * 
-	 * @param status
-	 *            the status to set
-	 */
-	public void setStatus(JLabel status) {
-		this.status = status;
-	}
-
-	@Override
-	public void start() {
 		dialog.setPreferredSize(new Dimension(300, 200));
+		dialog.setTitle("Connection");
 		connectButton.addActionListener(this);
 		cancelButton.addActionListener(this);
 		connectButton.setActionCommand("connect");
 		cancelButton.setActionCommand("cancel");
 		JPanel contentPane = new JPanel(new GridLayout(0, 2, 5, 5));
 		contentPane.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
-		contentPane.add(new JLabel("Host:"));
+		contentPane.add(hostLabel);
 		contentPane.add(host);
-		contentPane.add(new JLabel("Username:"));
+		contentPane.add(usernameLabel);
 		contentPane.add(userName);
-		contentPane.add(new JLabel("Port:"));
+		contentPane.add(portLabel);
 		contentPane.add(port);
 		contentPane.add(connectButton);
 		contentPane.add(cancelButton);
@@ -84,26 +89,49 @@ public class DialogConnection extends ConnectionUnit implements ActionListener {
 		dialog.pack();
 		dialog.setLocation(screenCentre.x - dialog.getHeight() / 2,
 				screenCentre.y - dialog.getWidth() / 2);
-		dialog.setVisible(true);
+
+	}
+
+	/**
+	 * Called when the UI is started and when the dialog is opened or closed.
+	 */
+	public void updateUI() {
+		connectButton.setText(buttonsBundle.getString("connect"));
+		cancelButton.setText(buttonsBundle.getString("cancel"));
+		hostLabel.setText(labelsBundle.getString("host"));
+		portLabel.setText(labelsBundle.getString("port"));
+		usernameLabel.setText(labelsBundle.getString("username"));
+		dialog.setTitle(labelsBundle.getString("dialog"));
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if ("cancel".equals(e.getActionCommand())) {
-			getMainWindow().stop();
 			dialog.dispose();
 		} else if ("connect".equals(e.getActionCommand())) {
-			tryConnect(host.getText(), userName.getText(), port.getText());
+			connect(host.getText(), port.getText(), userName.getText());
 		}
 	}
 
 	@Override
-	public void updateStatus(String status) {
-		this.status.setText(status);
-		if ("ok".equals(status)) {
-			getMainWindow().startListening(getConnectionListener().getServer());
-			dialog.dispose();
-		}
+	public void connectionEstablished() {
+		dialog.setVisible(false);
+
+	}
+
+	@Override
+	public void connectionRefused(String error) {
+		this.status.setText(error);
+
+	}
+
+	@Override
+	public void start() {
+		buttonsBundle = ResourceBundle.getBundle("ButtonsBundle", getCurrentLocale());
+		labelsBundle = ResourceBundle.getBundle("LabelsBundle", getCurrentLocale());
+		updateUI();
+		dialog.setVisible(true);
+
 	}
 
 }

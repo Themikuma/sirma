@@ -43,11 +43,10 @@ public class ClientBuilder {
 	/**
 	 * Build the client out of the given components. If no components are specified, the default
 	 * ones are used.
+	 * 
+	 * @return the newly created Client object
 	 */
-	public void build() {
-		mainFrame.start();
-		// TODO nope
-		connectionFrame.setParent(mainFrame);
-		connectionFrame.start();
+	public Client build() {
+		return new Client(mainFrame, connectionFrame);
 	}
 }

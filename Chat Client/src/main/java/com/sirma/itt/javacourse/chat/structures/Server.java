@@ -7,6 +7,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 
+import com.sirma.itt.javacourse.chat.client.main.Client;
+
 /**
  * A wrapper object representing the server.
  * 
@@ -16,23 +18,26 @@ public class Server {
 	private Socket socket;
 	private BufferedWriter writer;
 	private BufferedReader reader;
-	// TODO executor vs queue
 	private MessageSender messager;
+	private Client client;
 
 	/**
 	 * Setting up the socket with the already established connection to the server.
 	 * 
 	 * @param socket
 	 *            the socket
+	 * @param client
+	 *            the main client object
 	 */
-	public Server(Socket socket) {
+	public Server(Socket socket, Client client) {
 		this.socket = socket;
+		this.client = client;
 		try {
 			reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			client.getLogger().error(
+					"An I/O error occured while trying to open the connection's ports");
 		}
 		messager = new MessageSender(writer);
 		Thread thread = new Thread(messager);
@@ -47,8 +52,7 @@ public class Server {
 	 */
 	public void sendMessage(String message) {
 
-		if (message.split("[|]").length > 1) {
-			System.out.println("sending " + message);
+		if (message.split("[|]").length >= 1) {
 			messager.addMessage(message);
 		}
 	}
@@ -62,9 +66,9 @@ public class Server {
 		try {
 			return reader.readLine();
 		} catch (IOException e) {
-
+			return null;
 		}
-		return null;
+
 	}
 
 	/**
@@ -73,9 +77,10 @@ public class Server {
 	public void closeConnection() {
 		try {
 			socket.close();
+
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			client.getLogger().error(
+					"An I/O error occured while trying to disconnect from the server");
 		}
 	}
 }

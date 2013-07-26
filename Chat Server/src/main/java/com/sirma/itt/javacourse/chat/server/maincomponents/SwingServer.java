@@ -14,15 +14,14 @@ import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 
 /**
- * A graphical implementation of the {@link ServerWindow}.
+ * A graphical implementation of the {@link MainUnit}.
  * 
  * @author user
  */
-public class SwingServer extends ServerWindow implements ActionListener {
+public class SwingServer extends MainUnit implements ActionListener {
 
 	private JTextArea console = new JTextArea();
 	private JFrame frame = new JFrame();
-	// TODO close button handling
 	/**
 	 * Comment for serialVersionUID.
 	 */
@@ -32,8 +31,10 @@ public class SwingServer extends ServerWindow implements ActionListener {
 	/**
 	 * Init the UI. This is done on the EDT.
 	 */
-	public void initUI() {
+	private void initUI() {
+
 		frame.setPreferredSize(new Dimension(300, 300));
+		frame.setTitle("Swing Server");
 
 		JButton closeButton = new JButton("Close");
 		closeButton.addActionListener(this);
@@ -86,6 +87,7 @@ public class SwingServer extends ServerWindow implements ActionListener {
 
 	}
 
+	// TODO use system.lineseparator
 	@Override
 	public void onClientDisconnected(String client) {
 		console.append(client + " has disconnected.\n");
@@ -93,14 +95,14 @@ public class SwingServer extends ServerWindow implements ActionListener {
 	}
 
 	@Override
-	public void stop() {
+	public void actionPerformed(ActionEvent e) {
 		frame.dispose();
 
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
-		stop();
+	public void logMessage(String message) {
+		console.append(message + System.lineSeparator());
 
 	}
 

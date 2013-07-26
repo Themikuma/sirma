@@ -11,7 +11,6 @@ import java.nio.file.Paths;
  * @author user
  */
 public class FileConnection extends ConnectionUnit {
-
 	private String path;
 
 	/**
@@ -20,31 +19,30 @@ public class FileConnection extends ConnectionUnit {
 	 * @param path
 	 *            path to the file.
 	 */
-	// TODO handle file errors.
 	public FileConnection(String path) {
 		this.path = path;
+	}
+
+	@Override
+	public void connectionEstablished() {
+		System.out.println("ok");
+	}
+
+	@Override
+	public void connectionRefused(String error) {
+		System.out.println(error);
 
 	}
 
 	@Override
 	public void start() {
-		String config = null;
 		try {
-			config = Files.readAllLines(Paths.get(path), Charset.defaultCharset()).get(0);
+			String config = Files.readAllLines(Paths.get(path), Charset.defaultCharset()).get(0);
+			String[] splitConfig = config.split("[|]");
+			connect(splitConfig[0], splitConfig[1], splitConfig[2]);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			connectionRefused("File not found");
 		}
-		String[] splitConfig = config.split("[|]");
-		tryConnect(splitConfig[0], splitConfig[1], splitConfig[2]);
-
-	}
-
-	@Override
-	public void updateStatus(String status) {
-		System.out.println(status);
-		if ("ok".equals(status))
-			getMainWindow().startListening(getConnectionListener().getServer());
 
 	}
 

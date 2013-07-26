@@ -1,7 +1,8 @@
-package com.cit.chat.server;
+package com.sirma.itt.javacourse.chat.server.threads;
 
 import com.sirma.itt.javacourse.chat.messages.IClientMessages;
 import com.sirma.itt.javacourse.chat.messages.IServerMessages;
+import com.sirma.itt.javacourse.chat.server.UsersManager;
 import com.sirma.itt.javacourse.chat.server.structures.Client;
 
 /**

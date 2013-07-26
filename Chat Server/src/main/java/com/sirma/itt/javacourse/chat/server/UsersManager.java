@@ -1,15 +1,13 @@
-package com.cit.chat.server;
+package com.sirma.itt.javacourse.chat.server;
 
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.sirma.itt.javacourse.chat.messages.IServerMessages;
-import com.sirma.itt.javacourse.chat.server.maincomponents.ServerWindow;
+import com.sirma.itt.javacourse.chat.server.maincomponents.MainUnit;
 import com.sirma.itt.javacourse.chat.server.structures.Client;
 
 /**
@@ -19,8 +17,7 @@ import com.sirma.itt.javacourse.chat.server.structures.Client;
  */
 public class UsersManager {
 	private Set<Client> clientSet = new LinkedHashSet<>();
-	private Executor executor = Executors.newCachedThreadPool();
-	private ServerWindow serverWindow;
+	private MainUnit serverWindow;
 	private final Pattern pattern = Pattern.compile("\\]|\\[");
 
 	/**
@@ -29,12 +26,11 @@ public class UsersManager {
 	 * @param window
 	 *            the main unit
 	 */
-	public UsersManager(ServerWindow window) {
+	public UsersManager(MainUnit window) {
 		super();
 		this.serverWindow = window;
 	}
 
-	// TODO is this really thread safe ?
 	/**
 	 * Broadcast a message to all users.
 	 * 
@@ -42,10 +38,12 @@ public class UsersManager {
 	 *            the message to be broadcastet
 	 */
 	public void broadcastMessage(String message) {
+		serverWindow.logMessage(message);
 		synchronized (clientSet) {
 
 			Iterator<Client> iterator = clientSet.iterator();
 			while (iterator.hasNext()) {
+
 				Client client = iterator.next();
 				sendMessage(client, message);
 			}
@@ -60,8 +58,8 @@ public class UsersManager {
 	 * @param message
 	 *            the message to be sent
 	 */
-	public void sendMessage(Client client, String message) {
-		executor.execute(new SendMessageThread(client, message));
+	public void sendMessage(final Client client, final String message) {
+		client.sendMessage(message);
 	}
 
 	/**
@@ -77,7 +75,9 @@ public class UsersManager {
 			serverWindow.onClientConnected(client.getUsername());
 			client.sendMessage(IServerMessages.NICK_OK.toString());
 			broadcastMessage(IServerMessages.ADD_TO_LIST + "|" + client.getUsername());
-			clientSet.add(client);
+			synchronized (clientSet) {
+				clientSet.add(client);
+			}
 
 			sendMessage(client, IServerMessages.USER_LIST + "|" + generateUsernameString());
 		} else
@@ -93,7 +93,9 @@ public class UsersManager {
 	public void removeUser(Client client) {
 		serverWindow.onClientDisconnected(client.getUsername());
 		client.closeConnection();
-		clientSet.remove(client);
+		synchronized (clientSet) {
+			clientSet.remove(client);
+		}
 		broadcastMessage(IServerMessages.CLIENT_DISCONNECTED + "|" + client.getUsername());
 	}
 

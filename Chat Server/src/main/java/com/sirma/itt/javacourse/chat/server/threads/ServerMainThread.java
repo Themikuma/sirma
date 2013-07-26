@@ -1,10 +1,10 @@
-package com.cit.chat.server;
+package com.sirma.itt.javacourse.chat.server.threads;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 
-import com.cit.chat.server.connectionconfigs.ConnectionUnit;
-import com.sirma.itt.javacourse.chat.server.maincomponents.ServerWindow;
+import com.sirma.itt.javacourse.chat.server.UsersManager;
+import com.sirma.itt.javacourse.chat.server.main.Server;
 import com.sirma.itt.javacourse.chat.server.structures.Client;
 import com.sirma.itt.javacourse.chat.sockets.SocketFinder;
 
@@ -17,29 +17,23 @@ import com.sirma.itt.javacourse.chat.sockets.SocketFinder;
 public class ServerMainThread implements Runnable {
 
 	private ServerSocket socket;
-	private String host;
 	private int port;
 	private UsersManager usersManager;
-	private ConnectionUnit connectionUnit;
+	private Server server;
 
 	/**
 	 * Setting up the host, port, window and serverWindow.
 	 * 
-	 * @param host
-	 *            the host to connect to
 	 * @param port
-	 *            the port, opened on the specified host
-	 * @param window
-	 *            the connection unit
-	 * @param serverWindow
-	 *            the main unit
+	 *            the port of the server
+	 * @param server
+	 *            the server object
 	 */
-	public ServerMainThread(String host, int port, ConnectionUnit window, ServerWindow serverWindow) {
+	public ServerMainThread(int port, Server server) {
 		super();
-		this.host = host;
 		this.port = port;
-		connectionUnit = window;
-		usersManager = new UsersManager(serverWindow);
+		this.server = server;
+		usersManager = new UsersManager(server.getMainUnit());
 	}
 
 	@Override
@@ -54,22 +48,22 @@ public class ServerMainThread implements Runnable {
 	 * connection unit.
 	 */
 	public void connect() {
-		socket = SocketFinder.getAvailableServerSocket(host, port);
-		String status;
+		socket = SocketFinder.getAvailableServerSocket(port);
 		if (socket == null) {
-			status = "Invalid host";
+			server.getConnectionUnit().connectionFailed("Invalid port");
 		} else {
-			status = "ok";
+			server.getConnectionUnit().connectionEstablished();
+			server.getMainUnit().start();
+			server.getMainUnit().logMessage("Server started on localhost " + ":" + port);
 		}
-		connectionUnit.updateStatus(status);
+
 	}
 
 	/**
 	 * Wait for clients to connect.
 	 */
 	public void waitForClients() {
-
-		while (true) {
+		while (!Thread.currentThread().isInterrupted()) {
 			acceptClient();
 		}
 
