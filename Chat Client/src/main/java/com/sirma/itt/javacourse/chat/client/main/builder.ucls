@@ -4,52 +4,27 @@
   <class id="1" language="java" name="com.sirma.itt.javacourse.chat.client.main.ClientBuilder" project="Chat Client" 
     file="/Chat Client/src/main/java/com/sirma/itt/javacourse/chat/client/main/ClientBuilder.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="135" width="267" x="295" y="37"/>    
+    <position height="171" width="267" x="41" y="37"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </class>  
-  <class id="2" language="java" name="com.sirma.itt.javacourse.chat.client.maincomponents.MainUnit" 
-    project="Chat Client" 
-    file="/Chat Client/src/main/java/com/sirma/itt/javacourse/chat/client/maincomponents/MainUnit.java" binary="false" 
+  <class id="2" language="java" name="com.sirma.itt.javacourse.chat.client.main.Client" project="Chat Client" 
+    file="/Chat Client/src/main/java/com/sirma/itt/javacourse/chat/client/main/Client.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="261" width="234" x="328" y="459"/>    
+    <position height="387" width="200" x="41" y="248"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </class>  
-  <class id="3" language="java" name="com.sirma.itt.javacourse.chat.connectionconfigs.ConnectionUnit" 
-    project="Chat Client" 
-    file="/Chat Client/src/main/java/com/sirma/itt/javacourse/chat/connectionconfigs/ConnectionUnit.java" binary="false" 
-    corner="BOTTOM_RIGHT">    
-    <position height="207" width="266" x="41" y="212"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true"/>      
-      <operations public="true" package="true" protected="true" private="true"/>    
-    </display>  
-  </class>  
-  <association id="4">    
-    <bendpoint x="337" y="212"/>    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="5" name="mainFrame"/>      
-      <multiplicity id="6" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="2" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="7">    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="8" name="connectionFrame"/>      
-      <multiplicity id="9" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="3" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
+  <dependency id="3">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="2"/>  
+  </dependency>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     accessors="true" visibility="true">    
     <attributes public="true" package="true" protected="true" private="true"/>    

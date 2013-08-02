@@ -10,7 +10,7 @@ import java.nio.file.Paths;
  * 
  * @author user
  */
-public class FileConnection extends ConnectionUnit {
+public class FileConnection extends ServerConnectionUnit {
 
 	private String path;
 
@@ -30,19 +30,17 @@ public class FileConnection extends ConnectionUnit {
 			String config = Files.readAllLines(Paths.get(path), Charset.defaultCharset()).get(0);
 			tryConnect(config);
 		} catch (IOException e) {
-			connectionFailed("File not found");
+			connectionRefused("File not found");
 		}
 	}
 
 	@Override
 	public void connectionEstablished() {
-		System.out.println("yay");
-
 	}
 
 	@Override
-	public void connectionFailed(String message) {
-		System.out.println(message);
+	public void connectionRefused(String arg0) {
+		System.out.println(arg0);
 
 	}
 

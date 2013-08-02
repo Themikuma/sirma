@@ -1,12 +1,11 @@
 package com.sirma.itt.javacourse.chat.structures;
 
-import java.awt.GraphicsEnvironment;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import javax.swing.JOptionPane;
+import org.apache.log4j.Logger;
 
 /**
  * A runnable that will send messages when available.
@@ -14,9 +13,9 @@ import javax.swing.JOptionPane;
  * @author user
  */
 public class MessageSender implements Runnable {
-	// TODO nope
 	private BlockingQueue<String> messages = new LinkedBlockingQueue<String>();
 	private BufferedWriter writer;
+	private static final Logger logger = Logger.getLogger(MessageSender.class);
 
 	/**
 	 * Set up the writer of the server to which the message is going to be sent.
@@ -37,14 +36,9 @@ public class MessageSender implements Runnable {
 				writer.newLine();
 				writer.flush();
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				throw new RuntimeException(e);
 			} catch (IOException e) {
-				if (!GraphicsEnvironment.isHeadless())
-					JOptionPane.showMessageDialog(null,
-							"The connection to the server has been terminated");
-				else
-					System.out.println("The connection to the server has been terminated");
+				logger.error("No active connection found while trying to send a message");
 			}
 		}
 

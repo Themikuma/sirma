@@ -32,7 +32,6 @@ public class ServerMessagesReadThread implements Runnable {
 			decider.decide(msg);
 		}
 
-		client.getServer().closeConnection();
 		client.getMainUnit().disconnect();
 	}
 }

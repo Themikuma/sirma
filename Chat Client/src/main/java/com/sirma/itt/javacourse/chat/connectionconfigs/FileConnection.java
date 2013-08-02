@@ -6,11 +6,11 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 /**
- * A file based implementation of the {@link ConnectionUnit}. Loads the info from a file.
+ * A file based implementation of the {@link ClientConnectionUnit}. Loads the info from a file.
  * 
  * @author user
  */
-public class FileConnection extends ConnectionUnit {
+public class FileConnection extends ClientConnectionUnit {
 	private String path;
 
 	/**

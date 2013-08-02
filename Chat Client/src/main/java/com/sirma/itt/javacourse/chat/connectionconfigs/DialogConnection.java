@@ -19,13 +19,15 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
+import com.sirma.itt.javacourse.chat.client.threads.TextAnimationThread;
+
 /**
- * A graphical implementation of the {@link ConnectionUnit}. Uses a {@link JDialog} to display
+ * A graphical implementation of the {@link ClientConnectionUnit}. Uses a {@link JDialog} to display
  * components.
  * 
  * @author user
  */
-public class DialogConnection extends ConnectionUnit implements ActionListener {
+public class DialogConnection extends ClientConnectionUnit implements ActionListener {
 
 	/**
 	 * Called when the connection unit is created.Inits the ui in the EDT thread.
@@ -38,6 +40,8 @@ public class DialogConnection extends ConnectionUnit implements ActionListener {
 				initUI();
 			}
 		});
+		Thread thread = new Thread(labelAnimation);
+		thread.start();
 	}
 
 	/**
@@ -57,6 +61,8 @@ public class DialogConnection extends ConnectionUnit implements ActionListener {
 	private ResourceBundle labelsBundle;
 	private JButton connectButton = new JButton();
 	private JButton cancelButton = new JButton();
+	private TextAnimationThread labelAnimation = new TextAnimationThread(this.status);
+	private ResourceBundle dialogBundle;
 
 	/**
 	 * Init the UI. This is where the overriding of the start method is required. The UI is
@@ -115,13 +121,17 @@ public class DialogConnection extends ConnectionUnit implements ActionListener {
 
 	@Override
 	public void connectionEstablished() {
+		status.setText("");
 		dialog.setVisible(false);
 
 	}
 
 	@Override
 	public void connectionRefused(String error) {
-		this.status.setText(error);
+		this.status.setText(dialogBundle.getString(error));
+		synchronized (status) {
+			status.notify();
+		}
 
 	}
 
@@ -129,6 +139,7 @@ public class DialogConnection extends ConnectionUnit implements ActionListener {
 	public void start() {
 		buttonsBundle = ResourceBundle.getBundle("ButtonsBundle", getCurrentLocale());
 		labelsBundle = ResourceBundle.getBundle("LabelsBundle", getCurrentLocale());
+		dialogBundle = ResourceBundle.getBundle("DialogBundle", getCurrentLocale());
 		updateUI();
 		dialog.setVisible(true);
 

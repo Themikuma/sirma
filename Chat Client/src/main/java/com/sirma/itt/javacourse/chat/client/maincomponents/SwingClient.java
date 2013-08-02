@@ -9,7 +9,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.text.DateFormat;
+import java.text.MessageFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -25,16 +29,18 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
+import org.apache.log4j.Logger;
+
 import com.sirma.itt.javacourse.chat.messages.IClientMessages;
 import com.sirma.itt.javacourse.chat.structures.Message;
 
 /**
- * A graphical implementation of the {@link MainUnit}. Uses swing and a {@link JFrame} to display
+ * A graphical implementation of the {@link ClientMainUnit}. Uses swing and a {@link JFrame} to display
  * components.
  * 
  * @author user
  */
-public class SwingClient extends MainUnit implements ActionListener, KeyListener {
+public class SwingClient extends ClientMainUnit implements ActionListener, KeyListener {
 	private DefaultListModel<Message> messageModel = new DefaultListModel<>();
 	private JList<Message> console = new JList<Message>(messageModel);
 	private JTextField messageField = new JTextField();
@@ -50,11 +56,14 @@ public class SwingClient extends MainUnit implements ActionListener, KeyListener
 	private JMenuItem englishItem = new JMenuItem();
 	private JMenuItem bulgarianItem = new JMenuItem();
 	private JButton sendButton = new JButton();
-
+	private static final Logger logger = Logger.getLogger(SwingClient.class);
 	private JFrame mainFrame = new JFrame();
 
 	private ResourceBundle buttonsBundle;
-
+	private ResourceBundle hoursBundle;
+	private ResourceBundle messageBundle;
+	private MessageFormat messageFormatter = new MessageFormat("");
+	private DateFormat formatter;
 	/**
 	 * Comment for serialVersionUID.
 	 */
@@ -97,7 +106,6 @@ public class SwingClient extends MainUnit implements ActionListener, KeyListener
 		menu.add(connectMenu);
 		menu.add(localeMenu);
 		mainFrame.setJMenuBar(menu);
-
 		messagePane.add(messageField, BorderLayout.CENTER);
 		messagePane.add(sendButton, BorderLayout.EAST);
 		JPanel consolePane = new JPanel(new BorderLayout());
@@ -105,6 +113,7 @@ public class SwingClient extends MainUnit implements ActionListener, KeyListener
 		consolePane.add(console, BorderLayout.SOUTH);
 		JScrollPane scroll = new JScrollPane(consolePane);
 		JScrollPane userListScroll = new JScrollPane(userList);
+		console.setFixedCellHeight(100);
 		console.setBackground(Color.white);
 		console.setCellRenderer(new MessageRenderer());
 		sendButton.addActionListener(this);
@@ -146,17 +155,21 @@ public class SwingClient extends MainUnit implements ActionListener, KeyListener
 			disconnect();
 		else {
 			if ("eng".equals(command))
-				setLocale(getSupportedLocale(0));
+				setCurrentLocale(getLocaleFromIndex(0));
 			else if ("bg".equals(command))
-				setLocale(getSupportedLocale(1));
+				setCurrentLocale(getLocaleFromIndex(1));
 			buttonsBundle = ResourceBundle.getBundle("ButtonsBundle", getCurrentLocale());
+			hoursBundle = ResourceBundle.getBundle("HoursBundle", getCurrentLocale());
+			messageBundle = ResourceBundle.getBundle("MessagesBundle", getCurrentLocale());
+			formatter = new SimpleDateFormat(hoursBundle.getString("hours"));
 			redrawButtons();
 		}
 	}
 
 	@Override
 	public void onUserAdded(final String user) {
-		logMessage(user + " has joined the room");
+		messageFormatter.applyPattern(messageBundle.getString("connectMessage"));
+		addMessage("System", messageFormatter.format(new Object[] { user }));
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
@@ -168,39 +181,28 @@ public class SwingClient extends MainUnit implements ActionListener, KeyListener
 
 	@Override
 	public void onUserRemoved(String user) {
-		logMessage(user + " has left the room");
+		logger.info(user + " has left the room");
+		messageFormatter.applyPattern(messageBundle.getString("disconnectMessage"));
+		addMessage("System", messageFormatter.format(new Object[] { user }));
 		userListModel.removeElement(user);
 
 	}
 
 	@Override
-	public void onListReloadRequest(String users) {
-		for (String userName : users.split(","))
-			onUserAdded(userName);
-
-	}
-
-	@Override
-	public void onMessageAdded(final Message message) {
-		if (messageModel.size() == 20) {
-			SwingUtilities.invokeLater(new Runnable() {
-
-				@Override
-				public void run() {
-					messageModel.remove(0);
-
-				}
-			});
-		}
-		logMessage(message.getSender() + ":" + message.getMessage());
+	public void addMessage(final String user, final String message) {
 		SwingUtilities.invokeLater(new Runnable() {
 
 			@Override
 			public void run() {
-				messageModel.addElement(message);
+				if (messageModel.size() == 20) {
+					messageModel.remove(0);
+				}
+				messageModel.addElement(new Message(message, formatter.format(new Date()), user));
 				console.ensureIndexIsVisible(messageModel.indexOf(messageModel.lastElement()));
 			}
 		});
+
+		logger.info(user + ":" + message);
 
 	}
 
@@ -216,13 +218,11 @@ public class SwingClient extends MainUnit implements ActionListener, KeyListener
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -243,7 +243,10 @@ public class SwingClient extends MainUnit implements ActionListener, KeyListener
 
 	@Override
 	public void start() {
-		buttonsBundle = ResourceBundle.getBundle("ButtonsBundle", getSupportedLocale(1));
+		messageBundle = ResourceBundle.getBundle("MessagesBundle", getCurrentLocale());
+		hoursBundle = ResourceBundle.getBundle("HoursBundle", getCurrentLocale());
+		buttonsBundle = ResourceBundle.getBundle("ButtonsBundle", getCurrentLocale());
+		formatter = new SimpleDateFormat(hoursBundle.getString("hours"));
 		SwingUtilities.invokeLater(new Runnable() {
 
 			@Override

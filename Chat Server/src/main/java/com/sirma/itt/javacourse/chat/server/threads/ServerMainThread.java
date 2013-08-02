@@ -3,6 +3,8 @@ package com.sirma.itt.javacourse.chat.server.threads;
 import java.io.IOException;
 import java.net.ServerSocket;
 
+import org.apache.log4j.Logger;
+
 import com.sirma.itt.javacourse.chat.server.UsersManager;
 import com.sirma.itt.javacourse.chat.server.main.Server;
 import com.sirma.itt.javacourse.chat.server.structures.Client;
@@ -20,6 +22,7 @@ public class ServerMainThread implements Runnable {
 	private int port;
 	private UsersManager usersManager;
 	private Server server;
+	private static final Logger logger = Logger.getLogger(ServerMainThread.class);
 
 	/**
 	 * Setting up the host, port, window and serverWindow.
@@ -33,14 +36,12 @@ public class ServerMainThread implements Runnable {
 		super();
 		this.port = port;
 		this.server = server;
-		usersManager = new UsersManager(server.getMainUnit());
+		usersManager = new UsersManager();
 	}
 
 	@Override
 	public void run() {
 		connect();
-		waitForClients();
-
 	}
 
 	/**
@@ -48,15 +49,16 @@ public class ServerMainThread implements Runnable {
 	 * connection unit.
 	 */
 	public void connect() {
-		socket = SocketFinder.getAvailableServerSocket(port);
-		if (socket == null) {
-			server.getConnectionUnit().connectionFailed("Invalid port");
-		} else {
+		try {
+			socket = SocketFinder.getAvailableServerSocket(port);
+			server.setServer(socket);
 			server.getConnectionUnit().connectionEstablished();
-			server.getMainUnit().start();
-			server.getMainUnit().logMessage("Server started on localhost " + ":" + port);
+			server.getMainUnit().addMessage("Server",
+					"Server started on " + server.getServer().getInetAddress() + ":" + port);
+			waitForClients();
+		} catch (IOException e) {
+			server.getConnectionUnit().connectionRefused("Port already in use");
 		}
-
 	}
 
 	/**
@@ -74,10 +76,13 @@ public class ServerMainThread implements Runnable {
 	 */
 	public void acceptClient() {
 		try {
-			Client client = new Client(socket.accept(), "default");
-			Thread thread = new Thread(new ClientMessagesReadThread(client, usersManager));
+
+			Client client = new Client(socket.accept());
+			System.out.println("client trying to connect");
+			Thread thread = new Thread(new ClientMessagesReadThread(client, usersManager, server));
 			thread.start();
 		} catch (IOException e) {
+			logger.error("An IO exception occured while trying to accept a client");
 		}
 	}
 }

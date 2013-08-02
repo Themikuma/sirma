@@ -1,7 +1,12 @@
 package com.sirma.itt.javacourse.chat.server.main;
 
-import com.sirma.itt.javacourse.chat.server.connectionconfigs.ConnectionUnit;
-import com.sirma.itt.javacourse.chat.server.maincomponents.MainUnit;
+import java.net.ServerSocket;
+import java.util.Locale;
+
+import com.sirma.itt.javacourse.chat.contracts.ConnectionUnit;
+import com.sirma.itt.javacourse.chat.contracts.MainUnit;
+import com.sirma.itt.javacourse.chat.server.connectionconfigs.ServerConnectionUnit;
+import com.sirma.itt.javacourse.chat.server.maincomponents.ServerMainUnit;
 import com.sirma.itt.javacourse.chat.server.threads.ServerMainThread;
 
 /**
@@ -11,8 +16,10 @@ import com.sirma.itt.javacourse.chat.server.threads.ServerMainThread;
  */
 public class Server {
 	private MainUnit mainUnit;
-
 	private ConnectionUnit connectionUnit;
+	private ServerSocket server;
+	private Locale[] supported = { Locale.ENGLISH, new Locale("bg") };
+	private Locale currentLocale = Locale.getDefault();
 
 	/**
 	 * Setting up the main and connection units.
@@ -22,11 +29,12 @@ public class Server {
 	 * @param connect
 	 *            the connection unit
 	 */
-	public Server(MainUnit main, ConnectionUnit connect) {
+	public Server(ServerMainUnit main, ServerConnectionUnit connect) {
 		this.mainUnit = main;
 		this.connectionUnit = connect;
-		connectionUnit.setServer(this);
-		connectionUnit.start();
+		connect.setServer(this);
+		main.setServer(this);
+		mainUnit.start();
 	}
 
 	/**
@@ -40,10 +48,10 @@ public class Server {
 		try {
 			portInt = Integer.parseInt(port);
 			Thread thread = new Thread(new ServerMainThread(portInt, this));
-			thread.setDaemon(true);
+			// thread.setDaemon(true);
 			thread.start();
 		} catch (NumberFormatException e) {
-			connectionUnit.connectionFailed("Invalid port format");
+			connectionUnit.connectionRefused("malformedPort");
 		}
 
 	}
@@ -64,5 +72,52 @@ public class Server {
 	 */
 	public ConnectionUnit getConnectionUnit() {
 		return connectionUnit;
+	}
+
+	/**
+	 * Getter method for server.
+	 * 
+	 * @return the server
+	 */
+	public ServerSocket getServer() {
+		return server;
+	}
+
+	/**
+	 * Setter method for server.
+	 * 
+	 * @param server
+	 *            the server to set
+	 */
+	public void setServer(ServerSocket server) {
+		this.server = server;
+	}
+
+	/**
+	 * Getter method for currentLocale.
+	 * 
+	 * @return the currentLocale
+	 */
+	public Locale getCurrentLocale() {
+		return currentLocale;
+	}
+
+	/**
+	 * Setter method for currentLocale.
+	 * 
+	 * @param currentLocale
+	 *            the currentLocale to set
+	 */
+	public void setCurrentLocale(Locale currentLocale) {
+		this.currentLocale = currentLocale;
+	}
+
+	/**
+	 * Getter method for supported.
+	 * 
+	 * @return the supported
+	 */
+	public Locale[] getSupported() {
+		return supported;
 	}
 }

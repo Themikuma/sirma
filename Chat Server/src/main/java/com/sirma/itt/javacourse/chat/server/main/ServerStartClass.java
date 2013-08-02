@@ -1,6 +1,5 @@
 package com.sirma.itt.javacourse.chat.server.main;
 
-import com.sirma.itt.javacourse.chat.server.connectionconfigs.FileConnection;
 
 /**
  * Example use of the server.
@@ -23,6 +22,6 @@ public final class ServerStartClass {
 	 */
 	public static void main(String[] args) {
 		ServerBuilder builder = new ServerBuilder();
-		builder.setConnectionUnit(new FileConnection("config.txt")).build();
+		builder.build();
 	}
 }

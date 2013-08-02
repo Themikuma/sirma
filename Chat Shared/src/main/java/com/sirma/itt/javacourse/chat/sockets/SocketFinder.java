@@ -1,7 +1,6 @@
 package com.sirma.itt.javacourse.chat.sockets;
 
 import java.io.IOException;
-import java.net.BindException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -23,24 +22,17 @@ public final class SocketFinder {
 	/**
 	 * Starts an available server socket at the given host in the given port range.
 	 * 
-	 * @param host
-	 *            the host to start the server on
 	 * @param port
 	 *            the port
 	 * @return the found socket
+	 * @throws IOException
+	 *             an exception if the port is taken
 	 */
-	public static ServerSocket getAvailableServerSocket(int port) {
+	public static ServerSocket getAvailableServerSocket(int port) throws IOException {
 
-		try {
-			ServerSocket socket = new ServerSocket(port);
-			return socket;
-		} catch (BindException e) {
-			System.out.println("Port " + port + " is already in use.");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
+		ServerSocket socket = new ServerSocket(port);
+		return socket;
+
 	}
 
 	/**
@@ -51,17 +43,13 @@ public final class SocketFinder {
 	 * @param port
 	 *            the port
 	 * @return the found socket
+	 * @throws IOException
+	 *             if the host or port are incorrect
 	 */
-	public static Socket getAvailableSocket(String host, int port) {
-		try {
-			Socket socket = new Socket(host, port);
-			return socket;
-		} catch (BindException e) {
-			System.out.println("Port " + port + " is not available.");
-		} catch (IOException e) {
+	public static Socket getAvailableSocket(String host, int port) throws IOException {
 
-		}
+		Socket socket = new Socket(host, port);
+		return socket;
 
-		return null;
 	}
 }

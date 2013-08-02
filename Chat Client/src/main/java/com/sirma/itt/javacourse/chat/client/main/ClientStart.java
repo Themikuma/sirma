@@ -1,7 +1,6 @@
 package com.sirma.itt.javacourse.chat.client.main;
 
-import com.sirma.itt.javacourse.chat.client.maincomponents.ConsoleClient;
-import com.sirma.itt.javacourse.chat.connectionconfigs.DialogConnection;
+import java.io.IOException;
 
 /**
  * An example use of the builder.
@@ -22,16 +21,11 @@ public final class ClientStart {
 	 * 
 	 * @param args
 	 *            command-line arguments
+	 * @throws IOException
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		ClientBuilder builder = new ClientBuilder();
 		@SuppressWarnings("unused")
 		Client client = builder.build();
-		client.tryConnect("", "main", "7000");
-		for (int i = 0; i < 2000; i++) {
-			Client another = builder.setConnectionFrame(new DialogConnection())
-					.setMainUnit(new ConsoleClient()).build();
-			another.tryConnect("", "asd" + i, "7000");
-		}
 	}
 }

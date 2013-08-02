@@ -19,11 +19,11 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
 /**
- * Graphical implementation of the {@link ConnectionUnit}.
+ * Graphical implementation of the {@link ServerConnectionUnit}.
  * 
  * @author user
  */
-public class DialogConnection extends ConnectionUnit implements ActionListener {
+public class DialogConnection extends ServerConnectionUnit implements ActionListener {
 	private JTextField portField;
 	private JLabel status = new JLabel();
 
@@ -33,6 +33,17 @@ public class DialogConnection extends ConnectionUnit implements ActionListener {
 	 */
 	@SuppressWarnings("unused")
 	private static final long serialVersionUID = -5727905105138951096L;
+
+	public DialogConnection() {
+		SwingUtilities.invokeLater(new Runnable() {
+
+			@Override
+			public void run() {
+				initUI();
+
+			}
+		});
+	}
 
 	/**
 	 * Init the UI. This is where the overriding of the start method is required. The UI is
@@ -64,21 +75,12 @@ public class DialogConnection extends ConnectionUnit implements ActionListener {
 		dialog.pack();
 		dialog.setLocation(screenCentre.x - dialog.getHeight() / 2,
 				screenCentre.y - dialog.getWidth() / 2);
-		dialog.setVisible(true);
 
 	}
 
 	@Override
 	public void start() {
-		SwingUtilities.invokeLater(new Runnable() {
-
-			@Override
-			public void run() {
-				initUI();
-
-			}
-		});
-
+		dialog.setVisible(true);
 	}
 
 	@Override
@@ -94,13 +96,13 @@ public class DialogConnection extends ConnectionUnit implements ActionListener {
 
 	@Override
 	public void connectionEstablished() {
-		dialog.dispose();
+		dialog.setVisible(false);
 
 	}
 
 	@Override
-	public void connectionFailed(String message) {
-		this.status.setText(message);
+	public void connectionRefused(String arg0) {
+		this.status.setText(arg0);
 
 	}
 

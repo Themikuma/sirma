@@ -1,13 +1,17 @@
 package com.sirma.itt.javacourse.chat.client.maincomponents;
 
-import com.sirma.itt.javacourse.chat.structures.Message;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+import com.sirma.itt.javacourse.chat.messages.IClientMessages;
 
 /**
- * An example implementation of the {@link MainUnit}, that writes messages to the console.
+ * An example implementation of the {@link ClientMainUnit}, that writes messages to the console.
  * 
  * @author user
  */
-public class ConsoleClient extends MainUnit {
+public class ConsoleClient extends ClientMainUnit {
 
 	@Override
 	public void onUserAdded(String user) {
@@ -22,36 +26,30 @@ public class ConsoleClient extends MainUnit {
 	}
 
 	@Override
-	public void onListReloadRequest(String users) {
-		System.out.println("List reloaded with " + users);
-
-	}
-
-	@Override
-	public void onMessageAdded(Message message) {
-		System.out.println(message.getSender() + " : " + message.getMessage());
-
-	}
-
-	@Override
 	public void start() {
 		startConnectionUnit();
-		// BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-		// String line;
-		// try {
-		// while ((line = reader.readLine()) != null) {
-		// sendMessage(IClientMessages.CLIENT_MESSAGE + "|" + line);
-		// }
-		// } catch (IOException e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// }
-		// disconnect();
+		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+		String line;
+		try {
+			while ((line = reader.readLine()) != null) {
+				sendMessage(IClientMessages.CLIENT_MESSAGE + "|" + line);
+			}
+		} catch (IOException e) {
+			System.out
+					.println("An IO exception occured while trying to read a line from the console");
+		}
+		disconnect();
 	}
 
 	@Override
 	public void onServerStopped() {
 		System.out.println("Server stopped.");
+	}
+
+	@Override
+	public void addMessage(String user, String message) {
+		System.out.println(user + " : " + message);
+
 	}
 
 }

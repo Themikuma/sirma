@@ -7,6 +7,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 
+import org.apache.log4j.Logger;
+
 import com.sirma.itt.javacourse.chat.server.MessageSender;
 
 /**
@@ -17,29 +19,26 @@ import com.sirma.itt.javacourse.chat.server.MessageSender;
 public class Client {
 
 	private Socket socket;
-	private String username = "";
+	private String username = "default";
 	private BufferedReader reader;
 	private BufferedWriter writer;
 	private MessageSender sender;
+	private Logger logger = Logger.getLogger(this.getClass());
 
 	/**
-	 * Setting up the socket and the name.
+	 * Setting up the socket.
 	 * 
 	 * @param socket
 	 *            the socket representing the connection to the client
-	 * @param name
-	 *            the username of the client
 	 */
-	public Client(Socket socket, String name) {
+	public Client(Socket socket) {
 		super();
-		this.username = name;
 		this.socket = socket;
 		try {
 			reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-			setWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())));
+			writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("An IO exception occured while trying to open the client's streams");
 		}
 		sender = new MessageSender(this);
 		Thread thread = new Thread(sender);
@@ -51,9 +50,9 @@ public class Client {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		// TODO Auto-generated method stub
+
 		Client anotherClient = (Client) obj;
-		return this.username.equals(anotherClient.username);
+		return username.equals(anotherClient.username);
 	}
 
 	/**
@@ -61,8 +60,7 @@ public class Client {
 	 */
 	@Override
 	public int hashCode() {
-		// TODO Auto-generated method stub
-		return this.username.hashCode();
+		return this.getUsername().hashCode();
 	}
 
 	/**
@@ -120,8 +118,7 @@ public class Client {
 		try {
 			socket.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("An IO exception occured while trying to close the connection to a client");
 		}
 	}
 

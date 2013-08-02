@@ -1,20 +1,20 @@
 package com.sirma.itt.javacourse.chat.client.main;
 
-import com.sirma.itt.javacourse.chat.client.maincomponents.MainUnit;
+import com.sirma.itt.javacourse.chat.client.maincomponents.ClientMainUnit;
 import com.sirma.itt.javacourse.chat.client.maincomponents.SwingClient;
-import com.sirma.itt.javacourse.chat.connectionconfigs.ConnectionUnit;
+import com.sirma.itt.javacourse.chat.connectionconfigs.ClientConnectionUnit;
 import com.sirma.itt.javacourse.chat.connectionconfigs.DialogConnection;
 
 /**
- * Using the builder pattern to build the client chat window by setting the {@link MainUnit} and
- * {@link ConnectionUnit}. By default the main unit is a {@link SwingClient} and the connection unit
+ * Using the builder pattern to build the client chat window by setting the {@link ClientMainUnit} and
+ * {@link ClientConnectionUnit}. By default the main unit is a {@link SwingClient} and the connection unit
  * is a {@link DialogConnection}.
  * 
  * @author user
  */
 public class ClientBuilder {
-	private MainUnit mainFrame = new SwingClient();
-	private ConnectionUnit connectionFrame = new DialogConnection();
+	private ClientMainUnit mainFrame = new SwingClient();
+	private ClientConnectionUnit connectionFrame = new DialogConnection();
 
 	/**
 	 * Set the main unit of the chat client.
@@ -23,7 +23,7 @@ public class ClientBuilder {
 	 *            the unit implementation
 	 * @return this so we can continue building
 	 */
-	public ClientBuilder setMainUnit(MainUnit mainFrame) {
+	public ClientBuilder setMainUnit(ClientMainUnit mainFrame) {
 		this.mainFrame = mainFrame;
 		return this;
 	}
@@ -35,7 +35,7 @@ public class ClientBuilder {
 	 *            the unit implementation
 	 * @return this so we can continue building
 	 */
-	public ClientBuilder setConnectionFrame(ConnectionUnit connectionFrame) {
+	public ClientBuilder setConnectionFrame(ClientConnectionUnit connectionFrame) {
 		this.connectionFrame = connectionFrame;
 		return this;
 	}

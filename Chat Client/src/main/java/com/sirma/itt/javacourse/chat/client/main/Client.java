@@ -1,13 +1,14 @@
 package com.sirma.itt.javacourse.chat.client.main;
 
 import java.util.Locale;
+import java.util.ResourceBundle;
 
-import org.apache.log4j.Logger;
-
-import com.sirma.itt.javacourse.chat.client.maincomponents.MainUnit;
+import com.sirma.itt.javacourse.chat.client.maincomponents.ClientMainUnit;
 import com.sirma.itt.javacourse.chat.client.threads.ServerConnectionThread;
 import com.sirma.itt.javacourse.chat.client.threads.ServerMessagesReadThread;
-import com.sirma.itt.javacourse.chat.connectionconfigs.ConnectionUnit;
+import com.sirma.itt.javacourse.chat.connectionconfigs.ClientConnectionUnit;
+import com.sirma.itt.javacourse.chat.contracts.ConnectionUnit;
+import com.sirma.itt.javacourse.chat.contracts.MainUnit;
 import com.sirma.itt.javacourse.chat.structures.Server;
 
 /**
@@ -22,8 +23,7 @@ public class Client {
 	private Server server;
 	private boolean isConnected;
 	private Locale[] supported = { Locale.ENGLISH, new Locale("bg") };
-	private Locale locale = supported[1];
-	private Logger logger = Logger.getLogger(this.getClass());
+	private Locale locale = Locale.getDefault();
 
 	/**
 	 * Setting up the main and connection units.
@@ -33,7 +33,7 @@ public class Client {
 	 * @param connectionUnit
 	 *            the connection unit
 	 */
-	public Client(MainUnit mainUnit, ConnectionUnit connectionUnit) {
+	public Client(ClientMainUnit mainUnit, ClientConnectionUnit connectionUnit) {
 		super();
 		this.mainUnit = mainUnit;
 		this.connectionUnit = connectionUnit;
@@ -53,6 +53,7 @@ public class Client {
 	 *            the port of the host
 	 */
 	public void tryConnect(String host, String username, String port) {
+		ResourceBundle errorsBundle = ResourceBundle.getBundle("DialogBundle", locale);
 		int portInt = 0;
 		try {
 			portInt = Integer.parseInt(port);
@@ -61,7 +62,7 @@ public class Client {
 			Thread thread = new Thread(connectionListener);
 			thread.start();
 		} catch (NumberFormatException e) {
-			connectionUnit.connectionRefused("Invalid port");
+			connectionUnit.connectionRefused("malformedPort");
 		}
 
 	}
@@ -157,15 +158,6 @@ public class Client {
 	 */
 	public Locale[] getSupported() {
 		return supported;
-	}
-
-	/**
-	 * Getter method for logger.
-	 * 
-	 * @return the logger
-	 */
-	public Logger getLogger() {
-		return logger;
 	}
 
 }

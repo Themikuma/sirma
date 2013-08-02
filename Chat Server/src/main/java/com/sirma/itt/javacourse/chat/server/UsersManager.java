@@ -7,7 +7,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.sirma.itt.javacourse.chat.messages.IServerMessages;
-import com.sirma.itt.javacourse.chat.server.maincomponents.MainUnit;
 import com.sirma.itt.javacourse.chat.server.structures.Client;
 
 /**
@@ -17,34 +16,21 @@ import com.sirma.itt.javacourse.chat.server.structures.Client;
  */
 public class UsersManager {
 	private Set<Client> clientSet = new LinkedHashSet<>();
-	private MainUnit serverWindow;
-	private final Pattern pattern = Pattern.compile("\\]|\\[");
-
-	/**
-	 * Setting up the main unit.
-	 * 
-	 * @param window
-	 *            the main unit
-	 */
-	public UsersManager(MainUnit window) {
-		super();
-		this.serverWindow = window;
-	}
+	private static final Pattern pattern = Pattern.compile("\\]|\\[");
+	private static final String USER_SEPARATOR = ",";
 
 	/**
 	 * Broadcast a message to all users.
 	 * 
 	 * @param message
-	 *            the message to be broadcastet
+	 *            the message to be broadcasted
 	 */
 	public void broadcastMessage(String message) {
-		serverWindow.logMessage(message);
 		synchronized (clientSet) {
-
 			Iterator<Client> iterator = clientSet.iterator();
 			while (iterator.hasNext()) {
-
 				Client client = iterator.next();
+				System.out.println(client + "\\" + message);
 				sendMessage(client, message);
 			}
 		}
@@ -68,20 +54,11 @@ public class UsersManager {
 	 * 
 	 * @param client
 	 *            the connected client
+	 * @return true if the user has been added, false otherwise
 	 */
-	public void addUser(Client client) {
+	public boolean addUser(Client client) {
 		Matcher matcher = pattern.matcher(client.getUsername());
-		if (!clientSet.contains(client) && !matcher.find()) {
-			serverWindow.onClientConnected(client.getUsername());
-			client.sendMessage(IServerMessages.NICK_OK.toString());
-			broadcastMessage(IServerMessages.ADD_TO_LIST + "|" + client.getUsername());
-			synchronized (clientSet) {
-				clientSet.add(client);
-			}
-
-			sendMessage(client, IServerMessages.USER_LIST + "|" + generateUsernameString());
-		} else
-			sendMessage(client, IServerMessages.INVALID_NICK.toString());
+		return !matcher.find() && clientSet.add(client);
 	}
 
 	/**
@@ -91,7 +68,6 @@ public class UsersManager {
 	 *            the user that disconnected
 	 */
 	public void removeUser(Client client) {
-		serverWindow.onClientDisconnected(client.getUsername());
 		client.closeConnection();
 		synchronized (clientSet) {
 			clientSet.remove(client);
@@ -100,20 +76,34 @@ public class UsersManager {
 	}
 
 	/**
-	 * Generate a string with all users names to send to a new client when he first connects.
+	 * Generate a string with all users names expect the one of the sender to send to a new client
+	 * when he first connects.
 	 * 
+	 * @param sender
+	 *            the sender
 	 * @return the generated string
 	 */
-	private String generateUsernameString() {
+
+	public String generateUsernameString(Client sender) {
 		String result = "";
 		synchronized (clientSet) {
 
 			Iterator<Client> iterator = clientSet.iterator();
 			while (iterator.hasNext()) {
 				Client client = iterator.next();
-				result += client.getUsername() + ",";
+				if (client != sender)
+					result += client.getUsername() + USER_SEPARATOR;
 			}
 		}
 		return result;
+	}
+
+	/**
+	 * Getter method for clientSet.
+	 * 
+	 * @return the clientSet
+	 */
+	public Set<Client> getClientSet() {
+		return clientSet;
 	}
 }

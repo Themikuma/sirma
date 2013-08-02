@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 
-import com.sirma.itt.javacourse.chat.client.main.Client;
+import org.apache.log4j.Logger;
 
 /**
  * A wrapper object representing the server.
@@ -19,25 +19,21 @@ public class Server {
 	private BufferedWriter writer;
 	private BufferedReader reader;
 	private MessageSender messager;
-	private Client client;
+	private Logger logger = Logger.getLogger(this.getClass());
 
 	/**
 	 * Setting up the socket with the already established connection to the server.
 	 * 
 	 * @param socket
 	 *            the socket
-	 * @param client
-	 *            the main client object
 	 */
-	public Server(Socket socket, Client client) {
+	public Server(Socket socket) {
 		this.socket = socket;
-		this.client = client;
 		try {
 			reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
 		} catch (IOException e) {
-			client.getLogger().error(
-					"An I/O error occured while trying to open the connection's ports");
+			logger.error("An I/O error occured while trying to open the connection's ports");
 		}
 		messager = new MessageSender(writer);
 		Thread thread = new Thread(messager);
@@ -51,8 +47,8 @@ public class Server {
 	 *            the message to add to the queue
 	 */
 	public void sendMessage(String message) {
-
-		if (message.split("[|]").length >= 1) {
+		// TODO it still says connecting...
+		if (message.split("[|]").length > 1) {
 			messager.addMessage(message);
 		}
 	}
@@ -77,10 +73,8 @@ public class Server {
 	public void closeConnection() {
 		try {
 			socket.close();
-
 		} catch (IOException e) {
-			client.getLogger().error(
-					"An I/O error occured while trying to disconnect from the server");
+			logger.error("An I/O error occured while trying to disconnect from the server");
 		}
 	}
 }
