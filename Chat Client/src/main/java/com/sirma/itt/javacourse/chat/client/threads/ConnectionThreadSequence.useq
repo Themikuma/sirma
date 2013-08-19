@@ -31,27 +31,27 @@
       <position height="21" width="0" x="0" y="257"/>    
     </execution>  
   </object>  
-  <object id="25" language="java" name="com.sirma.itt.javacourse.chat.connectionconfigs.ClientConnectionUnit" 
+  <object id="25" language="java" name="com.sirma.itt.javacourse.chat.client.connectionconfigs.ClientConnectionUnit" 
     project="Chat Client" 
-    file="/Chat Client/src/main/java/com/sirma/itt/javacourse/chat/connectionconfigs/ClientConnectionUnit.java" 
+    file="/Chat Client/src/main/java/com/sirma/itt/javacourse/chat/client/connectionconfigs/ClientConnectionUnit.java" 
     binary="false" type="class" autoSize="true">    
     <position height="0" width="0" x="0" y="0"/>    
     <execution id="16">      
       <position height="21" width="0" x="0" y="509"/>    
     </execution>  
   </object>  
-  <object id="26" language="java" name="com.sirma.itt.javacourse.chat.connectionconfigs.ClientConnectionUnit" 
+  <object id="26" language="java" name="com.sirma.itt.javacourse.chat.client.connectionconfigs.ClientConnectionUnit" 
     project="Chat Client" 
-    file="/Chat Client/src/main/java/com/sirma/itt/javacourse/chat/connectionconfigs/ClientConnectionUnit.java" 
+    file="/Chat Client/src/main/java/com/sirma/itt/javacourse/chat/client/connectionconfigs/ClientConnectionUnit.java" 
     binary="false" type="class" autoSize="true">    
     <position height="0" width="0" x="0" y="0"/>    
     <execution id="20">      
       <position height="21" width="0" x="0" y="635"/>    
     </execution>  
   </object>  
-  <object id="27" language="java" name="com.sirma.itt.javacourse.chat.structures.Server" project="Chat Client" 
-    file="/Chat Client/src/main/java/com/sirma/itt/javacourse/chat/structures/Server.java" binary="false" label="server" 
-    type="class" autoSize="true">    
+  <object id="27" language="java" name="com.sirma.itt.javacourse.chat.client.structures.Server" project="Chat Client" 
+    file="/Chat Client/src/main/java/com/sirma/itt/javacourse/chat/client/structures/Server.java" binary="false" 
+    label="server" type="class" autoSize="true">    
     <position height="-1" width="-1" x="468" y="0"/>    
     <execution id="8">      
       <position height="21" width="0" x="0" y="299"/>    

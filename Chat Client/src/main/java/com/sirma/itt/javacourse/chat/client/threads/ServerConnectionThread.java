@@ -5,10 +5,10 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 import com.sirma.itt.javacourse.chat.client.main.Client;
+import com.sirma.itt.javacourse.chat.client.structures.Server;
 import com.sirma.itt.javacourse.chat.messages.IClientMessages;
 import com.sirma.itt.javacourse.chat.messages.IServerMessages;
 import com.sirma.itt.javacourse.chat.sockets.SocketFinder;
-import com.sirma.itt.javacourse.chat.structures.Server;
 
 /**
  * The thread that tries to establish connection the server socket and send the username.

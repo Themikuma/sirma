@@ -12,9 +12,9 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import com.sirma.itt.javacourse.chat.client.connectionconfigs.ClientConnectionUnit;
 import com.sirma.itt.javacourse.chat.client.main.Client;
 import com.sirma.itt.javacourse.chat.client.maincomponents.ClientMainUnit;
-import com.sirma.itt.javacourse.chat.connectionconfigs.ClientConnectionUnit;
 import com.sirma.itt.javacourse.chat.server.connectionconfigs.ServerConnectionUnit;
 import com.sirma.itt.javacourse.chat.server.main.Server;
 import com.sirma.itt.javacourse.chat.server.maincomponents.ServerMainUnit;

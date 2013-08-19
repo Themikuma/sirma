@@ -1,4 +1,4 @@
-package com.sirma.itt.javacourse.chat.connectionconfigs;
+package com.sirma.itt.javacourse.chat.client.connectionconfigs;
 
 import java.awt.BorderLayout;
 import java.awt.Dialog.ModalityType;

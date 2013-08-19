@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sequence-diagram version="1.1.2" icons="true" automaticImage="PNG">  
-  <object id="1" language="java" name="com.sirma.itt.javacourse.chat.connectionconfigs.ClientConnectionUnit" 
+  <object id="1" language="java" name="com.sirma.itt.javacourse.chat.client.connectionconfigs.ClientConnectionUnit" 
     project="Chat Client" 
-    file="/Chat Client/src/main/java/com/sirma/itt/javacourse/chat/connectionconfigs/ClientConnectionUnit.java" 
+    file="/Chat Client/src/main/java/com/sirma/itt/javacourse/chat/client/connectionconfigs/ClientConnectionUnit.java" 
     binary="false" label="clientConnectionUnit" type="class" autoSize="true">    
     <position height="-1" width="-1" x="267" y="0"/>    
     <execution id="2">      
@@ -61,9 +61,9 @@
       <position height="63" width="191" x="804" y="305"/>    
     </execution>  
   </object>  
-  <object id="30" language="java" name="com.sirma.itt.javacourse.chat.structures.Server" project="Chat Client" 
-    file="/Chat Client/src/main/java/com/sirma/itt/javacourse/chat/structures/Server.java" binary="false" label="server" 
-    type="class" autoSize="true">    
+  <object id="30" language="java" name="com.sirma.itt.javacourse.chat.client.structures.Server" project="Chat Client" 
+    file="/Chat Client/src/main/java/com/sirma/itt/javacourse/chat/client/structures/Server.java" binary="false" 
+    label="server" type="class" autoSize="true">    
     <position height="-1" width="-1" x="632" y="0"/>    
     <execution id="26">      
       <position height="21" width="177" x="1012" y="227"/>    

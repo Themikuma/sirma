@@ -1,4 +1,4 @@
-package com.sirma.itt.javacourse.chat.structures;
+package com.sirma.itt.javacourse.chat.client.structures;
 
 import java.awt.Color;
 

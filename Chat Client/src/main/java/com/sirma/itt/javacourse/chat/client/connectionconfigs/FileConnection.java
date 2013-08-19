@@ -1,4 +1,4 @@
-package com.sirma.itt.javacourse.chat.connectionconfigs;
+package com.sirma.itt.javacourse.chat.client.connectionconfigs;
 
 import java.io.IOException;
 import java.nio.charset.Charset;

@@ -31,7 +31,7 @@ import javax.swing.SwingUtilities;
 
 import org.apache.log4j.Logger;
 
-import com.sirma.itt.javacourse.chat.structures.Message;
+import com.sirma.itt.javacourse.chat.client.structures.Message;
 
 /**
  * A graphical implementation of the {@link ClientMainUnit}. Uses swing and a {@link JFrame} to

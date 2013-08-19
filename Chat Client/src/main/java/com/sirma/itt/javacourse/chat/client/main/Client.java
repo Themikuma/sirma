@@ -2,13 +2,13 @@ package com.sirma.itt.javacourse.chat.client.main;
 
 import java.util.Locale;
 
+import com.sirma.itt.javacourse.chat.client.connectionconfigs.ClientConnectionUnit;
+import com.sirma.itt.javacourse.chat.client.connectionconfigs.DialogConnection;
 import com.sirma.itt.javacourse.chat.client.maincomponents.ClientMainUnit;
 import com.sirma.itt.javacourse.chat.client.maincomponents.SwingClient;
+import com.sirma.itt.javacourse.chat.client.structures.Server;
 import com.sirma.itt.javacourse.chat.client.threads.ServerConnectionThread;
 import com.sirma.itt.javacourse.chat.client.threads.ServerMessagesReadThread;
-import com.sirma.itt.javacourse.chat.connectionconfigs.ClientConnectionUnit;
-import com.sirma.itt.javacourse.chat.connectionconfigs.DialogConnection;
-import com.sirma.itt.javacourse.chat.structures.Server;
 
 /**
  * The main object, mediator. Contains all the needed components for the client and manages the

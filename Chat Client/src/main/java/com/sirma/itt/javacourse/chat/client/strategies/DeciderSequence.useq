@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sequence-diagram version="1.1.2" icons="true">  
-  <object id="1" language="java" name="com.sirma.itt.javacourse.chat.structures.Server" project="Chat Client" 
-    file="/Chat Client/src/main/java/com/sirma/itt/javacourse/chat/structures/Server.java" binary="false" 
+  <object id="1" language="java" name="com.sirma.itt.javacourse.chat.client.structures.Server" project="Chat Client" 
+    file="/Chat Client/src/main/java/com/sirma/itt/javacourse/chat/client/structures/Server.java" binary="false" 
     label="server1" type="class" autoSize="true">    
     <position height="0" width="0" x="0" y="0"/>    
     <execution id="2">      

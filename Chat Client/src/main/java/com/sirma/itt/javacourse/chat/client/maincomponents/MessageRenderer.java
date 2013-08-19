@@ -13,7 +13,7 @@ import javax.swing.JTextArea;
 import javax.swing.ListCellRenderer;
 import javax.swing.SwingConstants;
 
-import com.sirma.itt.javacourse.chat.structures.Message;
+import com.sirma.itt.javacourse.chat.client.structures.Message;
 
 /**
  * A {@link JPanel} determining how the fields of the {@link Message} object are going to be shown
