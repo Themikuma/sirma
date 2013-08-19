@@ -32,31 +32,36 @@ public class MessageRenderer extends JPanel implements ListCellRenderer<Message>
 	public Component getListCellRendererComponent(JList<? extends Message> list, Message value,
 			int index, boolean isSelected, boolean cellHasFocus) {
 		this.removeAll();
+
 		this.setLayout(new BorderLayout(15, 15));
 		this.setBorder(BorderFactory.createLineBorder(Color.white));
-		JLabel senderLabel = new JLabel(value.getSender());
-		JLabel dateLabel = new JLabel(value.getDate(), SwingConstants.RIGHT);
-		dateLabel.setBackground(Color.darkGray);
-		dateLabel.setOpaque(true);
-		dateLabel.setForeground(Color.white);
 		this.setBackground(Color.white);
 
+		JLabel senderLabel = new JLabel(value.getSender());
+		JLabel dateLabel = new JLabel(value.getDate(), SwingConstants.RIGHT);
 		JTextArea messageLabel = new JTextArea();
+		JPanel topPanel = new JPanel(new GridLayout(1, 2));
+
+		dateLabel.setBackground(value.getColor());
+		dateLabel.setOpaque(true);
+		dateLabel.setForeground(Color.white);
 
 		messageLabel.setWrapStyleWord(true);
 		messageLabel.setLineWrap(true);
 		messageLabel.setText(value.getMessage());
 		messageLabel.setBackground(new Color(255, 255, 255, 0));
 
-		senderLabel.setBackground(Color.darkGray);
+		senderLabel.setBackground(value.getColor());
 		senderLabel.setForeground(Color.white);
 
 		senderLabel.setOpaque(true);
-		JPanel topPanel = new JPanel(new GridLayout(1, 2));
+
 		topPanel.add(senderLabel);
 		topPanel.add(dateLabel);
+
 		add(messageLabel, BorderLayout.CENTER);
 		add(topPanel, BorderLayout.NORTH);
+
 		if (isSelected) {
 			setBackground(Color.lightGray);
 		} else if (!isSelected) {

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence-diagram version="1.1.2" icons="true">  
+  <object id="1" language="java" name="com.sirma.itt.javacourse.chat.structures.Server" project="Chat Client" 
+    file="/Chat Client/src/main/java/com/sirma/itt/javacourse/chat/structures/Server.java" binary="false" 
+    label="server1" type="class" autoSize="true">    
+    <position height="0" width="0" x="0" y="0"/>    
+    <execution id="2">      
+      <position height="21" width="0" x="0" y="146"/>    
+    </execution>  
+  </object>  
+  <object id="3" language="java" name="com.sirma.itt.javacourse.chat.client.threads.ServerMessagesReadThread" 
+    project="Chat Client" 
+    file="/Chat Client/src/main/java/com/sirma/itt/javacourse/chat/client/threads/ServerMessagesReadThread.java" 
+    binary="false" label="serverMessagesReadThread" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="238" y="0"/>    
+    <execution id="4">      
+      <position height="476" width="0" x="0" y="125"/>    
+    </execution>  
+  </object>  
+  <object id="8" language="java" name="com.sirma.itt.javacourse.chat.client.strategies.Decider" project="Chat Client" 
+    file="/Chat Client/src/main/java/com/sirma/itt/javacourse/chat/client/strategies/Decider.java" binary="false" 
+    label="decider" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="438" y="0"/>    
+    <execution id="7">      
+      <position height="399" width="201" x="381" y="181"/>    
+    </execution>  
+  </object>  
+  <object id="17" language="java" name="com.sirma.itt.javacourse.chat.client.maincomponents.ClientMainUnit" 
+    project="Chat Client" 
+    file="/Chat Client/src/main/java/com/sirma/itt/javacourse/chat/client/maincomponents/ClientMainUnit.java" 
+    binary="false" type="class" autoSize="true">    
+    <position height="0" width="0" x="0" y="0"/>    
+    <execution id="10">      
+      <position height="21" width="0" x="0" y="286"/>    
+    </execution>  
+  </object>  
+  <object id="18" language="java" name="com.sirma.itt.javacourse.chat.client.maincomponents.ClientMainUnit" 
+    project="Chat Client" 
+    file="/Chat Client/src/main/java/com/sirma/itt/javacourse/chat/client/maincomponents/ClientMainUnit.java" 
+    binary="false" type="class" autoSize="true">    
+    <position height="0" width="0" x="0" y="0"/>    
+    <execution id="14">      
+      <position height="21" width="0" x="0" y="454"/>    
+    </execution>  
+  </object>  
+  <object id="19" language="java" name="com.sirma.itt.javacourse.chat.client.maincomponents.ClientMainUnit" 
+    project="Chat Client" 
+    file="/Chat Client/src/main/java/com/sirma/itt/javacourse/chat/client/maincomponents/ClientMainUnit.java" 
+    binary="false" type="class" autoSize="true">    
+    <position height="0" width="0" x="0" y="0"/>    
+    <execution id="12">      
+      <position height="21" width="0" x="0" y="370"/>    
+    </execution>  
+  </object>  
+  <object id="20" language="java" name="com.sirma.itt.javacourse.chat.client.maincomponents.ClientMainUnit" 
+    project="Chat Client" 
+    file="/Chat Client/src/main/java/com/sirma/itt/javacourse/chat/client/maincomponents/ClientMainUnit.java" 
+    binary="false" type="class" autoSize="true">    
+    <position height="0" width="0" x="0" y="0"/>    
+    <execution id="16">      
+      <position height="21" width="0" x="0" y="538"/>    
+    </execution>  
+  </object>  
+  <message id="5" operation="getMessage():java.lang.String">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="2"/>  
+  </message>  
+  <message id="6" operation="decide(java.lang.String):void">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="7"/>  
+  </message>  
+  <message id="9" operation="onMessageAdded(java.lang.String,java.lang.String):void">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="10"/>  
+  </message>  
+  <message id="11" operation="onUserAdded(java.lang.String):void">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="12"/>  
+  </message>  
+  <message id="13" operation="onUserRemoved(java.lang.String):void">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="14"/>  
+  </message>  
+  <message id="15" operation="onUserList(java.lang.String):void">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="16"/>  
+  </message>
+</sequence-diagram>

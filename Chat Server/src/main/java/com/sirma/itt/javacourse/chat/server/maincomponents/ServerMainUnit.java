@@ -14,19 +14,23 @@ import com.sirma.itt.javacourse.chat.server.main.Server;
 public abstract class ServerMainUnit implements MainUnit {
 	private Server server;
 
+	/**
+	 * Called when a valid connection has been established (The server has started).
+	 * 
+	 * @param port
+	 *            the port on which the server has started
+	 */
+	public abstract void onConnectionEstablished(String port);
+
+	@Override
 	public void startConnectionUnit() {
-		if (server.getServer() == null || server.getServer().isClosed())
-			server.getConnectionUnit().start();
+		server.getConnectionUnit().start();
 	}
 
-	public void stopServer() {
-		try {
-			if (server.getServer() != null && !server.getServer().isClosed())
-				server.getServer().close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	@Override
+	public void closeConnection() throws IOException {
+		server.stopServer();
+		server.getUsersManager().closeConnections();
 	}
 
 	/**

@@ -7,42 +7,59 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 
-import org.apache.log4j.Logger;
-
-import com.sirma.itt.javacourse.chat.server.MessageSender;
+import com.sirma.itt.javacourse.chat.server.main.Server;
+import com.sirma.itt.javacourse.chat.threads.MessageSender;
 
 /**
  * A wrapper of the object, representing a client.
  * 
  * @author user
  */
-public class Client {
+public final class Client {
 
-	private Socket socket;
+	private final Socket socket;
 	private String username = "default";
+	private boolean verified;
 	private BufferedReader reader;
 	private BufferedWriter writer;
 	private MessageSender sender;
-	private Logger logger = Logger.getLogger(this.getClass());
+	private final Server server;
+	private Thread senderThread;
 
 	/**
 	 * Setting up the socket.
 	 * 
 	 * @param socket
 	 *            the socket representing the connection to the client
+	 * @param server
+	 *            the main server object
 	 */
-	public Client(Socket socket) {
+	public Client(Socket socket, Server server) {
 		super();
 		this.socket = socket;
-		try {
-			reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-			writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-		} catch (IOException e) {
-			logger.error("An IO exception occured while trying to open the client's streams");
-		}
-		sender = new MessageSender(this);
-		Thread thread = new Thread(sender);
-		thread.start();
+		this.server = server;
+
+	}
+
+	/**
+	 * Open the socket's streams.
+	 * 
+	 * @throws IOException
+	 *             an io exception occured while trying to open the socket's streams
+	 */
+	public void openStreams() throws IOException {
+		reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+		writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+	}
+
+	/**
+	 * Start the sender thread.
+	 */
+	public void startSenderThread() {
+		sender = new MessageSender(writer, server.getMainUnit());
+		senderThread = new Thread(sender);
+		senderThread.setName("Sender thread:" + this.hashCode());
+		senderThread.start();
 	}
 
 	/**
@@ -83,16 +100,6 @@ public class Client {
 	}
 
 	/**
-	 * Setter method for socket.
-	 * 
-	 * @param socket
-	 *            the socket to set
-	 */
-	public void setSocket(Socket socket) {
-		this.socket = socket;
-	}
-
-	/**
 	 * Getter method for username.
 	 * 
 	 * @return the username
@@ -117,8 +124,9 @@ public class Client {
 	public void closeConnection() {
 		try {
 			socket.close();
+			senderThread.interrupt();
 		} catch (IOException e) {
-			logger.error("An IO exception occured while trying to close the connection to a client");
+			server.getMainUnit().onError("clientClose");
 		}
 	}
 
@@ -145,12 +153,21 @@ public class Client {
 	}
 
 	/**
-	 * Setter method for writer.
+	 * Getter method for verified.
 	 * 
-	 * @param writer
-	 *            the writer to set
+	 * @return the verified
 	 */
-	public void setWriter(BufferedWriter writer) {
-		this.writer = writer;
+	public boolean isVerified() {
+		return verified;
+	}
+
+	/**
+	 * Setter method for verified.
+	 * 
+	 * @param verified
+	 *            the verified to set
+	 */
+	public void setVerified(boolean verified) {
+		this.verified = verified;
 	}
 }

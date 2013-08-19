@@ -1,12 +1,14 @@
 package com.sirma.itt.javacourse.chat.server.main;
 
+import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.Locale;
 
-import com.sirma.itt.javacourse.chat.contracts.ConnectionUnit;
-import com.sirma.itt.javacourse.chat.contracts.MainUnit;
+import com.sirma.itt.javacourse.chat.server.UsersManager;
+import com.sirma.itt.javacourse.chat.server.connectionconfigs.DialogConnection;
 import com.sirma.itt.javacourse.chat.server.connectionconfigs.ServerConnectionUnit;
 import com.sirma.itt.javacourse.chat.server.maincomponents.ServerMainUnit;
+import com.sirma.itt.javacourse.chat.server.maincomponents.SwingServer;
 import com.sirma.itt.javacourse.chat.server.threads.ServerMainThread;
 
 /**
@@ -15,26 +17,46 @@ import com.sirma.itt.javacourse.chat.server.threads.ServerMainThread;
  * @author user
  */
 public class Server {
-	private MainUnit mainUnit;
-	private ConnectionUnit connectionUnit;
+	private final ServerMainUnit mainUnit;
+	private final ServerConnectionUnit connectionUnit;
 	private ServerSocket server;
-	private Locale[] supported = { Locale.ENGLISH, new Locale("bg") };
+	private final Locale[] supported = { Locale.ENGLISH, new Locale("bg") };
 	private Locale currentLocale = Locale.getDefault();
+	private final UsersManager usersManager = new UsersManager();
 
 	/**
 	 * Setting up the main and connection units.
 	 * 
-	 * @param main
-	 *            the main unit
-	 * @param connect
-	 *            the connection unit
+	 * @param builder
+	 *            the builder to use.
 	 */
-	public Server(ServerMainUnit main, ServerConnectionUnit connect) {
-		this.mainUnit = main;
-		this.connectionUnit = connect;
-		connect.setServer(this);
-		main.setServer(this);
+	public Server(ServerBuilder builder) {
+		this.mainUnit = builder.mainWindow;
+		this.connectionUnit = builder.connectionWindow;
+		connectionUnit.setServer(this);
+		mainUnit.setServer(this);
 		mainUnit.start();
+	}
+
+	/**
+	 * Checks if the server is currently running.
+	 * 
+	 * @return true if the socket is bound and not null, false otherwise
+	 */
+	public boolean isRunning() {
+		if (server == null || server.isClosed())
+			return false;
+		return true;
+	}
+
+	/**
+	 * Stops the socket.
+	 * 
+	 * @throws IOException
+	 *             if an IO exception occurs while trying to close the socket
+	 */
+	public void stopServer() throws IOException {
+		server.close();
 	}
 
 	/**
@@ -43,13 +65,13 @@ public class Server {
 	 * @param port
 	 *            the port
 	 */
-	public void tryConnect(String port) {
+	public void startServer(String port) {
 		int portInt;
 		try {
 			portInt = Integer.parseInt(port);
-			Thread thread = new Thread(new ServerMainThread(portInt, this));
-			// thread.setDaemon(true);
-			thread.start();
+			Thread listeningThread = new Thread(new ServerMainThread(portInt, this));
+			listeningThread.setDaemon(true);
+			listeningThread.start();
 		} catch (NumberFormatException e) {
 			connectionUnit.connectionRefused("malformedPort");
 		}
@@ -61,7 +83,7 @@ public class Server {
 	 * 
 	 * @return the mainUnit
 	 */
-	public MainUnit getMainUnit() {
+	public ServerMainUnit getMainUnit() {
 		return mainUnit;
 	}
 
@@ -70,7 +92,7 @@ public class Server {
 	 * 
 	 * @return the connectionUnit
 	 */
-	public ConnectionUnit getConnectionUnit() {
+	public ServerConnectionUnit getConnectionUnit() {
 		return connectionUnit;
 	}
 
@@ -120,4 +142,59 @@ public class Server {
 	public Locale[] getSupported() {
 		return supported;
 	}
+
+	/**
+	 * Getter method for usersManager.
+	 * 
+	 * @return the usersManager
+	 */
+	public UsersManager getUsersManager() {
+		return usersManager;
+	}
+
+	/**
+	 * Implementing the builder pattern as a static nested class in order to increase encapsulation.
+	 * By default the builder uses a {@link SwingServer} and a {@link DialogConnection}. They can be
+	 * changed in the builder via method chaining.
+	 * 
+	 * @author user
+	 */
+	public static class ServerBuilder {
+		private ServerMainUnit mainWindow = new SwingServer();
+		private ServerConnectionUnit connectionWindow = new DialogConnection();
+
+		/**
+		 * Set the main unit of the server.
+		 * 
+		 * @param window
+		 *            the main unit
+		 * @return this so we can continue building
+		 */
+		public ServerBuilder setMainUnit(ServerMainUnit window) {
+			this.mainWindow = window;
+			return this;
+		}
+
+		/**
+		 * Set the connection unit of the server.
+		 * 
+		 * @param window
+		 *            the connection unit
+		 * @return this so we can continue building
+		 */
+		public ServerBuilder setConnectionUnit(ServerConnectionUnit window) {
+			this.connectionWindow = window;
+			return this;
+		}
+
+		/**
+		 * Build the server from the specified units. If none are specified, use the default ones.
+		 * 
+		 * @return the built server
+		 */
+		public Server build() {
+			return new Server(this);
+		}
+	}
+
 }

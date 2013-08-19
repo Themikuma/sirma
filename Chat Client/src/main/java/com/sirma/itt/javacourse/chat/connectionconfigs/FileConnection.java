@@ -10,8 +10,8 @@ import java.nio.file.Paths;
  * 
  * @author user
  */
-public class FileConnection extends ClientConnectionUnit {
-	private String path;
+public final class FileConnection extends ClientConnectionUnit {
+	private final String path;
 
 	/**
 	 * Sets up the path to the file.
@@ -43,7 +43,5 @@ public class FileConnection extends ClientConnectionUnit {
 		} catch (IOException e) {
 			connectionRefused("File not found");
 		}
-
 	}
-
 }

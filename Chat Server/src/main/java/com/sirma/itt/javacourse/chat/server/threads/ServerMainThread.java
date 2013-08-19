@@ -2,10 +2,9 @@ package com.sirma.itt.javacourse.chat.server.threads;
 
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.net.Socket;
+import java.net.SocketException;
 
-import org.apache.log4j.Logger;
-
-import com.sirma.itt.javacourse.chat.server.UsersManager;
 import com.sirma.itt.javacourse.chat.server.main.Server;
 import com.sirma.itt.javacourse.chat.server.structures.Client;
 import com.sirma.itt.javacourse.chat.sockets.SocketFinder;
@@ -16,13 +15,12 @@ import com.sirma.itt.javacourse.chat.sockets.SocketFinder;
  * 
  * @author user
  */
-public class ServerMainThread implements Runnable {
+public final class ServerMainThread implements Runnable {
 
 	private ServerSocket socket;
 	private int port;
-	private UsersManager usersManager;
 	private Server server;
-	private static final Logger logger = Logger.getLogger(ServerMainThread.class);
+	private int ind = 0;
 
 	/**
 	 * Setting up the host, port, window and serverWindow.
@@ -36,7 +34,6 @@ public class ServerMainThread implements Runnable {
 		super();
 		this.port = port;
 		this.server = server;
-		usersManager = new UsersManager();
 	}
 
 	@Override
@@ -48,41 +45,39 @@ public class ServerMainThread implements Runnable {
 	 * Try to start a server on the specified host and port and send the appropriate status to the
 	 * connection unit.
 	 */
-	public void connect() {
+	private void connect() {
 		try {
 			socket = SocketFinder.getAvailableServerSocket(port);
 			server.setServer(socket);
 			server.getConnectionUnit().connectionEstablished();
-			server.getMainUnit().addMessage("Server",
-					"Server started on " + server.getServer().getInetAddress() + ":" + port);
+			server.getMainUnit().onConnectionEstablished(Integer.toString(port));
 			waitForClients();
+		} catch (IllegalArgumentException e) {
+			server.getConnectionUnit().connectionRefused("malformedPort");
 		} catch (IOException e) {
-			server.getConnectionUnit().connectionRefused("Port already in use");
+			server.getConnectionUnit().connectionRefused("usedPort");
 		}
 	}
 
 	/**
 	 * Wait for clients to connect.
 	 */
-	public void waitForClients() {
-		while (!Thread.currentThread().isInterrupted()) {
-			acceptClient();
-		}
+	private void waitForClients() {
 
-	}
-
-	/**
-	 * Accept the client.
-	 */
-	public void acceptClient() {
 		try {
-
-			Client client = new Client(socket.accept());
-			System.out.println("client trying to connect");
-			Thread thread = new Thread(new ClientMessagesReadThread(client, usersManager, server));
-			thread.start();
+			while (!Thread.currentThread().isInterrupted()) {
+				Socket clientSocket = socket.accept();
+				Thread thread = new Thread(new ClientMessagesReadThread(new Client(clientSocket,
+						server), server));
+				thread.setName("client thread" + ind);
+				ind++;
+				thread.start();
+			}
+		} catch (SocketException e) {
+			server.getMainUnit().onConnectionClosed();
 		} catch (IOException e) {
-			logger.error("An IO exception occured while trying to accept a client");
+			server.getMainUnit().onError("clientStreams");
 		}
+
 	}
 }

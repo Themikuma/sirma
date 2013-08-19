@@ -6,5 +6,5 @@ package com.sirma.itt.javacourse.chat.messages;
  * @author user
  */
 public enum IClientMessages {
-	CONNECTION_ATTEMPT, DISCONNECT_CLIENT, CLIENT_MESSAGE;
+	CONNECTION_ATTEMPT, CLIENT_MESSAGE;
 }

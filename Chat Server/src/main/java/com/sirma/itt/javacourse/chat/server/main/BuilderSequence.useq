@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence-diagram version="1.1.2" icons="true">  
+  <object id="1" language="java" name="com.sirma.itt.javacourse.chat.server.main.Server" project="Chat Server" 
+    file="/Chat Server/src/main/java/com/sirma/itt/javacourse/chat/server/main/Server.java" binary="false" 
+    label="server" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="444" y="0"/>    
+    <execution id="2">      
+      <position height="21" width="185" x="5" y="378"/>    
+    </execution>  
+  </object>  
+  <object id="3" language="java" name="com.sirma.itt.javacourse.chat.server.main.Server.ServerBuilder" 
+    project="Chat Server" file="/Chat Server/src/main/java/com/sirma/itt/javacourse/chat/server/main/Server.java" 
+    binary="false" label="serverBuilder" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="444" y="0"/>    
+    <execution id="4">      
+      <position height="84" width="185" x="194" y="109"/>    
+    </execution>    
+    <execution id="6">      
+      <position height="21" width="185" x="194" y="151"/>    
+    </execution>    
+    <execution id="7">      
+      <position height="84" width="185" x="194" y="208"/>    
+    </execution>    
+    <execution id="9">      
+      <position height="21" width="185" x="194" y="250"/>    
+    </execution>    
+    <execution id="10">      
+      <position height="126" width="185" x="194" y="315"/>    
+    </execution>    
+    <execution id="12">      
+      <position height="63" width="185" x="194" y="357"/>    
+    </execution>  
+  </object>  
+  <message id="5" 
+    operation="setConnectionUnit(com.sirma.itt.javacourse.chat.server.connectionconfigs.ServerConnectionUnit):com.sirma.itt.javacourse.chat.server.main.Server.ServerBuilder">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="6"/>  
+  </message>  
+  <message id="8" 
+    operation="setMainUnit(com.sirma.itt.javacourse.chat.server.maincomponents.ServerMainUnit):com.sirma.itt.javacourse.chat.server.main.Server.ServerBuilder">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="9"/>  
+  </message>  
+  <message id="11" operation="build():com.sirma.itt.javacourse.chat.server.main.Server">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="12"/>  
+  </message>  
+  <message id="13" operation="Server(com.sirma.itt.javacourse.chat.server.main.Server.ServerBuilder)">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="2"/>  
+  </message>
+</sequence-diagram>

@@ -7,7 +7,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 
-import org.apache.log4j.Logger;
+import com.sirma.itt.javacourse.chat.client.main.Client;
+import com.sirma.itt.javacourse.chat.threads.MessageSender;
 
 /**
  * A wrapper object representing the server.
@@ -15,29 +16,33 @@ import org.apache.log4j.Logger;
  * @author user
  */
 public class Server {
-	private Socket socket;
-	private BufferedWriter writer;
-	private BufferedReader reader;
-	private MessageSender messager;
-	private Logger logger = Logger.getLogger(this.getClass());
+	private final Socket socket;
+	private final BufferedWriter writer;
+	private final BufferedReader reader;
+	private final MessageSender messager;
+	private final Client client;
+	private final Thread messagerThread;
 
 	/**
-	 * Setting up the socket with the already established connection to the server.
+	 * Setting up the socket with the already established connection to the server and the client
+	 * for error logging.
 	 * 
 	 * @param socket
 	 *            the socket
+	 * @param client
+	 *            the client
+	 * @throws IOException
+	 *             An I/O error occurred while trying to open the socket's streams
 	 */
-	public Server(Socket socket) {
+	public Server(Socket socket, Client client) throws IOException {
+		this.client = client;
 		this.socket = socket;
-		try {
-			reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-			writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-		} catch (IOException e) {
-			logger.error("An I/O error occured while trying to open the connection's ports");
-		}
-		messager = new MessageSender(writer);
-		Thread thread = new Thread(messager);
-		thread.start();
+		reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+		writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+		messager = new MessageSender(writer, client.getMainUnit());
+		messagerThread = new Thread(messager);
+		messagerThread.setName("Sending thread");
+		messagerThread.start();
 	}
 
 	/**
@@ -47,8 +52,7 @@ public class Server {
 	 *            the message to add to the queue
 	 */
 	public void sendMessage(String message) {
-		// TODO it still says connecting...
-		if (message.split("[|]").length > 1) {
+		if (message.split("[|]").length > 1 && !socket.isClosed()) {
 			messager.addMessage(message);
 		}
 	}
@@ -64,17 +68,27 @@ public class Server {
 		} catch (IOException e) {
 			return null;
 		}
-
 	}
 
 	/**
 	 * Close the connection to the server.
 	 */
 	public void closeConnection() {
-		try {
-			socket.close();
-		} catch (IOException e) {
-			logger.error("An I/O error occured while trying to disconnect from the server");
-		}
+		if (!socket.isClosed())
+			try {
+				socket.close();
+			} catch (IOException e) {
+				client.getMainUnit().onError("connection");
+			}
+		messagerThread.interrupt();
+	}
+
+	/**
+	 * Getter method for socket.
+	 * 
+	 * @return the socket
+	 */
+	public Socket getSocket() {
+		return socket;
 	}
 }

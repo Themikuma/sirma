@@ -2,6 +2,11 @@ package com.sirma.itt.javacourse.chat.contracts;
 
 import java.util.Locale;
 
+/**
+ * The interface that defines every connection unit.
+ * 
+ * @author user
+ */
 public interface ConnectionUnit {
 
 	/**

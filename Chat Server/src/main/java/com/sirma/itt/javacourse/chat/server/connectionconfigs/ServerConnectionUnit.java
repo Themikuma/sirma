@@ -24,18 +24,26 @@ public abstract class ServerConnectionUnit implements ConnectionUnit {
 	}
 
 	/**
+	 * Getter method for server.
+	 * 
+	 * @return the server
+	 */
+	public Server getServer() {
+		return server;
+	}
+
+	/**
 	 * Try to start the server on the given port.
 	 * 
 	 * @param port
 	 *            the port
 	 */
 	public void tryConnect(String port) {
-		server.tryConnect(port);
+		server.startServer(port);
 	}
 
 	@Override
 	public Locale getCurrentLocale() {
-		// TODO Auto-generated method stub
-		return null;
+		return server.getCurrentLocale();
 	}
 }

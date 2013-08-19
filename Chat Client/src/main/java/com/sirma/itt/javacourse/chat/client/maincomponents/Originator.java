@@ -5,7 +5,7 @@ package com.sirma.itt.javacourse.chat.client.maincomponents;
  * 
  * @author user
  */
-public class Originator {
+public final class Originator {
 
 	/**
 	 * Restore a state from the given {@link Memento}.

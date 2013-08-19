@@ -6,6 +6,11 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.MessageFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 import javax.swing.JFrame;
@@ -23,25 +28,42 @@ import org.apache.log4j.Logger;
  * 
  * @author user
  */
-public class SwingServer extends ServerMainUnit implements ActionListener {
+public final class SwingServer extends ServerMainUnit implements ActionListener {
 
-	private JTextArea console = new JTextArea();
-	private JFrame frame = new JFrame();
-	private Logger logger = Logger.getLogger(this.getClass());
-	private JMenu serverMenu = new JMenu();
-	private JMenu languageMenu = new JMenu();
-	private JMenuItem startServer = new JMenuItem();
-	private JMenuItem stopServer = new JMenuItem();
-	private JMenuItem englishMenu = new JMenuItem();
-	private JMenuItem bulgarianMenu = new JMenuItem();
+	private final JTextArea console = new JTextArea();
+	private final JFrame frame = new JFrame();
+	private static final Logger LOGGER = Logger.getLogger(SwingServer.class);
+	private final JMenu serverMenu = new JMenu();
+	private final JMenu languageMenu = new JMenu();
+	private final JMenuItem startServer = new JMenuItem();
+	private final JMenuItem stopServer = new JMenuItem();
+	private final JMenuItem englishMenu = new JMenuItem();
+	private final JMenuItem bulgarianMenu = new JMenuItem();
+
+	private final MessageFormat messageFormatter = new MessageFormat("");
+	private DateFormat formatter;
+
 	private ResourceBundle buttonsBundle;
+	private ResourceBundle hoursBundle;
+	private ResourceBundle messagesBundle;
+	private ResourceBundle labelsBundle;
 	/**
 	 * Comment for serialVersionUID.
 	 */
 	@SuppressWarnings("unused")
 	private static final long serialVersionUID = -4342026673924478849L;
 
+	/**
+	 * Updates the text of the ui elements according to the chosen language.
+	 */
 	private void updateUI() {
+		buttonsBundle = ResourceBundle.getBundle("ButtonsBundle", getCurrentLocale());
+		messagesBundle = ResourceBundle.getBundle("MessagesBundle", getCurrentLocale());
+		labelsBundle = ResourceBundle.getBundle("LabelsBundle", getCurrentLocale());
+		hoursBundle = ResourceBundle.getBundle("HoursBundle", getCurrentLocale());
+		formatter = new SimpleDateFormat(hoursBundle.getString("hours"));
+
+		frame.setTitle(labelsBundle.getString("server"));
 		serverMenu.setText(buttonsBundle.getString("server"));
 		languageMenu.setText(buttonsBundle.getString("language"));
 		startServer.setText(buttonsBundle.getString("start"));
@@ -91,7 +113,6 @@ public class SwingServer extends ServerMainUnit implements ActionListener {
 
 	@Override
 	public void start() {
-		buttonsBundle = ResourceBundle.getBundle("ButtonsBundle", getCurrentLocale());
 		SwingUtilities.invokeLater(new Runnable() {
 
 			@Override
@@ -100,7 +121,6 @@ public class SwingServer extends ServerMainUnit implements ActionListener {
 
 			}
 		});
-
 	}
 
 	@Override
@@ -109,13 +129,17 @@ public class SwingServer extends ServerMainUnit implements ActionListener {
 		if ("start".equals(command))
 			startConnectionUnit();
 		else if ("stop".equals(command))
-			stopServer();
+			try {
+				closeConnection();
+			} catch (IOException e1) {
+				onError("closeServer");
+			}
 		else {
 			if ("eng".equals(command))
 				setCurrentLocale(getLocaleFromIndex(0));
 			else
 				setCurrentLocale(getLocaleFromIndex(1));
-			buttonsBundle = ResourceBundle.getBundle("ButtonsBundle", getCurrentLocale());
+
 			updateUI();
 
 		}
@@ -123,36 +147,56 @@ public class SwingServer extends ServerMainUnit implements ActionListener {
 	}
 
 	@Override
-	public void addMessage(String arg0, String arg1) {
-		console.append(arg0 + ":" + arg1 + System.lineSeparator());
-		logger.info(arg0 + ":" + arg1);
-
+	public void onMessageAdded(String arg0, String arg1) {
+		addMessage(arg0 + ":" + arg1);
 	}
 
-	@Override
-	public void disconnect() {
-		console.append("Server has stopped");
-		logger.info("Server has stopped");
+	/**
+	 * Add a message to the console and log it as info.
+	 * 
+	 * @param message
+	 *            the message to be added
+	 */
+	public void addMessage(final String message) {
+		SwingUtilities.invokeLater(new Runnable() {
 
-	}
+			@Override
+			public void run() {
+				console.append("[" + formatter.format(new Date()) + "]" + message
+						+ System.lineSeparator());
+			}
+		});
 
-	@Override
-	public void onServerStopped() {
-		// TODO Auto-generated method stub
-
+		LOGGER.info(message);
 	}
 
 	@Override
 	public void onUserAdded(String arg0) {
-		console.append("arg0" + "has connected");
-		logger.info("arg0" + "has connected");
-
+		messageFormatter.applyPattern(messagesBundle.getString("connect"));
+		addMessage(messageFormatter.format(new String[] { arg0 }));
 	}
 
 	@Override
 	public void onUserRemoved(String arg0) {
-		console.append("arg0" + "has disconnected");
-		logger.info("arg0" + "has disconnected");
+		messageFormatter.applyPattern(messagesBundle.getString("disconnect"));
+		addMessage(messageFormatter.format(new String[] { arg0 }));
+	}
+
+	@Override
+	public void onConnectionClosed() {
+		addMessage(messagesBundle.getString("stop"));
+	}
+
+	@Override
+	public void onConnectionEstablished(String port) {
+		messageFormatter.applyPattern(messagesBundle.getString("started"));
+		addMessage(messageFormatter.format(new String[] { port }));
+	}
+
+	@Override
+	public void onError(String arg0) {
+		console.append(messagesBundle.getString(arg0));
+		LOGGER.error(messagesBundle.getString(arg0));
 
 	}
 }

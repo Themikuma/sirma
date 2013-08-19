@@ -11,8 +11,8 @@ import com.sirma.itt.javacourse.chat.client.strategies.Decider;
  */
 public class ServerMessagesReadThread implements Runnable {
 
-	private Decider decider;
-	private Client client;
+	private final Decider decider;
+	private final Client client;
 
 	/**
 	 * Setting up the server and the main unit.
@@ -31,7 +31,7 @@ public class ServerMessagesReadThread implements Runnable {
 		while ((msg = client.getServer().getMessage()) != null) {
 			decider.decide(msg);
 		}
-
-		client.getMainUnit().disconnect();
+		client.getServer().closeConnection();
+		client.getMainUnit().onConnectionClosed();
 	}
 }

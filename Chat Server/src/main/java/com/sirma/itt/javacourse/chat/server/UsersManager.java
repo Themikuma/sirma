@@ -1,7 +1,7 @@
 package com.sirma.itt.javacourse.chat.server;
 
+import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -14,9 +14,9 @@ import com.sirma.itt.javacourse.chat.server.structures.Client;
  * 
  * @author user
  */
-public class UsersManager {
-	private Set<Client> clientSet = new LinkedHashSet<>();
-	private static final Pattern pattern = Pattern.compile("\\]|\\[");
+public final class UsersManager {
+	private final Set<Client> clientSet = new HashSet<>();
+	private static final Pattern PATTERN = Pattern.compile("\\]|\\[");
 	private static final String USER_SEPARATOR = ",";
 
 	/**
@@ -26,14 +26,29 @@ public class UsersManager {
 	 *            the message to be broadcasted
 	 */
 	public void broadcastMessage(String message) {
+		StringBuilder sb = new StringBuilder(message);
+		sb.setCharAt(0, Character.toUpperCase(sb.charAt(0)));
 		synchronized (clientSet) {
 			Iterator<Client> iterator = clientSet.iterator();
 			while (iterator.hasNext()) {
 				Client client = iterator.next();
-				System.out.println(client + "\\" + message);
 				sendMessage(client, message);
 			}
 		}
+	}
+
+	/**
+	 * Calls the closeConnection method on all connected clients.
+	 */
+	public void closeConnections() {
+		synchronized (clientSet) {
+			Iterator<Client> iterator = clientSet.iterator();
+			while (iterator.hasNext()) {
+				Client client = iterator.next();
+				client.closeConnection();
+			}
+		}
+
 	}
 
 	/**
@@ -57,8 +72,14 @@ public class UsersManager {
 	 * @return true if the user has been added, false otherwise
 	 */
 	public boolean addUser(Client client) {
-		Matcher matcher = pattern.matcher(client.getUsername());
-		return !matcher.find() && clientSet.add(client);
+		Matcher matcher = PATTERN.matcher(client.getUsername());
+		boolean added = false;
+		if (!matcher.find())
+			synchronized (clientSet) {
+				added = clientSet.add(client);
+			}
+		return added;
+
 	}
 
 	/**
@@ -69,10 +90,12 @@ public class UsersManager {
 	 */
 	public void removeUser(Client client) {
 		client.closeConnection();
+
 		synchronized (clientSet) {
 			clientSet.remove(client);
 		}
 		broadcastMessage(IServerMessages.CLIENT_DISCONNECTED + "|" + client.getUsername());
+
 	}
 
 	/**

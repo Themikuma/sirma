@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence-diagram version="1.1.2" icons="true">  
+  <object id="1" language="java" name="com.sirma.itt.javacourse.chat.server.connectionconfigs.ServerConnectionUnit" 
+    project="Chat Server" 
+    file="/Chat Server/src/main/java/com/sirma/itt/javacourse/chat/server/connectionconfigs/ServerConnectionUnit.java" 
+    binary="false" label="serverConnectionUnit" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="496" y="0"/>    
+    <execution id="2">      
+      <position height="514" width="241" x="5" y="105"/>    
+    </execution>    
+    <execution id="5">      
+      <position height="21" width="7" x="122" y="255"/>    
+    </execution>  
+  </object>  
+  <object id="6" language="java" name="com.sirma.itt.javacourse.chat.server.main.Server" project="Chat Server" 
+    file="/Chat Server/src/main/java/com/sirma/itt/javacourse/chat/server/main/Server.java" binary="false" 
+    label="server" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="449" y="0"/>    
+    <execution id="4">      
+      <position height="472" width="185" x="250" y="126"/>    
+    </execution>  
+  </object>  
+  <object id="9" language="java" name="com.sirma.itt.javacourse.chat.server.threads.ServerMainThread" 
+    project="Chat Server" 
+    file="/Chat Server/src/main/java/com/sirma/itt/javacourse/chat/server/threads/ServerMainThread.java" binary="false" 
+    type="class" autoSize="true">    
+    <position height="0" width="0" x="0" y="0"/>    
+    <execution id="8">      
+      <position height="430" width="0" x="0" y="147"/>    
+    </execution>    
+    <execution id="11">      
+      <position height="367" width="7" x="534" y="189"/>    
+    </execution>    
+    <execution id="13">      
+      <position height="304" width="7" x="534" y="231"/>    
+    </execution>    
+    <execution id="18">      
+      <position height="157" width="196" x="439" y="357"/>    
+    </execution>  
+  </object>  
+  <object id="25" language="java" name="java.net.ServerSocket" project="Chat Server" 
+    file="C:/Program Files/Java/jdk1.7.0_15/jre/lib/rt.jar" binary="true" label="socket" type="class" autoSize="true">    
+    <position height="0" width="0" x="0" y="0"/>    
+    <execution id="20">      
+      <position height="21" width="0" x="0" y="388"/>    
+    </execution>  
+  </object>  
+  <object id="26" language="java" name="com.sirma.itt.javacourse.chat.server.structures.Client" project="Chat Server" 
+    file="/Chat Server/src/main/java/com/sirma/itt/javacourse/chat/server/structures/Client.java" binary="false" 
+    type="class" autoSize="true">    
+    <position height="0" width="0" x="0" y="0"/>    
+    <execution id="22">      
+      <position height="21" width="0" x="0" y="430"/>    
+    </execution>  
+  </object>  
+  <object id="27" language="java" name="com.sirma.itt.javacourse.chat.server.threads.ClientMessagesReadThread" 
+    project="Chat Server" 
+    file="/Chat Server/src/main/java/com/sirma/itt/javacourse/chat/server/threads/ClientMessagesReadThread.java" 
+    binary="false" type="class" autoSize="true">    
+    <position height="0" width="0" x="0" y="0"/>    
+    <execution id="24">      
+      <position height="21" width="0" x="0" y="472"/>    
+    </execution>  
+  </object>  
+  <object id="28" language="java" name="com.sirma.itt.javacourse.chat.server.maincomponents.ServerMainUnit" 
+    project="Chat Server" 
+    file="/Chat Server/src/main/java/com/sirma/itt/javacourse/chat/server/maincomponents/ServerMainUnit.java" 
+    binary="false" label="serverMainUnit" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="465" y="0"/>    
+    <execution id="15">      
+      <position height="21" width="236" x="639" y="252"/>    
+    </execution>  
+  </object>  
+  <message id="3" operation="startServer(java.lang.String):void">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="4"/>  
+  </message>  
+  <message id="7" operation="ServerMainThread(int,com.sirma.itt.javacourse.chat.server.main.Server)">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="8"/>  
+  </message>  
+  <message id="10" operation="run():void">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="11"/>  
+  </message>  
+  <message id="12" operation="connect():void">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="13"/>  
+  </message>  
+  <message id="14" operation="onConnectionEstablished(java.lang.String):void">    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="15"/>  
+  </message>  
+  <message id="16" operation="connectionEstablished():void">    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="5"/>  
+  </message>  
+  <message id="17" operation="waitForClients():void">    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="18"/>  
+  </message>  
+  <message id="19" operation="accept():java.net.Socket">    
+    <end type="SOURCE" refId="18"/>    
+    <end type="TARGET" refId="20"/>  
+  </message>  
+  <message id="21" operation="Client(java.net.Socket,com.sirma.itt.javacourse.chat.server.main.Server)">    
+    <end type="SOURCE" refId="18"/>    
+    <end type="TARGET" refId="22"/>  
+  </message>  
+  <message id="23" 
+    operation="ClientMessagesReadThread(com.sirma.itt.javacourse.chat.server.structures.Client,com.sirma.itt.javacourse.chat.server.main.Server)">    
+    <end type="SOURCE" refId="18"/>    
+    <end type="TARGET" refId="24"/>  
+  </message>
+</sequence-diagram>

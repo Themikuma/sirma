@@ -1,9 +1,10 @@
 package com.sirma.itt.javacourse.chat.contracts;
 
+import java.io.IOException;
 import java.util.Locale;
 
 /**
- * The interface used by every main window, be it a server or client one.
+ * The interface that defines every main unit.
  * 
  * @author user
  */
@@ -15,8 +16,24 @@ public interface MainUnit {
 
 	/**
 	 * Disconnects from or stops the server.
+	 * 
+	 * @throws IOException
+	 *             if an IO exception occurs while trying to close the connection.
 	 */
-	void disconnect();
+	void closeConnection() throws IOException;
+
+	/**
+	 * Called when the connection has been closed.
+	 */
+	void onConnectionClosed();
+
+	/**
+	 * Called when an error has occured, letting the implementation decide what to do with it.
+	 * 
+	 * @param error
+	 *            the error
+	 */
+	void onError(String error);
 
 	/**
 	 * Get the supported locale from the array of supported locales.
@@ -66,15 +83,11 @@ public interface MainUnit {
 	 * @param message
 	 *            the message to be displayed
 	 */
-	void addMessage(String user, String message);
+	void onMessageAdded(String user, String message);
 
 	/**
 	 * Called once the main object has been created and all of it's components are set up correctly.
 	 */
 	void start();
 
-	/**
-	 * Called when the server has been stopped or a disconnect has been forced.
-	 */
-	void onServerStopped();
 }

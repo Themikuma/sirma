@@ -5,7 +5,7 @@ package com.sirma.itt.javacourse.chat.client.maincomponents;
  * 
  * @author user
  */
-public class Memento {
+public final class Memento {
 	private final String state;
 
 	/**

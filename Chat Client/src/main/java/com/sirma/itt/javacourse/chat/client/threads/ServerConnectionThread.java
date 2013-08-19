@@ -16,10 +16,10 @@ import com.sirma.itt.javacourse.chat.structures.Server;
  * @author user
  */
 public class ServerConnectionThread implements Runnable {
-	private String host;
-	private String username;
-	private Client client;
-	private int port;
+	private final String host;
+	private final String username;
+	private final Client client;
+	private final int port;
 
 	/**
 	 * Setting up the host, username, port and Client.
@@ -46,22 +46,23 @@ public class ServerConnectionThread implements Runnable {
 		client.getConnectionUnit().connectionRefused("connecting");
 		try {
 			Socket socket = SocketFinder.getAvailableSocket(host, port);
-			Server server = new Server(socket);
+			Server server = new Server(socket, client);
 			server.sendMessage(IClientMessages.CONNECTION_ATTEMPT + "|" + username);
 			String msg = server.getMessage();
 			if (IServerMessages.NICK_OK.toString().equals(msg)) {
-				client.setConnected(true);
 				client.setServer(server);
 				client.getConnectionUnit().connectionEstablished();
 				client.startListening();
-			} else
+			} else {
 				client.getConnectionUnit().connectionRefused("username");
+				server.closeConnection();
+			}
 		} catch (IllegalArgumentException e) {
 			client.getConnectionUnit().connectionRefused("rangePort");
 		} catch (UnknownHostException e) {
 			client.getConnectionUnit().connectionRefused("host");
 		} catch (IOException e) {
-			client.getConnectionUnit().connectionRefused("invalidPort");
+			client.getConnectionUnit().connectionRefused("IOError");
 		}
 
 	}

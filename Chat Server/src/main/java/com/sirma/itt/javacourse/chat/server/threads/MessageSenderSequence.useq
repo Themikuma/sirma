@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence-diagram version="1.1.2" icons="true">  
+  <object id="1" language="java" name="com.sirma.itt.javacourse.chat.server.structures.Client" project="Chat Server" 
+    file="/Chat Server/src/main/java/com/sirma/itt/javacourse/chat/server/structures/Client.java" binary="false" 
+    label="client" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="28" y="0"/>    
+    <execution id="2">      
+      <position height="514" width="207" x="5" y="60"/>    
+    </execution>  
+  </object>  
+  <object id="5" language="java" name="com.sirma.itt.javacourse.chat.server.threads.MessageSender" project="Chat Server" 
+    file="/Chat Server/src/main/java/com/sirma/itt/javacourse/chat/server/threads/MessageSender.java" binary="false" 
+    label="messageSender" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="574" y="0"/>    
+    <execution id="4">      
+      <position height="472" width="0" x="0" y="81"/>    
+    </execution>    
+    <execution id="7">      
+      <position height="409" width="0" x="0" y="123"/>    
+    </execution>  
+  </object>  
+  <object id="16" language="java" name="java.util.concurrent.BlockingQueue" project="Chat Client" 
+    file="C:/Program Files/Java/jdk1.7.0_15/jre/lib/rt.jar" binary="true" label="messages" type="interface" 
+    autoSize="true">    
+    <position height="0" width="0" x="0" y="0"/>    
+    <execution id="9">      
+      <position height="21" width="0" x="0" y="238"/>    
+    </execution>  
+  </object>  
+  <object id="17" language="java" name="java.io.BufferedWriter" project="Chat Client" 
+    file="C:/Program Files/Java/jdk1.7.0_15/jre/lib/rt.jar" binary="true" type="class" autoSize="true">    
+    <position height="0" width="0" x="0" y="0"/>    
+    <execution id="11">      
+      <position height="21" width="0" x="0" y="322"/>    
+    </execution>  
+  </object>  
+  <object id="18" language="java" name="java.io.BufferedWriter" project="Chat Client" 
+    file="C:/Program Files/Java/jdk1.7.0_15/jre/lib/rt.jar" binary="true" type="class" autoSize="true">    
+    <position height="0" width="0" x="0" y="0"/>    
+    <execution id="13">      
+      <position height="21" width="0" x="0" y="406"/>    
+    </execution>  
+  </object>  
+  <object id="19" language="java" name="java.io.BufferedWriter" project="Chat Client" 
+    file="C:/Program Files/Java/jdk1.7.0_15/jre/lib/rt.jar" binary="true" type="class" autoSize="true">    
+    <position height="0" width="0" x="0" y="0"/>    
+    <execution id="15">      
+      <position height="21" width="0" x="0" y="490"/>    
+    </execution>  
+  </object>  
+  <message id="3" operation="addMessage(java.lang.String):void">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="4"/>  
+  </message>  
+  <message id="6" operation="run():void">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="7"/>  
+  </message>  
+  <message id="8" operation="take():E">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="9"/>  
+  </message>  
+  <message id="10" operation="write(java.lang.String):void">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="11"/>  
+  </message>  
+  <message id="12" operation="newLine():void">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="13"/>  
+  </message>  
+  <message id="14" operation="flush():void">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="15"/>  
+  </message>
+</sequence-diagram>

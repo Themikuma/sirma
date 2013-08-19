@@ -9,8 +9,10 @@ import com.sirma.itt.javacourse.chat.messages.IServerMessages;
  * 
  * @author user
  */
-public class Decider {
-	private Client client;
+public final class Decider {
+	private final Client client;
+	private static final String SPLITTER = "|";
+	private static final char MESSAGESPLITTER = '\0';
 
 	/**
 	 * Setting up the main window.
@@ -29,18 +31,30 @@ public class Decider {
 	 * @param msg
 	 *            the message
 	 */
-	public void decide(String msg) {
+	public void decide(final String msg) {
+		if (msg.contains("|")) {
+			String command = msg.substring(0, msg.indexOf(SPLITTER));
+			String message = msg.substring(msg.indexOf(SPLITTER) + 1);
+			IServerMessages messages = IServerMessages.valueOf(command);
+			switch (messages) {
+				case MESSAGE:
+					String nickname = message.substring(0, message.indexOf(MESSAGESPLITTER));
+					String sentMessage = message.substring(message.indexOf(MESSAGESPLITTER) + 1);
+					client.getMainUnit().onMessageAdded(nickname, sentMessage);
+					break;
+				case ADD_TO_LIST:
+					client.getMainUnit().onUserAdded(message);
+					break;
+				case CLIENT_DISCONNECTED:
+					client.getMainUnit().onUserRemoved(message);
+					break;
+				case USER_LIST:
+					client.getMainUnit().onUserList(message);
+					break;
+				default:
+					break;
 
-		String[] splitMessage = msg.split("[|]");
-		if (IServerMessages.USER_LIST.toString().equals(splitMessage[0])) {
-			for (String user : splitMessage[1].split(","))
-				client.getMainUnit().onUserAdded(user);
-		} else if (IServerMessages.ADD_TO_LIST.toString().equals(splitMessage[0])) {
-			client.getMainUnit().onUserAdded(splitMessage[1]);
-		} else if (IServerMessages.CLIENT_DISCONNECTED.toString().equals(splitMessage[0])) {
-			client.getMainUnit().onUserRemoved(splitMessage[1]);
-		} else if (IServerMessages.MESSAGE.toString().equals(splitMessage[0])) {
-			client.getMainUnit().addMessage(splitMessage[1], splitMessage[2]);
+			}
 		}
 	}
 }

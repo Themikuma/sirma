@@ -19,7 +19,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
-import com.sirma.itt.javacourse.chat.client.threads.TextAnimationThread;
+import com.sirma.itt.javacourse.chat.client.maincomponents.MaxCharsDocument;
+import com.sirma.itt.javacourse.chat.threads.TextAnimationThread;
 
 /**
  * A graphical implementation of the {@link ClientConnectionUnit}. Uses a {@link JDialog} to display
@@ -27,42 +28,40 @@ import com.sirma.itt.javacourse.chat.client.threads.TextAnimationThread;
  * 
  * @author user
  */
-public class DialogConnection extends ClientConnectionUnit implements ActionListener {
+public final class DialogConnection extends ClientConnectionUnit implements ActionListener {
+	private final JTextField host = new JTextField();
+	private final JTextField userName = new JTextField();
+	private final JTextField port = new JTextField();
+	private final JLabel status = new JLabel();
+	private final JLabel hostLabel = new JLabel();
+	private final JLabel portLabel = new JLabel();
+	private final JLabel usernameLabel = new JLabel();
+	private final JDialog dialog = new JDialog();
+	private final JButton connectButton = new JButton();
+	private final JButton cancelButton = new JButton();
+	private final TextAnimationThread labelAnimation = new TextAnimationThread(this.status);
+
+	private ResourceBundle messageBundle;
+	private ResourceBundle buttonsBundle;
+	private ResourceBundle labelsBundle;
+	@SuppressWarnings("unused")
+	private static final long serialVersionUID = 3256466009104642108L;
 
 	/**
-	 * Called when the connection unit is created.Inits the ui in the EDT thread.
+	 * Called when the connection unit is created.Inits the ui in the EDT thread and starts the
+	 * animation thread for the status label.
 	 */
 	public DialogConnection() {
 		SwingUtilities.invokeLater(new Runnable() {
-
 			@Override
 			public void run() {
 				initUI();
 			}
 		});
 		Thread thread = new Thread(labelAnimation);
+		thread.setDaemon(true);
 		thread.start();
 	}
-
-	/**
-	 * Comment for serialVersionUID.
-	 */
-	@SuppressWarnings("unused")
-	private static final long serialVersionUID = 3256466009104642108L;
-	private JTextField host = new JTextField();
-	private JTextField userName = new JTextField();
-	private JTextField port = new JTextField();
-	private JLabel status = new JLabel();
-	private JLabel hostLabel = new JLabel();
-	private JLabel portLabel = new JLabel();
-	private JLabel usernameLabel = new JLabel();
-	private JDialog dialog = new JDialog();
-	private ResourceBundle buttonsBundle;
-	private ResourceBundle labelsBundle;
-	private JButton connectButton = new JButton();
-	private JButton cancelButton = new JButton();
-	private TextAnimationThread labelAnimation = new TextAnimationThread(this.status);
-	private ResourceBundle dialogBundle;
 
 	/**
 	 * Init the UI. This is where the overriding of the start method is required. The UI is
@@ -71,11 +70,11 @@ public class DialogConnection extends ClientConnectionUnit implements ActionList
 	private void initUI() {
 
 		dialog.setPreferredSize(new Dimension(300, 200));
-		dialog.setTitle("Connection");
 		connectButton.addActionListener(this);
 		cancelButton.addActionListener(this);
 		connectButton.setActionCommand("connect");
 		cancelButton.setActionCommand("cancel");
+		userName.setDocument(new MaxCharsDocument(20));
 		JPanel contentPane = new JPanel(new GridLayout(0, 2, 5, 5));
 		contentPane.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 		contentPane.add(hostLabel);
@@ -101,7 +100,10 @@ public class DialogConnection extends ClientConnectionUnit implements ActionList
 	/**
 	 * Called when the UI is started and when the dialog is opened or closed.
 	 */
-	public void updateUI() {
+	private void updateUI() {
+		buttonsBundle = ResourceBundle.getBundle("ClientButtonsBundle", getCurrentLocale());
+		labelsBundle = ResourceBundle.getBundle("ClientLabelsBundle", getCurrentLocale());
+		messageBundle = ResourceBundle.getBundle("ClientMessagesBundle", getCurrentLocale());
 		connectButton.setText(buttonsBundle.getString("connect"));
 		cancelButton.setText(buttonsBundle.getString("cancel"));
 		hostLabel.setText(labelsBundle.getString("host"));
@@ -113,7 +115,7 @@ public class DialogConnection extends ClientConnectionUnit implements ActionList
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if ("cancel".equals(e.getActionCommand())) {
-			dialog.dispose();
+			dialog.setVisible(false);
 		} else if ("connect".equals(e.getActionCommand())) {
 			connect(host.getText(), port.getText(), userName.getText());
 		}
@@ -128,20 +130,18 @@ public class DialogConnection extends ClientConnectionUnit implements ActionList
 
 	@Override
 	public void connectionRefused(String error) {
-		this.status.setText(dialogBundle.getString(error));
+		this.status.setText(messageBundle.getString(error));
 		synchronized (status) {
 			status.notify();
 		}
-
 	}
 
 	@Override
 	public void start() {
-		buttonsBundle = ResourceBundle.getBundle("ButtonsBundle", getCurrentLocale());
-		labelsBundle = ResourceBundle.getBundle("LabelsBundle", getCurrentLocale());
-		dialogBundle = ResourceBundle.getBundle("DialogBundle", getCurrentLocale());
-		updateUI();
-		dialog.setVisible(true);
+		if (!getClient().isConnected()) {
+			updateUI();
+			dialog.setVisible(true);
+		}
 
 	}
 

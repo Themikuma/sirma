@@ -1,14 +1,13 @@
 package com.sirma.itt.javacourse.chat.client.main;
 
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import com.sirma.itt.javacourse.chat.client.maincomponents.ClientMainUnit;
+import com.sirma.itt.javacourse.chat.client.maincomponents.SwingClient;
 import com.sirma.itt.javacourse.chat.client.threads.ServerConnectionThread;
 import com.sirma.itt.javacourse.chat.client.threads.ServerMessagesReadThread;
 import com.sirma.itt.javacourse.chat.connectionconfigs.ClientConnectionUnit;
-import com.sirma.itt.javacourse.chat.contracts.ConnectionUnit;
-import com.sirma.itt.javacourse.chat.contracts.MainUnit;
+import com.sirma.itt.javacourse.chat.connectionconfigs.DialogConnection;
 import com.sirma.itt.javacourse.chat.structures.Server;
 
 /**
@@ -17,29 +16,36 @@ import com.sirma.itt.javacourse.chat.structures.Server;
  * 
  * @author user
  */
-public class Client {
-	private MainUnit mainUnit;
-	private ConnectionUnit connectionUnit;
+public final class Client {
+	private final ClientMainUnit mainUnit;
+	private final ClientConnectionUnit connectionUnit;
 	private Server server;
-	private boolean isConnected;
-	private Locale[] supported = { Locale.ENGLISH, new Locale("bg") };
-	private Locale locale = Locale.getDefault();
+	private final Locale[] supportedLocales = { Locale.ENGLISH, new Locale("bg") };
+	private Locale currentLocale = Locale.getDefault();
 
 	/**
 	 * Setting up the main and connection units.
 	 * 
-	 * @param mainUnit
-	 *            the main unit
-	 * @param connectionUnit
-	 *            the connection unit
+	 * @param builder
+	 *            the Builder containing the main and connection units
 	 */
-	public Client(ClientMainUnit mainUnit, ClientConnectionUnit connectionUnit) {
-		super();
-		this.mainUnit = mainUnit;
-		this.connectionUnit = connectionUnit;
+	private Client(Builder builder) {
+		this.mainUnit = builder.mainFrame;
+		this.connectionUnit = builder.connectionFrame;
 		mainUnit.setClient(this);
 		connectionUnit.setClient(this);
 		mainUnit.start();
+	}
+
+	/**
+	 * Check if a connection to the server has been established.
+	 * 
+	 * @return true if it has, false otherwise
+	 */
+	public boolean isConnected() {
+		if (server == null || server.getSocket().isClosed())
+			return false;
+		return true;
 	}
 
 	/**
@@ -53,13 +59,13 @@ public class Client {
 	 *            the port of the host
 	 */
 	public void tryConnect(String host, String username, String port) {
-		ResourceBundle errorsBundle = ResourceBundle.getBundle("DialogBundle", locale);
 		int portInt = 0;
 		try {
 			portInt = Integer.parseInt(port);
 			ServerConnectionThread connectionListener = new ServerConnectionThread(host, username,
 					portInt, this);
 			Thread thread = new Thread(connectionListener);
+			thread.setName("Connection thread");
 			thread.start();
 		} catch (NumberFormatException e) {
 			connectionUnit.connectionRefused("malformedPort");
@@ -73,6 +79,7 @@ public class Client {
 	public void startListening() {
 		ServerMessagesReadThread thread = new ServerMessagesReadThread(this);
 		Thread msgThread = new Thread(thread);
+		msgThread.setName("Listening Thread");
 		msgThread.start();
 	}
 
@@ -90,7 +97,7 @@ public class Client {
 	 * 
 	 * @return the mainUnit
 	 */
-	public MainUnit getMainUnit() {
+	public ClientMainUnit getMainUnit() {
 		return mainUnit;
 	}
 
@@ -99,7 +106,7 @@ public class Client {
 	 * 
 	 * @return the connectionUnit
 	 */
-	public ConnectionUnit getConnectionUnit() {
+	public ClientConnectionUnit getConnectionUnit() {
 		return connectionUnit;
 	}
 
@@ -114,31 +121,12 @@ public class Client {
 	}
 
 	/**
-	 * Getter method for isConnected.
-	 * 
-	 * @return the isConnected
-	 */
-	public boolean isConnected() {
-		return isConnected;
-	}
-
-	/**
-	 * Setter method for isConnected.
-	 * 
-	 * @param isConnected
-	 *            the isConnected to set
-	 */
-	public void setConnected(boolean isConnected) {
-		this.isConnected = isConnected;
-	}
-
-	/**
 	 * Getter method for locale.
 	 * 
 	 * @return the locale
 	 */
 	public Locale getLocale() {
-		return locale;
+		return currentLocale;
 	}
 
 	/**
@@ -148,7 +136,7 @@ public class Client {
 	 *            the locale to set
 	 */
 	public void setLocale(Locale locale) {
-		this.locale = locale;
+		this.currentLocale = locale;
 	}
 
 	/**
@@ -157,7 +145,53 @@ public class Client {
 	 * @return the supported
 	 */
 	public Locale[] getSupported() {
-		return supported;
+		return supportedLocales;
+	}
+
+	/**
+	 * Implementing the builder pattern as a static nested class in order to increase encapsulation.
+	 * By default the builder uses a {@link SwingClient} and a {@link DialogConnection}. They can be
+	 * changed in the builder via method chaining.
+	 * 
+	 * @author user
+	 */
+	public static class Builder {
+		private ClientMainUnit mainFrame = new SwingClient();
+		private ClientConnectionUnit connectionFrame = new DialogConnection();
+
+		/**
+		 * Set the main unit of the chat client.
+		 * 
+		 * @param mainFrame
+		 *            the unit implementation
+		 * @return this so we can continue building
+		 */
+		public Builder setMainUnit(ClientMainUnit mainFrame) {
+			this.mainFrame = mainFrame;
+			return this;
+		}
+
+		/**
+		 * Set the connection unit of the chat client.
+		 * 
+		 * @param connectionFrame
+		 *            the unit implementation
+		 * @return this so we can continue building
+		 */
+		public Builder setConnectionFrame(ClientConnectionUnit connectionFrame) {
+			this.connectionFrame = connectionFrame;
+			return this;
+		}
+
+		/**
+		 * Build the client out of the given components. If no components are specified, the default
+		 * ones are used.
+		 * 
+		 * @return the newly created Client object
+		 */
+		public Client build() {
+			return new Client(this);
+		}
 	}
 
 }

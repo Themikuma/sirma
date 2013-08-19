@@ -1,27 +1,25 @@
 package com.sirma.itt.javacourse.chat.server.main;
 
-
 /**
  * Example use of the server.
  * 
  * @author user
  */
 public final class ServerStartClass {
+
 	/**
-	 * Private constructor disallowing the instantiation of the class.
+	 * A private constructor disallowing the instantiation of this class.
 	 */
 	private ServerStartClass() {
-
 	}
 
 	/**
-	 * Using the {@link ServerBuilder} to construct a server and start it.
+	 * Builds the {@link Server} object.
 	 * 
 	 * @param args
 	 *            command-line arguments
 	 */
 	public static void main(String[] args) {
-		ServerBuilder builder = new ServerBuilder();
-		builder.build();
+		new Server.ServerBuilder().build();
 	}
 }

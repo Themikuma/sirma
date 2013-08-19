@@ -33,8 +33,23 @@ public abstract class ClientConnectionUnit implements ConnectionUnit {
 		return client.getLocale();
 	}
 
+	/**
+	 * Setter method of the client.
+	 * 
+	 * @param client
+	 *            the Client
+	 */
 	public void setClient(Client client) {
 		this.client = client;
+	}
+
+	/**
+	 * Getter method for client.
+	 * 
+	 * @return the client
+	 */
+	public Client getClient() {
+		return client;
 	}
 
 }

@@ -8,6 +8,7 @@ import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ResourceBundle;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -18,22 +19,34 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
+import com.sirma.itt.javacourse.chat.threads.TextAnimationThread;
+
 /**
  * Graphical implementation of the {@link ServerConnectionUnit}.
  * 
  * @author user
  */
-public class DialogConnection extends ServerConnectionUnit implements ActionListener {
-	private JTextField portField;
-	private JLabel status = new JLabel();
-
-	private JDialog dialog = new JDialog();
+public final class DialogConnection extends ServerConnectionUnit implements ActionListener {
+	private final JTextField portField = new JTextField();
+	private final JLabel status = new JLabel();
+	private final JLabel portLabel = new JLabel();
+	private final JDialog dialog = new JDialog();
+	private final JButton okButton = new JButton();
+	private final JButton cancelButton = new JButton();
+	private final TextAnimationThread labelAnimation = new TextAnimationThread(this.status);
+	private ResourceBundle messagesBundle;
+	private ResourceBundle labelsBundle;
+	private ResourceBundle buttonsBundle;
 	/**
 	 * Comment for serialVersionUID.
 	 */
 	@SuppressWarnings("unused")
 	private static final long serialVersionUID = -5727905105138951096L;
 
+	/**
+	 * Initializing the user interface from the EDT and starting the thread that animates the status
+	 * label. Called when constructing the {@link Server} object from the builder.
+	 */
 	public DialogConnection() {
 		SwingUtilities.invokeLater(new Runnable() {
 
@@ -43,6 +56,8 @@ public class DialogConnection extends ServerConnectionUnit implements ActionList
 
 			}
 		});
+		Thread thread = new Thread(labelAnimation);
+		thread.start();
 	}
 
 	/**
@@ -55,16 +70,18 @@ public class DialogConnection extends ServerConnectionUnit implements ActionList
 		dialog.setTitle("Connection");
 
 		JPanel contentPane = new JPanel(new GridLayout(0, 2, 15, 15));
-		portField = new JTextField();
-		contentPane.add(new JLabel("Port"));
+
+		contentPane.add(portLabel);
 		contentPane.add(portField);
 
-		JButton okButton = new JButton("Start");
-		JButton cancelButton = new JButton("Cancel");
+		okButton.setActionCommand("ok");
+		cancelButton.setActionCommand("cancel");
 
 		okButton.addActionListener(this);
 		cancelButton.addActionListener(this);
+
 		contentPane.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
+
 		contentPane.add(okButton);
 		contentPane.add(cancelButton);
 		status.setHorizontalAlignment(SwingConstants.CENTER);
@@ -75,20 +92,36 @@ public class DialogConnection extends ServerConnectionUnit implements ActionList
 		dialog.pack();
 		dialog.setLocation(screenCentre.x - dialog.getHeight() / 2,
 				screenCentre.y - dialog.getWidth() / 2);
+	}
 
+	/**
+	 * Updates the text of the ui elements according to the chosen language.
+	 */
+	private void updateUI() {
+		messagesBundle = ResourceBundle.getBundle("MessagesBundle", getCurrentLocale());
+		labelsBundle = ResourceBundle.getBundle("LabelsBundle", getCurrentLocale());
+		buttonsBundle = ResourceBundle.getBundle("ButtonsBundle", getCurrentLocale());
+		portLabel.setText(labelsBundle.getString("port"));
+		dialog.setTitle(labelsBundle.getString("connection"));
+		okButton.setText(buttonsBundle.getString("start"));
+		cancelButton.setText(buttonsBundle.getString("cancel"));
 	}
 
 	@Override
 	public void start() {
-		dialog.setVisible(true);
+		if (!getServer().isRunning()) {
+
+			updateUI();
+			dialog.setVisible(true);
+		}
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-		if ("Cancel".equals(e.getActionCommand())) {
-			dialog.dispose();
-		} else if ("Start".equals(e.getActionCommand())) {
+		if ("cancel".equals(e.getActionCommand())) {
+			dialog.setVisible(false);
+		} else if ("ok".equals(e.getActionCommand())) {
 			tryConnect(portField.getText());
 		}
 
@@ -97,12 +130,14 @@ public class DialogConnection extends ServerConnectionUnit implements ActionList
 	@Override
 	public void connectionEstablished() {
 		dialog.setVisible(false);
-
 	}
 
 	@Override
 	public void connectionRefused(String arg0) {
-		this.status.setText(arg0);
+		this.status.setText(messagesBundle.getString(arg0));
+		synchronized (status) {
+			status.notify();
+		}
 
 	}
 

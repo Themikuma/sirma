@@ -10,9 +10,9 @@ import java.nio.file.Paths;
  * 
  * @author user
  */
-public class FileConnection extends ServerConnectionUnit {
+public final class FileConnection extends ServerConnectionUnit {
 
-	private String path;
+	private final String path;
 
 	/**
 	 * Setting up the path of the file.
