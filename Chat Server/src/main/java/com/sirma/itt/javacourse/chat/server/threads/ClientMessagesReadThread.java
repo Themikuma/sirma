@@ -4,8 +4,8 @@ import java.io.IOException;
 
 import com.sirma.itt.javacourse.chat.messages.IClientMessages;
 import com.sirma.itt.javacourse.chat.messages.IServerMessages;
-import com.sirma.itt.javacourse.chat.server.UsersManager;
 import com.sirma.itt.javacourse.chat.server.main.Server;
+import com.sirma.itt.javacourse.chat.server.main.UsersManager;
 import com.sirma.itt.javacourse.chat.server.structures.Client;
 
 /**

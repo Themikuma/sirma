@@ -2,8 +2,8 @@ package com.sirma.itt.javacourse.chat.client.main;
 
 import java.util.Locale;
 
-import com.sirma.itt.javacourse.chat.client.connectionconfigs.ClientConnectionUnit;
-import com.sirma.itt.javacourse.chat.client.connectionconfigs.DialogConnection;
+import com.sirma.itt.javacourse.chat.client.connectioncomponents.ClientConnectionUnit;
+import com.sirma.itt.javacourse.chat.client.connectioncomponents.DialogConnection;
 import com.sirma.itt.javacourse.chat.client.maincomponents.ClientMainUnit;
 import com.sirma.itt.javacourse.chat.client.maincomponents.SwingClient;
 import com.sirma.itt.javacourse.chat.client.structures.Server;

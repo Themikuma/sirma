@@ -4,9 +4,8 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.Locale;
 
-import com.sirma.itt.javacourse.chat.server.UsersManager;
-import com.sirma.itt.javacourse.chat.server.connectionconfigs.DialogConnection;
-import com.sirma.itt.javacourse.chat.server.connectionconfigs.ServerConnectionUnit;
+import com.sirma.itt.javacourse.chat.server.connectioncomponents.DialogConnection;
+import com.sirma.itt.javacourse.chat.server.connectioncomponents.ServerConnectionUnit;
 import com.sirma.itt.javacourse.chat.server.maincomponents.ServerMainUnit;
 import com.sirma.itt.javacourse.chat.server.maincomponents.SwingServer;
 import com.sirma.itt.javacourse.chat.server.threads.ServerMainThread;

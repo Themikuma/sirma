@@ -5,8 +5,8 @@ import java.net.Socket;
 
 import org.junit.Test;
 
-import com.sirma.itt.javacourse.chat.server.UsersManager;
 import com.sirma.itt.javacourse.chat.server.main.Server;
+import com.sirma.itt.javacourse.chat.server.main.UsersManager;
 import com.sirma.itt.javacourse.chat.server.structures.Client;
 
 /**

@@ -31,18 +31,18 @@
       <position height="21" width="0" x="0" y="257"/>    
     </execution>  
   </object>  
-  <object id="25" language="java" name="com.sirma.itt.javacourse.chat.client.connectionconfigs.ClientConnectionUnit" 
+  <object id="25" language="java" name="com.sirma.itt.javacourse.chat.client.connectioncomponents.ClientConnectionUnit" 
     project="Chat Client" 
-    file="/Chat Client/src/main/java/com/sirma/itt/javacourse/chat/client/connectionconfigs/ClientConnectionUnit.java" 
+    file="/Chat Client/src/main/java/com/sirma/itt/javacourse/chat/client/connectioncomponents/ClientConnectionUnit.java" 
     binary="false" type="class" autoSize="true">    
     <position height="0" width="0" x="0" y="0"/>    
     <execution id="16">      
       <position height="21" width="0" x="0" y="509"/>    
     </execution>  
   </object>  
-  <object id="26" language="java" name="com.sirma.itt.javacourse.chat.client.connectionconfigs.ClientConnectionUnit" 
+  <object id="26" language="java" name="com.sirma.itt.javacourse.chat.client.connectioncomponents.ClientConnectionUnit" 
     project="Chat Client" 
-    file="/Chat Client/src/main/java/com/sirma/itt/javacourse/chat/client/connectionconfigs/ClientConnectionUnit.java" 
+    file="/Chat Client/src/main/java/com/sirma/itt/javacourse/chat/client/connectioncomponents/ClientConnectionUnit.java" 
     binary="false" type="class" autoSize="true">    
     <position height="0" width="0" x="0" y="0"/>    
     <execution id="20">      

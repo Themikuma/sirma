@@ -35,8 +35,8 @@
       <position height="21" width="0" x="0" y="813"/>    
     </execution>  
   </object>  
-  <object id="38" language="java" name="com.sirma.itt.javacourse.chat.server.UsersManager" project="Chat Server" 
-    file="/Chat Server/src/main/java/com/sirma/itt/javacourse/chat/server/UsersManager.java" binary="false" 
+  <object id="38" language="java" name="com.sirma.itt.javacourse.chat.server.main.UsersManager" project="Chat Server" 
+    file="/Chat Server/src/main/java/com/sirma/itt/javacourse/chat/server/main/UsersManager.java" binary="false" 
     label="usersManager" type="class" autoSize="true">    
     <position height="0" width="0" x="0" y="0"/>    
     <execution id="12">      

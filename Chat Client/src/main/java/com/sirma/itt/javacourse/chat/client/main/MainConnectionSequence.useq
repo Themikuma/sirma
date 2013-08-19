@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sequence-diagram version="1.1.2" icons="true" automaticImage="PNG">  
-  <object id="1" language="java" name="com.sirma.itt.javacourse.chat.client.connectionconfigs.ClientConnectionUnit" 
+  <object id="1" language="java" name="com.sirma.itt.javacourse.chat.client.connectioncomponents.ClientConnectionUnit" 
     project="Chat Client" 
-    file="/Chat Client/src/main/java/com/sirma/itt/javacourse/chat/client/connectionconfigs/ClientConnectionUnit.java" 
+    file="/Chat Client/src/main/java/com/sirma/itt/javacourse/chat/client/connectioncomponents/ClientConnectionUnit.java" 
     binary="false" label="clientConnectionUnit" type="class" autoSize="true">    
     <position height="-1" width="-1" x="267" y="0"/>    
     <execution id="2">      

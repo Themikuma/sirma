@@ -11,9 +11,9 @@
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </class>  
-  <class id="2" language="java" name="com.sirma.itt.javacourse.chat.server.connectionconfigs.ServerConnectionUnit" 
+  <class id="2" language="java" name="com.sirma.itt.javacourse.chat.server.connectioncomponents.ServerConnectionUnit" 
     project="Chat Server" 
-    file="/Chat Server/src/main/java/com/sirma/itt/javacourse/chat/server/connectionconfigs/ServerConnectionUnit.java" 
+    file="/Chat Server/src/main/java/com/sirma/itt/javacourse/chat/server/connectioncomponents/ServerConnectionUnit.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="153" width="244" x="199" y="410"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
@@ -33,8 +33,8 @@
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </class>  
-  <class id="4" language="java" name="com.sirma.itt.javacourse.chat.server.UsersManager" project="Chat Server" 
-    file="/Chat Server/src/main/java/com/sirma/itt/javacourse/chat/server/UsersManager.java" binary="false" 
+  <class id="4" language="java" name="com.sirma.itt.javacourse.chat.server.main.UsersManager" project="Chat Server" 
+    file="/Chat Server/src/main/java/com/sirma/itt/javacourse/chat/server/main/UsersManager.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="261" width="211" x="483" y="410"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
@@ -65,9 +65,9 @@
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </class>  
-  <class id="7" language="java" name="com.sirma.itt.javacourse.chat.server.connectionconfigs.DialogConnection" 
+  <class id="7" language="java" name="com.sirma.itt.javacourse.chat.server.connectioncomponents.DialogConnection" 
     project="Chat Server" 
-    file="/Chat Server/src/main/java/com/sirma/itt/javacourse/chat/server/connectionconfigs/DialogConnection.java" 
+    file="/Chat Server/src/main/java/com/sirma/itt/javacourse/chat/server/connectioncomponents/DialogConnection.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="387" width="244" x="41" y="711"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
@@ -76,9 +76,9 @@
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </class>  
-  <class id="8" language="java" name="com.sirma.itt.javacourse.chat.server.connectionconfigs.FileConnection" 
+  <class id="8" language="java" name="com.sirma.itt.javacourse.chat.server.connectioncomponents.FileConnection" 
     project="Chat Server" 
-    file="/Chat Server/src/main/java/com/sirma/itt/javacourse/chat/server/connectionconfigs/FileConnection.java" 
+    file="/Chat Server/src/main/java/com/sirma/itt/javacourse/chat/server/connectioncomponents/FileConnection.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="153" width="244" x="325" y="711"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
