@@ -4,7 +4,7 @@
   <class id="1" language="java" name="com.sirma.itt.javacourse.chat.client.main.Client" project="Chat Client" 
     file="/Chat Client/src/main/java/com/sirma/itt/javacourse/chat/client/main/Client.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="279" width="222" x="478" y="37"/>    
+    <position height="279" width="222" x="477" y="37"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
@@ -15,7 +15,7 @@
     project="Chat Client" 
     file="/Chat Client/src/main/java/com/sirma/itt/javacourse/chat/client/maincomponents/ClientMainUnit.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="225" width="234" x="204" y="356"/>    
+    <position height="225" width="234" x="203" y="356"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
@@ -26,7 +26,7 @@
     project="Chat Client" 
     file="/Chat Client/src/main/java/com/sirma/itt/javacourse/chat/client/connectioncomponents/ClientConnectionUnit.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="153" width="214" x="698" y="356"/>    
+    <position height="153" width="259" x="722" y="356"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
@@ -36,7 +36,7 @@
   <class id="4" language="java" name="com.sirma.itt.javacourse.chat.client.structures.Server" project="Chat Client" 
     file="/Chat Client/src/main/java/com/sirma/itt/javacourse/chat/client/structures/Server.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="261" width="180" x="478" y="356"/>    
+    <position height="261" width="205" x="477" y="356"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="false" package="false" protected="true" private="true"/>      
@@ -69,7 +69,7 @@
     project="Chat Client" 
     file="/Chat Client/src/main/java/com/sirma/itt/javacourse/chat/client/connectioncomponents/DialogConnection.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="423" width="214" x="594" y="657"/>    
+    <position height="423" width="259" x="594" y="657"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
@@ -80,7 +80,7 @@
     project="Chat Client" 
     file="/Chat Client/src/main/java/com/sirma/itt/javacourse/chat/client/connectioncomponents/FileConnection.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="153" width="214" x="848" y="657"/>    
+    <position height="153" width="259" x="893" y="657"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
@@ -89,10 +89,10 @@
   </class>  
   <association id="9">    
     <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="10" name="connectionUnit"/>      
+      <attribute id="10" name="server"/>      
       <multiplicity id="11" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="3" navigable="true"/>    
+    <end type="TARGET" refId="4" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="12">    
@@ -103,44 +103,44 @@
     <end type="TARGET" refId="1" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="15">    
-    <end type="SOURCE" refId="6"/>    
-    <end type="TARGET" refId="2"/>  
-  </generalization>  
-  <generalization id="16">    
-    <end type="SOURCE" refId="7"/>    
-    <end type="TARGET" refId="3"/>  
-  </generalization>  
-  <generalization id="17">    
-    <end type="SOURCE" refId="8"/>    
-    <end type="TARGET" refId="3"/>  
-  </generalization>  
+  <association id="15">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="16" name="client"/>      
+      <multiplicity id="17" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
   <generalization id="18">    
-    <end type="SOURCE" refId="5"/>    
+    <end type="SOURCE" refId="6"/>    
     <end type="TARGET" refId="2"/>  
   </generalization>  
   <association id="19">    
     <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="20" name="server"/>      
+      <attribute id="20" name="connectionUnit"/>      
       <multiplicity id="21" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="4" navigable="true"/>    
+    <end type="TARGET" refId="3" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="22">    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="23" name="mainUnit"/>      
-      <multiplicity id="24" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="2" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
+  <generalization id="22">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="3"/>  
+  </generalization>  
+  <generalization id="23">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="3"/>  
+  </generalization>  
+  <generalization id="24">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="2"/>  
+  </generalization>  
   <association id="25">    
-    <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="26" name="client"/>      
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="26" name="mainUnit"/>      
       <multiplicity id="27" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="1" navigable="true"/>    
+    <end type="TARGET" refId="2" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 

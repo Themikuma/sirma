@@ -180,8 +180,8 @@ public class IntegrationTests {
 		Thread.sleep(100);
 		clientTwo.getServer().sendMessage("CLIENT_MESSAGE|hello");
 		Thread.sleep(100);
-		Mockito.verify(clientMainUnit).onMessageAdded("key", "hello");
-		Mockito.verify(clientMainUnitTwo).onMessageAdded("key", "hello");
+		Mockito.verify(clientMainUnit).onMessageAdded("key", "Hello");
+		Mockito.verify(clientMainUnitTwo).onMessageAdded("key", "Hello");
 		clientTwo.getServer().getSocket().close();
 	}
 

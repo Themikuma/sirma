@@ -1,10 +1,9 @@
 package com.sirma.itt.javacourse.chat.client.structures;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.net.Socket;
 
 import com.sirma.itt.javacourse.chat.client.main.Client;
@@ -17,7 +16,7 @@ import com.sirma.itt.javacourse.chat.threads.MessageSender;
  */
 public class Server {
 	private final Socket socket;
-	private final BufferedWriter writer;
+	private final PrintWriter writer;
 	private final BufferedReader reader;
 	private final MessageSender messager;
 	private final Client client;
@@ -38,8 +37,8 @@ public class Server {
 		this.client = client;
 		this.socket = socket;
 		reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-		writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-		messager = new MessageSender(writer, client.getMainUnit());
+		writer = new PrintWriter(socket.getOutputStream(), true);
+		messager = new MessageSender(writer);
 		messagerThread = new Thread(messager);
 		messagerThread.setName("Sending thread");
 		messagerThread.start();

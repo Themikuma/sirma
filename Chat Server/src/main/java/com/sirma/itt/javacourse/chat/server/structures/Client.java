@@ -1,10 +1,9 @@
 package com.sirma.itt.javacourse.chat.server.structures;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.net.Socket;
 
 import com.sirma.itt.javacourse.chat.server.main.Server;
@@ -21,7 +20,7 @@ public final class Client {
 	private String username = "default";
 	private boolean verified;
 	private BufferedReader reader;
-	private BufferedWriter writer;
+	private PrintWriter writer;
 	private MessageSender sender;
 	private final Server server;
 	private Thread senderThread;
@@ -49,14 +48,14 @@ public final class Client {
 	 */
 	public void openStreams() throws IOException {
 		reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-		writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+		writer = new PrintWriter(socket.getOutputStream(), true);
 	}
 
 	/**
 	 * Start the sender thread.
 	 */
 	public void startSenderThread() {
-		sender = new MessageSender(writer, server.getMainUnit());
+		sender = new MessageSender(writer);
 		senderThread = new Thread(sender);
 		senderThread.setName("Sender thread:" + this.hashCode());
 		senderThread.start();
@@ -141,15 +140,6 @@ public final class Client {
 		} catch (IOException e) {
 			return null;
 		}
-	}
-
-	/**
-	 * Getter method for writer.
-	 * 
-	 * @return the writer
-	 */
-	public BufferedWriter getWriter() {
-		return writer;
 	}
 
 	/**

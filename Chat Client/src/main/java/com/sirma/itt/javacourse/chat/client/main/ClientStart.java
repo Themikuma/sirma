@@ -22,5 +22,6 @@ public final class ClientStart {
 	 */
 	public static void main(String[] args) {
 		new Client.Builder().build();
+
 	}
 }

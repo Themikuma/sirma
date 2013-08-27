@@ -2,14 +2,11 @@ package com.sirma.itt.javacourse.chat.threads;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedWriter;
-import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import javax.swing.Timer;
-
-import com.sirma.itt.javacourse.chat.contracts.MainUnit;
 
 /**
  * A runnable that will send messages when available.
@@ -18,8 +15,7 @@ import com.sirma.itt.javacourse.chat.contracts.MainUnit;
  */
 public class MessageSender implements Runnable, ActionListener {
 	private final BlockingQueue<String> messages = new LinkedBlockingQueue<String>();
-	private final BufferedWriter writer;
-	private final MainUnit main;
+	private final PrintWriter writer;
 
 	/**
 	 * Set up the writer of the server to which the message is going to be sent and the client for
@@ -27,13 +23,10 @@ public class MessageSender implements Runnable, ActionListener {
 	 * 
 	 * @param writer
 	 *            the writer
-	 * @param main
-	 *            the client
 	 */
-	public MessageSender(BufferedWriter writer, MainUnit main) {
+	public MessageSender(PrintWriter writer) {
 		super();
 		this.writer = writer;
-		this.main = main;
 	}
 
 	@Override
@@ -41,13 +34,9 @@ public class MessageSender implements Runnable, ActionListener {
 		new Timer(10000, this).start();
 		try {
 			while (!Thread.interrupted()) {
-				writer.write(messages.take());
-				writer.newLine();
-				writer.flush();
+				writer.println(messages.take());
 			}
 		} catch (InterruptedException e) {
-		} catch (IOException e) {
-			main.onError("messageSendError");
 		}
 
 	}

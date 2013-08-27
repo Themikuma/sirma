@@ -1,7 +1,6 @@
 package com.sirma.itt.javacourse.chat.server.main;
 
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -29,11 +28,8 @@ public final class UsersManager {
 		StringBuilder sb = new StringBuilder(message);
 		sb.setCharAt(0, Character.toUpperCase(sb.charAt(0)));
 		synchronized (clientSet) {
-			Iterator<Client> iterator = clientSet.iterator();
-			while (iterator.hasNext()) {
-				Client client = iterator.next();
+			for (Client client : clientSet)
 				sendMessage(client, message);
-			}
 		}
 	}
 
@@ -42,11 +38,8 @@ public final class UsersManager {
 	 */
 	public void closeConnections() {
 		synchronized (clientSet) {
-			Iterator<Client> iterator = clientSet.iterator();
-			while (iterator.hasNext()) {
-				Client client = iterator.next();
+			for (Client client : clientSet)
 				client.closeConnection();
-			}
 		}
 
 	}
@@ -110,13 +103,9 @@ public final class UsersManager {
 	public String generateUsernameString(Client sender) {
 		String result = "";
 		synchronized (clientSet) {
-
-			Iterator<Client> iterator = clientSet.iterator();
-			while (iterator.hasNext()) {
-				Client client = iterator.next();
+			for (Client client : clientSet)
 				if (client != sender)
 					result += client.getUsername() + USER_SEPARATOR;
-			}
 		}
 		return result;
 	}
