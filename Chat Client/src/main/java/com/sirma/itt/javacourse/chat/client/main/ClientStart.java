@@ -1,5 +1,6 @@
 package com.sirma.itt.javacourse.chat.client.main;
 
+
 /**
  * An example use of the builder.
  * 
@@ -22,6 +23,7 @@ public final class ClientStart {
 	 */
 	public static void main(String[] args) {
 		new Client.Builder().build();
-
+		// new Client.Builder().setConnectionFrame(new FileConnection("config.txt"))
+		// .setMainUnit(new ConsoleClient()).build();
 	}
 }
